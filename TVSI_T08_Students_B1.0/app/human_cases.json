@@ -1,0 +1,14 @@
+[
+  {
+    "id": "H-ENV",
+    "input": {
+      "weight": 500,
+      "zone": "LOCAL",
+      "express": false
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 5
+    }
+  }
+]

@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>T08 StudentAssignment</title><style>body{font:16px/1.55 Segoe UI,Arial,sans-serif;color:#203649;background:#f4f7fa;margin:0}main{max-width:1120px;margin:30px auto;padding:28px;background:white;border-radius:12px}h1{color:#17364b}h2{margin-top:28px}a{color:#086d7b}label{display:inline-flex;flex-direction:column;margin:8px 18px 8px 0;gap:5px}input,select,button,textarea{font:inherit;padding:9px;border:1px solid #9aabb8;border-radius:5px}button{background:#17364b;color:white;cursor:pointer;margin:8px 8px 8px 0}textarea{width:96%;min-height:180px;font-family:Consolas,monospace}pre{background:#edf3f5;padding:18px;white-space:pre-wrap;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:9px;border-bottom:1px solid #ccd7df}th{background:#17364b;color:white}.note{background:#fff4ce;padding:12px}@media(max-width:650px){main{margin:0;padding:15px}}@media print{body{background:white}main{margin:0}button{display:none}}
+</style><main><nav><a href="START_HERE.html">Start here</a> · <a href="StudentAssignment.html">Assignment</a> · <a href="BusinessRules.html">Rules</a></nav><h1>T08 — AI-Assisted Test Design</h1>
+<p>TVSI 2026/27 · Student assignment v1.0 · For teacher review</p>
+<h2>Your challenge</h2>
+<p>Apply <strong>Critical comparison of human and AI test designs</strong> to the supplied test object. You are testing supplied software, not developing an application. Python 3.10+ must be available. Open a terminal in the extracted app folder. Check <code>python --version</code> (Windows: <code>py -3 --version</code>). Use the commands in BusinessRules. No pip install, account, server or IDE is needed. If Python is unavailable, report the environment as BLOCKED and ask the teacher for a lab machine; do not invent execution results.</p>
+<h2>1. Plan and review</h2>
+<p>Produce a one-page charter: group members and roles, scope, risks, priorities, environment and approach. Review BR-01–BR-08 for clarity/testability. Record genuine ambiguities with suggested clarifications; do not invent issues to fill the template. Rules are the oracle, not application output.</p>
+<h2>2. Design before execution</h2>
+<p>Before opening ai_candidates.json, independently design at least 12 tests and freeze them in human_cases.json. Then review the supplied AI candidate set: classify every candidate as accept, revise or reject, justify against business rules, identify gaps, and build at least 16 final tests. Compare equal-sized suites where possible using rule/boundary coverage, invalid expectations, redundancy and confirmed defects. Execute both suites; candidate expectations are claims to review, not an oracle.</p>
+<p>Put exact inputs, preconditions, expected outputs and side effects in Test Cases BEFORE executing. Link to R01–R08 and state the technique and priority. Include positive, negative and boundary cases. Separate setup from the action being tested. Record topic-specific design in Technique and attach diagrams or additional tables where useful.</p>
+<h2>3. Execute and report</h2>
+<p>Record build T08-B1.0, OS, browser or Python version, date, tester, exact observed output and evidence filename for every execution. Preserve earlier runs. A PASS requires every expected outcome to match. A blocked run is not a pass. Reproduce unexpected behaviour from the same initial conditions.</p>
+<p>Log one defect per distinct reproducible issue, with exact setup/steps, rule, expected/actual, evidence and severity with rationale. Several failing cases may support one defect. Separate specification questions, data defects and implementation defects. Do not guess root causes from symptoms.</p>
+<h2>4. Evaluate coverage</h2>
+<p>Map requirements to tests and executions. Explain technique-specific coverage, gaps, residual risks and limitations. A high percentage or many tests does not establish correctness. Finding all planted defects is not the assessment objective.</p>
+<h2>Submission</h2>
+<p>Submit a 4–6-page report excluding appendices, completed workbook, charter, topic-specific design records, evidence folder and a 15-minute group presentation. Include individual contributions and AI disclosure (tool, purpose, material used, independent verification). Every member must explain and reproduce selected tests. Do not claim supplied software as your development.</p>
+<p>Suggested report: scope/risks; static review; design/oracle; executions/findings; coverage/limitations; contributions. Assessment weights, group rules and deadlines are those confirmed by the teacher.</p>
+<h2>Proposed checkpoints</h2>
+<table>
+<thead>
+<tr>
+<th>Proposed date (2026)</th>
+<th>Evidence checkpoint</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>27 October</td>
+<td>Charter, roles, scope, risks, environment check</td>
+</tr>
+<tr>
+<td>3 November</td>
+<td>Static review, model/partitions, initial oracle</td>
+</tr>
+<tr>
+<td>10 November</td>
+<td>Designed tests and expected results before execution</td>
+</tr>
+<tr>
+<td>17 November</td>
+<td>Executions, reproducible evidence and draft defects</td>
+</tr>
+<tr>
+<td>24 November</td>
+<td>Consolidated findings, coverage and remaining risks</td>
+</tr>
+<tr>
+<td>9 December</td>
+<td>Near-final report and demonstration for feedback</td>
+</tr>
+<tr>
+<td>15 December, 23:59 (Portugal local time)</td><td>Final submission</td></tr><tr><td>16 December</td><td>Final presentation</td>
+</tr>
+</tbody></table>
+<p>Dates and submission times require teacher confirmation in Moodle. Do not infer a weekly class day from this table.</p>
+</main></html>

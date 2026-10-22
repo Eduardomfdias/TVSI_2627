@@ -1,0 +1,146 @@
+[
+  {
+    "id": "AI-01",
+    "input": {
+      "weight": 500,
+      "zone": "LOCAL",
+      "express": false
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 5
+    }
+  },
+  {
+    "id": "AI-02",
+    "input": {
+      "weight": 2000,
+      "zone": "LOCAL",
+      "express": false
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 8
+    }
+  },
+  {
+    "id": "AI-03",
+    "input": {
+      "weight": 6000,
+      "zone": "LOCAL",
+      "express": false
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 12
+    }
+  },
+  {
+    "id": "AI-04",
+    "input": {
+      "weight": 500,
+      "zone": "LOCAL",
+      "express": true
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 11
+    }
+  },
+  {
+    "id": "AI-05",
+    "input": {
+      "weight": 500,
+      "zone": "REMOTE",
+      "express": false
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 4
+    }
+  },
+  {
+    "id": "AI-06",
+    "input": {
+      "weight": 1000,
+      "zone": "LOCAL",
+      "express": false
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 8
+    }
+  },
+  {
+    "id": "AI-07",
+    "input": {
+      "weight": 0,
+      "zone": "LOCAL",
+      "express": false
+    },
+    "expected": {
+      "status": "INVALID",
+      "fee": null
+    }
+  },
+  {
+    "id": "AI-08",
+    "input": {
+      "weight": 20001,
+      "zone": "LOCAL",
+      "express": false
+    },
+    "expected": {
+      "status": "INVALID",
+      "fee": null
+    }
+  },
+  {
+    "id": "AI-09",
+    "input": {
+      "weight": 6000,
+      "zone": "REMOTE",
+      "express": true
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 22
+    }
+  },
+  {
+    "id": "AI-10",
+    "input": {
+      "weight": 500,
+      "zone": "LOCAL",
+      "express": false
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 5
+    }
+  },
+  {
+    "id": "AI-11",
+    "input": {
+      "weight": 10000,
+      "zone": "LOCAL",
+      "express": true
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 18
+    }
+  },
+  {
+    "id": "AI-12",
+    "input": {
+      "weight": 2000,
+      "zone": "REMOTE",
+      "express": false
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 12
+    }
+  }
+]

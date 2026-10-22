@@ -1,0 +1,24 @@
+{
+  "build": "T08-B1.0",
+  "suite": "human_cases.json",
+  "python": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+  "results": [
+    {
+      "id": "H-ENV",
+      "input": {
+        "weight": 500,
+        "zone": "LOCAL",
+        "express": false
+      },
+      "expected": {
+        "status": "OK",
+        "fee": 5
+      },
+      "actual": {
+        "status": "OK",
+        "fee": 5
+      },
+      "verdict": "PASS"
+    }
+  ]
+}
