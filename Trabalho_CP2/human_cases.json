@@ -1,0 +1,82 @@
+[
+  {
+    "id": "H-01",
+    "input": {"weight": 500, "zone": "LOCAL", "express": false},
+    "expected": {"status": "OK", "fee": 5}
+  },
+  {
+    "id": "H-02",
+    "input": {"weight": 1, "zone": "LOCAL", "express": false},
+    "expected": {"status": "OK", "fee": 5}
+  },
+  {
+    "id": "H-03",
+    "input": {"weight": 1000, "zone": "LOCAL", "express": false},
+    "expected": {"status": "OK", "fee": 5}
+  },
+  {
+    "id": "H-04",
+    "input": {"weight": 1001, "zone": "LOCAL", "express": false},
+    "expected": {"status": "OK", "fee": 8}
+  },
+  {
+    "id": "H-05",
+    "input": {"weight": 5000, "zone": "LOCAL", "express": false},
+    "expected": {"status": "OK", "fee": 8}
+  },
+  {
+    "id": "H-06",
+    "input": {"weight": 5001, "zone": "LOCAL", "express": false},
+    "expected": {"status": "OK", "fee": 12}
+  },
+  {
+    "id": "H-07",
+    "input": {"weight": 20000, "zone": "LOCAL", "express": false},
+    "expected": {"status": "OK", "fee": 12}
+  },
+  {
+    "id": "H-08",
+    "input": {"weight": 0, "zone": "LOCAL", "express": false},
+    "expected": {"status": "INVALID", "fee": null}
+  },
+  {
+    "id": "H-09",
+    "input": {"weight": 20001, "zone": "LOCAL", "express": false},
+    "expected": {"status": "INVALID", "fee": null}
+  },
+  {
+    "id": "H-10",
+    "input": {"weight": 500, "zone": "REMOTE", "express": false},
+    "expected": {"status": "OK", "fee": 9}
+  },
+  {
+    "id": "H-11",
+    "input": {"weight": 500, "zone": "LOCAL", "express": true},
+    "expected": {"status": "OK", "fee": 11}
+  },
+  {
+    "id": "H-12",
+    "input": {"weight": 500, "zone": "REMOTE", "express": true},
+    "expected": {"status": "OK", "fee": 15}
+  },
+  {
+    "id": "H-13",
+    "input": {"weight": 5000, "zone": "REMOTE", "express": true},
+    "expected": {"status": "OK", "fee": 18}
+  },
+  {
+    "id": "H-14",
+    "input": {"weight": 5001, "zone": "REMOTE", "express": true},
+    "expected": {"status": "UNAVAILABLE", "fee": null}
+  },
+  {
+    "id": "H-15",
+    "input": {"weight": true, "zone": "LOCAL", "express": false},
+    "expected": {"status": "INVALID", "fee": null}
+  },
+  {
+    "id": "H-16",
+    "input": {"weight": 500, "zone": "local", "express": false},
+    "expected": {"status": "INVALID", "fee": null}
+  }
+]
