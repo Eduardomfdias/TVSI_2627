@@ -163,13 +163,24 @@ def verify_br05():
     env_after = dict(os.environ)
     no_env_change = (env_before == env_after)
 
-    ext_pass = no_io_output and no_env_change
+    # 4.3 No filesystem modifications in app directory
+    def _snapshot_dir(d):
+        return {f.name: (f.stat().st_size, f.stat().st_mtime_ns) for f in d.iterdir() if f.is_file()}
+
+    fs_before = _snapshot_dir(app_dir)
+    shipping.quote(500, "LOCAL", False)
+    shipping.quote(25000, "INVALID_ZONE", "not_a_bool")
+    fs_after = _snapshot_dir(app_dir)
+    no_fs_change = (fs_before == fs_after)
+
+    ext_pass = no_io_output and no_env_change and no_fs_change
     report["tests"].append({
         "test_id": "BR05-EXT-04",
-        "property": "Ausência de efeitos secundários externos (I/O e ambiente)",
-        "description": "Verificação de ausência de emissão para stdout/stderr e integridade de variáveis de ambiente",
+        "property": "Ausência de efeitos secundários externos (I/O, ambiente e sistema de ficheiros)",
+        "description": "Verificação de ausência de emissão para stdout/stderr, integridade de variáveis de ambiente e ausência de mutação de ficheiros",
         "no_stdout_stderr_leakage": no_io_output,
         "no_environment_variables_modified": no_env_change,
+        "no_filesystem_modified": no_fs_change,
         "verdict": "PASS" if ext_pass else "FAIL"
     })
 

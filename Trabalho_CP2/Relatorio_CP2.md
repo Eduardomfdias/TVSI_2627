@@ -30,7 +30,7 @@
 | AMB-03 | BR-04 diz "above 5000 g". O limiar é exclusivo (>5000) ou inclusivo (≥5000)? | Exclusivo: `weight > 5000` com `REMOTE + express` → `UNAVAILABLE`; `weight = 5000` → disponível, fee = 18 €. |
 | AMB-04 | BR-01 não especifica o comportamento para `weight = None` ou `weight = string`. | Sim: qualquer valor que não seja `int` (excluindo `bool`) → `INVALID`/`null`. |
 
-> **Nota:** AMB-01 e AMB-02 aguardam clarificação do professor antes de CP03.
+> **Nota metodológica (Resolução para CP03):** Na ausência de esclarecimento formal adicional por parte do corpo docente, o grupo adotou a interpretação estrita e normativa decorrente das regras BR-01 ("excluding booleans" e "express an actual boolean") e BR-05 (precedência de validação): qualquer `bool` em `weight` e qualquer valor não-booleano em `express` é tratado por tipo (`isinstance`) como `INVALID`. Esta interpretação foi subsequentemente codificada, testada e confirmada na suite final do CP03 através dos casos `F-20` e `F-21`.
 
 ---
 

@@ -177,7 +177,7 @@ Os expected results são derivados exclusivamente de BR-01–BR-05. A implementa
 
 **Por resolver:**
 
-- Clarificação AMB-01/AMB-02 com o professor (comportamento de booleans como weight e express)
+- Resolução metodológica de AMB-01/AMB-02: na ausência de esclarecimento formal do professor, adotada a interpretação estrita de tipo (BR-01/BR-05), validada no CP03 via F-20 e F-21
 - Upgrade Python 3.9.6 → 3.10+ antes de CP03 (10 nov)
 
 **Próximas ações (CP03 — 10 nov):**

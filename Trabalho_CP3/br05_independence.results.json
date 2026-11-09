@@ -1,7 +1,7 @@
 {
   "build": "T08-B1.0",
   "rule": "BR-05",
-  "python": "3.12.7 (v3.12.7:0b05ead877f, Sep 30 2024, 23:18:00) [Clang 13.0.0 (clang-1300.0.29.30)]",
+  "python": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
   "verification_scope": {
     "tested_properties": [
       "repeatability_and_determinism",
@@ -210,10 +210,11 @@
     },
     {
       "test_id": "BR05-EXT-04",
-      "property": "Aus\u00eancia de efeitos secund\u00e1rios externos (I/O e ambiente)",
-      "description": "Verifica\u00e7\u00e3o de aus\u00eancia de emiss\u00e3o para stdout/stderr e integridade de vari\u00e1veis de ambiente",
+      "property": "Aus\u00eancia de efeitos secund\u00e1rios externos (I/O, ambiente e sistema de ficheiros)",
+      "description": "Verifica\u00e7\u00e3o de aus\u00eancia de emiss\u00e3o para stdout/stderr, integridade de vari\u00e1veis de ambiente e aus\u00eancia de muta\u00e7\u00e3o de ficheiros",
       "no_stdout_stderr_leakage": true,
       "no_environment_variables_modified": true,
+      "no_filesystem_modified": true,
       "verdict": "PASS"
     }
   ],

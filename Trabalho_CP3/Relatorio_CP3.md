@@ -203,11 +203,11 @@ Para rigor metodológico, foram distinguidas e testadas **quatro propriedades es
    - *Resultado observado:* Imutabilidade de inputs, isolamento de objetos e namespace preservados (**PASS**).
 
 4. **Ausência de Efeitos Secundários Externos (`BR05-EXT-04`):**
-   - *Procedimento:* Monitorização de streams de saída padrão (`sys.stdout`, `sys.stderr`) e de variáveis de ambiente (`os.environ`) durante a execução de `quote()`.
-   - *Resultado esperado:* Nenhuma escrita para stdout/stderr e nenhuma alteração em variáveis de ambiente.
-   - *Resultado observado:* Streams de saída completamente limpos e ambiente inalterado (**PASS**).
+   - *Procedimento:* Monitorização de streams de saída padrão (`sys.stdout`, `sys.stderr`), variáveis de ambiente (`os.environ`) e snapshot do sistema de ficheiros (ficheiros, tamanhos e timestamps na diretoria da aplicação) antes e após as invocações de `quote()`.
+   - *Resultado esperado:* Nenhuma escrita para stdout/stderr, nenhuma alteração em variáveis de ambiente e nenhuma criação, remoção ou mutação de ficheiros no sistema de ficheiros.
+   - *Resultado observado:* Streams de saída completamente limpos, ambiente inalterado e sistema de ficheiros estritamente intacto (**PASS**).
 
-> **Delimitação de Âmbito:** A função `quote()` em `shipping.py` é uma função de cálculo puramente computacional em memória (sem I/O de rede ou base de dados). Os testes realizados confirmam a repetibilidade, a ausência de estado residual intra-processo, a ausência de mutações em memória e a ausência de efeitos secundários externos de I/O e ambiente.
+> **Delimitação de Âmbito:** A função `quote()` em `shipping.py` é uma função de cálculo puramente computacional em memória (sem I/O de rede ou base de dados). Os testes realizados confirmam a repetibilidade, a ausência de estado residual intra-processo, a ausência de mutações em memória e a ausência de efeitos secundários externos de I/O, ambiente e sistema de ficheiros.
 
 - **Evidência gerada:** `Trabalho_CP3/br05_independence.results.json` (Veredicto geral: **PASS**).
 
@@ -240,7 +240,8 @@ Para rigor metodológico, foram distinguidas e testadas **quatro propriedades es
 | Ficheiro | Localização | Descrição |
 |---------|------------|-----------|
 | `final_cases.json` | `Trabalho_CP3/` | Suite final com 21 casos (H-01–H-16 + F-17–F-21) |
-| `final_cases.results.json` | `Trabalho_CP3/` | Output do runner: 13 PASS / 8 FAIL, exit code 1 |
+| `final_cases.results.json` | `Trabalho_CP3/` | Output do runner em Python 3.9.6 (baseline): 13 PASS / 8 FAIL, exit code 1 |
+| `final_cases.results.py312.json` | `Trabalho_CP3/` | Output do runner em Python 3.12.7 (requisito 3.10+): 13 PASS / 8 FAIL, exit code 1 |
 | `verify_br05_independence.py` | `Trabalho_CP3/` | Procedimento complementar de validação de independência e ausência de efeitos secundários (BR-05) |
 | `br05_independence.results.json` | `Trabalho_CP3/` | Evidência de execução da validação BR-05: veredicto PASS |
 | `human_cases.json` | `Trabalho_CP2/` | Suite humana congelada em CP02 (16 casos H-01–H-16) |

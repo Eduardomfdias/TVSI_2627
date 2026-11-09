@@ -52,7 +52,8 @@ TVSI_2627/
     ├── CP3.md                                 # Planeamento da revisão dos candidatos IA
     ├── Relatorio_CP3.md                       # Relatório consolidado e auditado do CP03
     ├── final_cases.json                       # Suite final combinada (21 casos: H-01 a H-16 + F-17 a F-21)
-    ├── final_cases.results.json               # Evidência de execução da suite final (13 PASS / 8 FAIL)
+    ├── final_cases.results.json               # Evidência de execução em Python 3.9.6 (13 PASS / 8 FAIL)
+    ├── final_cases.results.py312.json         # Evidência de execução em Python 3.12.7 (13 PASS / 8 FAIL)
     ├── verify_br05_independence.py            # Procedimento complementar de validação da regra BR-05
     └── br05_independence.results.json         # Evidência da independência e ausência de efeitos secundários (PASS)
 ```
@@ -96,7 +97,8 @@ TVSI_2627/
 | **Resultados Humanos** | `Trabalho_CP2/human_cases.results.json` | 10 PASS / 6 FAIL (evidência CP02) |
 | **Candidatos IA** | `TVSI_T08_Students_B1.0/app/ai_candidates.json` | 12 sugestões de teste geradas por IA |
 | **Suite Final Combinada** | `Trabalho_CP3/final_cases.json` | 21 casos finais (H-01 a H-16 + F-17 a F-21) |
-| **Resultados Finais** | `Trabalho_CP3/final_cases.results.json` | 13 PASS / 8 FAIL (evidência CP03) |
+| **Resultados Finais (Py 3.9)** | `Trabalho_CP3/final_cases.results.json` | 13 PASS / 8 FAIL (baseline) |
+| **Resultados Finais (Py 3.12)** | `Trabalho_CP3/final_cases.results.py312.json` | 13 PASS / 8 FAIL (requisito 3.10+) |
 | **Validação BR-05** | `Trabalho_CP3/br05_independence.results.json` | Evidência de independência entre chamadas (PASS) |
 | **Workbook Oficial** | `TVSI_T08_Students_B1.0/TestResults_T08_Template.xlsx` | Workbook Excel oficial com 6 separadores completos |
 
