@@ -283,7 +283,7 @@ Para transparência e rigor metodológico absoluto, discrimina-se o estado exato
    - **Ficheiro:** `TVSI_T08_Grupo5_CP03.zip`
    - **Localização:** Raiz do repositório (`./TVSI_T08_Grupo5_CP03.zip`)
    - **Dimensão:** 110.027 bytes (28 ficheiros incluídos, sem diretórios temporários ou ficheiros do Git)
-   - **Hash SHA-256:** `7aec17ee2c456c21c83c5801d861b55f8dd635ab74b9232a12dbba2767e27eac`
+   - **Hash SHA-256:** `8e7527a5d013229c4e52dcb247181af090bad5abba1b491056d5cbcec46bc83c`
    - **Integridade:** Testado com `zipfile.testzip()`, apresentando 0 ficheiros corrompidos. O ficheiro encontra-se ignorado pelo Git (`.gitignore`) para prevenir a inclusão de binários no repositório.
 4. **Evidências Efetivamente Verificadas por Execução Direta:**
    - **Sintaxe JSON:** 100% dos ficheiros JSON validados e em conformidade.
