@@ -1,8 +1,8 @@
-# CP03 — Plano de Execução para Claude
+# CP03 — Plano de Execução e Revisão de Candidatos IA
 
-## T08 · Desenho de Testes com Assistência de IA · Build T08-B1.0
-
-**Due:** 10 novembro 2026, 23:59 (hora de Portugal)
+**Universidade do Minho — Tecnologias e Verificação de Sistemas de Informação 2026/27 — T08 — Grupo 5**  
+**Build:** T08-B1.0 · **Data:** 2026-11-08 (Data prevista de checkpoint: 2026-11-10, 23:59)  
+**Autores:** Eduardo Dias, Rui Carneiro, Érica Moreira, Beatriz Barbosa
 
 ---
 
@@ -10,12 +10,12 @@
 
 O grupo já tem:
 
-- **16 casos humanos congelados** em `human_cases.json` (H-01 a H-16) — feitos em CP02
+- **16 casos humanos congelados** em `human_cases.json` (H-01 a H-16) — feitos em CP02 (congelados a 2026-10-30 em `Trabalho_CP2/human_cases.json`)
 - **Oráculo independente** derivado exclusivamente das BR (sem consultar shipping.py nem ai_candidates.json)
 - **Resultados de execução CP02:** 10 PASS / 6 FAIL — defeitos DEF-01 a DEF-04 identificados
 - **ai_candidates.json** — NÃO foi aberto em CP02; pode ser aberto agora em CP03
 
-**Função sob teste:** `calculate_shipping(weight: int, zone: str, express: bool) -> {status, fee}`
+**Função sob teste:** `quote(weight, zone, express)` em `shipping.py`
 
 **Oráculo (resumo):**
 
@@ -74,11 +74,15 @@ Formato de cada caso em final_cases.json (seguir estrutura de human_cases.json):
 ```json
 {
   "id": "F-17",
-  "weight": ...,
-  "zone": "...",
-  "express": ...,
-  "expected_status": "...",
-  "expected_fee": ...
+  "input": {
+    "weight": 10000,
+    "zone": "LOCAL",
+    "express": true
+  },
+  "expected": {
+    "status": "OK",
+    "fee": 18
+  }
 }
 ```
 

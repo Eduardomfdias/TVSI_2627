@@ -1,6 +1,8 @@
 # CP02 — Revisão Estática, Modelo e Oráculo Inicial
 
-T08-B1.0 · Grupo 5 · 2026-10-28
+**Universidade do Minho — Tecnologias e Verificação de Sistemas de Informação 2026/27 — T08 — Grupo 5**  
+**Build:** T08-B1.0 · **Data de realização:** 2026-10-28 (Data prevista de checkpoint: 2026-11-03)  
+**Autores:** Eduardo Dias, Rui Carneiro, Érica Moreira, Beatriz Barbosa
 
 ---
 

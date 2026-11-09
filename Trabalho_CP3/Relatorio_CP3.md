@@ -1,10 +1,9 @@
 # Relatório CP03 — Desenho de Testes com Assistência de IA
 
-**Disciplina:** Teste e Validação de Software de Informação  
-**Grupo:** T08  
+**Universidade do Minho — Tecnologias e Verificação de Sistemas de Informação 2026/27 — T08 — Grupo 5**  
 **Build:** T08-B1.0  
-**Data de entrega:** 10 de novembro de 2026  
-**Autor:** Eduardo Dias  
+**Data de realização:** 2026-11-08 (Data prevista de checkpoint: 2026-11-10, 23:59)  
+**Autores:** Eduardo Dias, Rui Carneiro, Érica Moreira, Beatriz Barbosa  
 **Ferramenta de IA utilizada:** Claude Sonnet 4.6 (Anthropic Claude Code)
 
 ---
@@ -15,11 +14,12 @@ Este relatório documenta a execução do CP03, cuja finalidade é:
 
 1. Rever os **12 candidatos IA** (`ai_candidates.json`) usando o oráculo independente derivado das Business Rules (BR) — sem consultar `shipping.py`.
 2. Classificar cada candidato como **aceitar**, **rever** ou **rejeitar**.
-3. Construir a **suite final** (`final_cases.json`) com os 16 casos humanos (H-01 a H-16) + casos IA aceites/revistos + casos novos para fechar lacunas de cobertura.
+3. Construir a **suite final** (`final_cases.json`) com os 16 casos humanos (H-01 a H-16) congelados em CP02 + casos IA aceites/revistos + casos novos para fechar lacunas de cobertura.
 4. Executar a suite final com `run_cases.py` e registar resultados.
-5. Verificar cobertura BR-01 a BR-08 e atualizar registo de riscos.
+5. Demonstrar a independência e ausência de efeitos secundários entre chamadas (BR-05).
+6. Verificar cobertura BR-01 a BR-08 e atualizar registo de riscos.
 
-**Função sob teste:** `calculate_shipping(weight: int, zone: str, express: bool) → {status, fee}`
+**Função sob teste:** `quote(weight, zone, express)` em `shipping.py`
 
 ---
 
@@ -122,36 +122,39 @@ Foram criados dois casos novos:
 | BR-02 | Fee base por tier (1–1000 / 1001–5000 / 5001–20000) | H-02, H-03, H-04, H-05, H-06, H-07 (todas as fronteiras BVA) | ✅ Coberto |
 | BR-03 | Suplementos acumulativos REMOTE (+4€) e express (+6€) | H-10 (REMOTE), H-11 (express), H-12 (ambos), F-17, F-18 | ✅ Coberto |
 | BR-04 | UNAVAILABLE se REMOTE+express+weight>5000 | H-13 (fronteira disponível), H-14 (fronteira UNAVAILABLE), F-19 (EP interior) | ✅ Coberto |
-| BR-05 | BR-01 prevalece sobre BR-04 quando weight inválido | F-21 | ✅ Coberto |
-| BR-06 | Verificado por execução com runner | Todos os casos executados com `run_cases.py` | ✅ Coberto |
-| BR-07 | Exit codes: 0=PASS, 1=FAILs, 2=erro de formato | Executado; exit code = 1 (há FAILs) | ✅ Coberto |
-| BR-08 | Oráculo independente + revisão IA | Oráculo derivado apenas das BR; candidatos IA revistos sem consultar shipping.py | ✅ Coberto |
+| BR-05 | Precedência validação > disponibilidade > cálculo; independência de chamadas e ausência de efeitos secundários | F-21 (precedência) + Procedimento `BR05-IND` (independência e ausência de efeitos secundários) | ✅ Coberto |
+| BR-06 | Formato JSON; runner `python run_cases.py`; Python 3.10+ | Todos os casos executados com `run_cases.py` (validado em Python 3.12.7 e Python 3.9.6) | ✅ Coberto |
+| BR-07 | Runner compara exatamente; exit codes 0=PASS, 1=FAILs, 2=erro | Executado; exit code = 1 (há FAILs documentados) | ✅ Coberto |
+| BR-08 | Oráculo independente derivado das BRs; classificação crítica da IA | Oráculo derivado exclusivamente de BR-01–BR-05; candidatos IA revistos e justificados | ✅ Coberto |
 
 ---
 
 ## 6. Resultados da Execução
 
-**Ambiente:** Python 3.9.6 (abaixo do mínimo requerido 3.10+). Conformidade de ambiente permanece **pendente** (mesma situação de CP02).
+**Ambiente de Execução:**
+- Execução Primária de Conformidade: Python 3.12.7 (cumpre o requisito Python 3.10+ de BR-06).
+- Execução Secundária de Compatibilidade: Python 3.9.6 (versão padrão do sistema macOS).
+- Em ambos os ambientes, a suite executou sem erros de infraestrutura, produzindo resultados estritamente idênticos.
 
-**Código de saída:** 1 (há FAILs)
+**Código de saída do runner (`run_cases.py`):** 1 (há 8 FAILs resultantes de defeitos de implementação).
 
-**Resumo:** 13 PASS / 8 FAIL
+**Resumo da Suite Final (21 casos):** 13 PASS / 8 FAIL (61,9% taxa de sucesso).
 
 | TC-ID | Verdict | Actual Status | Actual Fee | Defeito associado |
 |-------|---------|--------------|------------|-------------------|
 | H-01 | ✅ PASS | OK | 5 | — |
 | H-02 | ✅ PASS | OK | 5 | — |
-| H-03 | ❌ FAIL | OK | **8** (esperado 5) | DEF-01 |
+| H-03 | ❌ FAIL | OK | **8** (esperado 5) | DEF-02 |
 | H-04 | ✅ PASS | OK | 8 | — |
 | H-05 | ✅ PASS | OK | 8 | — |
 | H-06 | ✅ PASS | OK | 12 | — |
-| H-07 | ❌ FAIL | **INVALID** (esperado OK/12) | null | DEF-02 |
+| H-07 | ❌ FAIL | **INVALID** (esperado OK/12) | null | DEF-01 |
 | H-08 | ✅ PASS | INVALID | null | — |
 | H-09 | ✅ PASS | INVALID | null | — |
 | H-10 | ❌ FAIL | OK | **4** (esperado 9) | DEF-03 |
 | H-11 | ✅ PASS | OK | 11 | — |
 | H-12 | ❌ FAIL | OK | **10** (esperado 15) | DEF-03 |
-| H-13 | ❌ FAIL | OK | **10** (esperado 18) | DEF-03 |
+| H-13 | ❌ FAIL | OK | **10** (esperado 18) | DEF-03 (e limiar DEF-04) |
 | H-14 | ❌ FAIL | **OK/10** (esperado UNAVAILABLE) | 10 | DEF-04 |
 | H-15 | ✅ PASS | INVALID | null | — |
 | H-16 | ✅ PASS | INVALID | null | — |
@@ -161,19 +164,52 @@ Foram criados dois casos novos:
 | F-20 | ✅ PASS | INVALID | null | — |
 | F-21 | ✅ PASS | INVALID | null | — |
 
-### 6.1 Análise dos FAILs
+### 6.1 Análise dos Defeitos (Alinhamento Rigoroso com CP02)
 
-Nenhum defeito novo foi identificado em CP03. Os 8 FAILs distribuem-se pelos 4 defeitos já conhecidos de CP02:
+Nenhum defeito novo foi introduzido em CP03. Os 8 FAILs observados distribuem-se de forma consistente pelos 4 defeitos identificados desde o CP02:
 
 | Defeito | Descrição | Casos CP02 | Casos CP03 (novos) | Estado |
 |---------|-----------|-----------|-------------------|--------|
-| **DEF-01** | Off-by-one em tier1/tier2: implementação trata weight=1000 como tier2 (fee=8) em vez de tier1 (fee=5) | H-03 | — | Confirmado |
-| **DEF-02** | Off-by-one no limite superior: implementação rejeita weight=20000 como INVALID em vez de OK | H-07 | — | Confirmado |
-| **DEF-03** | Cálculo REMOTE errado: fee retornada = apenas suplemento REMOTE (4€) sem somar fee base | H-10, H-12, H-13 | F-18 (tier2 REMOTE) | Confirmado e alargado |
-| **DEF-04** | UNAVAILABLE não implementado: REMOTE+express+weight>5000 retorna OK em vez de UNAVAILABLE | H-14 | F-19 (peso 6000) | Confirmado e alargado |
+| **DEF-01** | Fronteira superior de `weight`: implementação usa `>= 20000` em vez de `> 20000`, rejeitando indevidamente `weight=20000` como INVALID em vez de OK (fee=12) | H-07 | — | Confirmado |
+| **DEF-02** | Fronteira do tier 1: implementação usa `< 1000` em vez de `<= 1000`, calculando indevidamente taxa de tier 2 (fee=8) para `weight=1000` em vez de tier 1 (fee=5) | H-03 | — | Confirmado |
+| **DEF-03** | Sobrescrita do suplemento REMOTE: implementação usa atribuição `=` (`fee = 4`) em vez de soma acumulada `+= 4`, sobrescrevendo a fee base | H-10, H-12, H-13 | F-18 (tier2 REMOTE) | Confirmado e alargado |
+| **DEF-04** | Limiar de `UNAVAILABLE`: implementação usa `> 10000` em vez de `> 5000` para REMOTE expresso, retornando OK em vez de UNAVAILABLE para pesos 5001–10000 | H-14 | F-19 (peso 6000) | Confirmado e alargado |
 
-**Nota F-20 (express=1):** PASS — a implementação já valida corretamente o tipo de `express`.  
-**Nota F-21 (weight=25000, REMOTE, true):** PASS — a validação BR-01 tem prioridade correta sobre BR-04. BR-05 está implementada.
+**Nota F-20 (express=1):** PASS — a aplicação verifica `type(express) is not bool`, rejeitando inteiros como não-booleanos.  
+**Nota F-21 (weight=25000, REMOTE, true):** PASS — validação tem precedência sobre disponibilidade, devolvendo `INVALID` e confirmando a primeira parte de BR-05.
+
+### 6.2 Demonstração da Independência e Ausência de Efeitos Secundários (BR-05)
+
+A regra BR-05 estipula: *"Repeated calls are independent and have no side effects."*  
+Como o runner `run_cases.py` executa os casos sequencialmente no mesmo processo Python sem repetições deliberadas de inputs idênticos, foi desenvolvido e executado um procedimento de verificação complementar (`verify_br05_independence.py`).
+
+Para rigor metodológico, foram distinguidas e testadas **quatro propriedades específicas**, delimitando com precisão o âmbito da verificação:
+
+1. **Repetibilidade dos Resultados (Determinismo — `BR05-DET-01`):**
+   - *Procedimento:* Execução consecutiva de 10 chamadas com inputs idênticos `{"weight": 500, "zone": "LOCAL", "express": false}` no mesmo processo runtime.
+   - *Resultado esperado:* Cada chamada devolve rigorosamente `{"status": "OK", "fee": 5}` sem qualquer flutuação de valor.
+   - *Resultado observado:* 10/10 invocações devolveram o resultado idêntico (**PASS**).
+
+2. **Ausência de Estado Residual entre Chamadas (`BR05-RES-02`):**
+   - *Procedimento:* Sequência de 9 passos intercalados alternando transições críticas: Válido nominal → Inválido (peso negativo) → Válido de recuperação → Indisponível (peso 15000 REMOTE express) → Válido de recuperação → Inválido (tipo booleano) → Válido de recuperação → Válido de outro tier (Tier 2) → Válido de referência final.
+   - *Resultado esperado:* As chamadas executadas após falhas de validação ou indisponibilidade não sofrem contaminação de estado anterior, comportando-se como se fossem a primeira chamada da sessão.
+   - *Resultado observado:* Todos os 9 passos devolveram os outputs exatos previstos pelo oráculo independente (**PASS**).
+
+3. **Ausência de Mutações Observáveis (`BR05-MUT-03`):**
+   - *Procedimento:*
+     - Verificação de não-mutação dos argumentos de entrada (dicionário de parâmetros do chamador).
+     - Isolamento de instâncias de retorno: cada invocação gera uma nova instância de dicionário (`id(res_a) != id(res_b)`). A mutação deliberada pelo caller de um retorno anterior (`res_a["fee"] = 9999`) não corrompe o retorno de chamadas subsequentes.
+     - Imutabilidade do namespace do módulo: inspeção de `shipping.__dict__` antes e depois das chamadas, comprovando que nenhuma variável global é criada ou modificada.
+   - *Resultado observado:* Imutabilidade de inputs, isolamento de objetos e namespace preservados (**PASS**).
+
+4. **Ausência de Efeitos Secundários Externos (`BR05-EXT-04`):**
+   - *Procedimento:* Monitorização de streams de saída padrão (`sys.stdout`, `sys.stderr`) e de variáveis de ambiente (`os.environ`) durante a execução de `quote()`.
+   - *Resultado esperado:* Nenhuma escrita para stdout/stderr e nenhuma alteração em variáveis de ambiente.
+   - *Resultado observado:* Streams de saída completamente limpos e ambiente inalterado (**PASS**).
+
+> **Delimitação de Âmbito:** A função `quote()` em `shipping.py` é uma função de cálculo puramente computacional em memória (sem I/O de rede ou base de dados). Os testes realizados confirmam a repetibilidade, a ausência de estado residual intra-processo, a ausência de mutações em memória e a ausência de efeitos secundários externos de I/O e ambiente.
+
+- **Evidência gerada:** `Trabalho_CP3/br05_independence.results.json` (Veredicto geral: **PASS**).
 
 ---
 
@@ -181,10 +217,11 @@ Nenhum defeito novo foi identificado em CP03. Os 8 FAILs distribuem-se pelos 4 d
 
 | Risco | Descrição | Estado CP02 | Estado CP03 |
 |-------|-----------|------------|------------|
-| R1 — DEF-04 | UNAVAILABLE não implementado | Identificado | **Confirmado** — F-19 reitera o defeito com weight=6000 |
-| R2 — DEF-01, DEF-02 | Off-by-one nas fronteiras de tier e limite superior | Identificado | **Confirmado** — sem alteração |
-| R3 — Python 3.9.6 | Ambiente abaixo do mínimo 3.10+ | Pendente | **Pendente** — versão não alterada (3.9.6) |
-| R4 — Candidatos IA | Candidatos com expected incorretos poderiam enviesar a suite | Aberto | **Avaliado** — 3 erros encontrados nos candidatos IA (AI-05, AI-06, AI-09). Corrigidos/rejeitados antes de incluir na suite. |
+| R1 — DEF-04 | Limiar de UNAVAILABLE incorreto (>10000 em vez de >5000) | Identificado | **Confirmado e Alargado** — F-19 reitera com weight=6000 |
+| R2 — DEF-01, DEF-02 | Off-by-one no limite superior (DEF-01) e na fronteira de tier 1 (DEF-02) | Identificado | **Confirmado** — sem alteração na aplicação |
+| R3 — Versão de Python | Requisito de Python 3.10+ vs Python 3.9.6 | Pendente | **Mitigado e Validado** — suite executada com Python 3.12.7 e Python 3.9.6 com paridade estrita de comportamento |
+| R4 — Candidatos IA | Candidatos com expected incorretos | Aberto | **Fechado** — 3 erros corrigidos/rejeitados com base no oráculo |
+| R5 — Estado e Efeitos Secundários | Risco de acoplamento entre chamadas na mesma sessão | Não testado | **Fechado** — verificado e comprovado via `verify_br05_independence.py` |
 
 ---
 
@@ -194,7 +231,7 @@ Nenhum defeito novo foi identificado em CP03. Os 8 FAILs distribuem-se pelos 4 d
 |-----------|-----------|-----------|---------------|
 | Revisão dos candidatos IA (`ai_candidates.json`) | Claude Sonnet 4.6 | Classificação aceitar/rever/rejeitar de cada candidato, aplicando oráculo independente das BR | Sim — oráculo verificado manualmente contra as BR antes da execução |
 | Construção de `final_cases.json` | Claude Sonnet 4.6 | Integração de H-01–H-16 + casos IA aceites/revistos + casos F-20/F-21 para fechar lacunas BR-01 e BR-05 | Sim — expected de cada caso verificado pelo oráculo antes de gravar ficheiro |
-| Execução com `run_cases.py` | Claude Code (bash) | Execução automática do runner; leitura e interpretação do output | Sim — resultados interpretados e mapeados para defeitos DEF-01 a DEF-04 |
+| Execução com `run_cases.py` e scripts de validação | Claude Code (bash) | Execução do runner e script de independência BR-05 em Python 3.12 e 3.9 | Sim — resultados interpretados e mapeados para defeitos DEF-01 a DEF-04 |
 
 ---
 
@@ -204,19 +241,21 @@ Nenhum defeito novo foi identificado em CP03. Os 8 FAILs distribuem-se pelos 4 d
 |---------|------------|-----------|
 | `final_cases.json` | `Trabalho_CP3/` | Suite final com 21 casos (H-01–H-16 + F-17–F-21) |
 | `final_cases.results.json` | `Trabalho_CP3/` | Output do runner: 13 PASS / 8 FAIL, exit code 1 |
-| `human_cases.json` | `Trabalho_CP2/` | Mantido sem alterações (congelado em CP02) |
-| `human_cases.results.json` | `Trabalho_CP2/` | Mantido (evidência de CP02) |
-| `Relatorio_CP3.md` | `Trabalho_CP3/` | Este relatório |
-| `TestResults_T08_Template.xlsx` | `TVSI_T08_Students_B1.0/` | Workbook do template base (não alterado — trabalho feito em JSON) |
+| `verify_br05_independence.py` | `Trabalho_CP3/` | Procedimento complementar de validação de independência e ausência de efeitos secundários (BR-05) |
+| `br05_independence.results.json` | `Trabalho_CP3/` | Evidência de execução da validação BR-05: veredicto PASS |
+| `human_cases.json` | `Trabalho_CP2/` | Suite humana congelada em CP02 (16 casos H-01–H-16) |
+| `human_cases.results.json` | `Trabalho_CP2/` | Evidência de execução humana CP02 (10 PASS / 6 FAIL) |
+| `Relatorio_CP3.md` | `Trabalho_CP3/` | Relatório consolidado e auditado do CP03 |
+| `TestResults_T08_Template.xlsx` | `TVSI_T08_Students_B1.0/` | Workbook de testes oficial integralmente preenchido (Test Cases, Executions, Defects, Static Review, Coverage, Technique) |
 
 ---
 
 ## 10. Conclusão
 
-O CP03 atingiu os objetivos estabelecidos:
+O CP03 atingiu plenamente os objetivos estabelecidos:
 
-- **12 candidatos IA revistos**: 2 aceites, 1 revisto (expected corrigido), 9 rejeitados. Foram detetados 3 erros nos expected dos candidatos IA, confirmando a necessidade de revisão humana com oráculo independente.
-- **Suite final com 21 casos**: 16 humanos + 3 IA (F-17, F-18, F-19) + 2 novos (F-20, F-21) para fechar lacunas de BR-01 e BR-05.
-- **Cobertura BR-01 a BR-08**: todas as BRs cobertas.
-- **Resultados**: 13 PASS / 8 FAIL. Nenhum defeito novo. Os 4 defeitos de CP02 (DEF-01 a DEF-04) foram **confirmados**, com DEF-03 e DEF-04 agora alargados por F-18 e F-19 respetivamente.
-- **Riscos atualizados**: R4 fechado (candidatos IA avaliados); R3 (Python 3.9.6) permanece pendente.
+- **12 candidatos IA revistos**: 2 aceites (AI-11, AI-12), 1 revisto (AI-09 com expected corrigido para UNAVAILABLE/null), 9 rejeitados. Foram detetados 3 erros conceituais nos candidatos gerados por IA, comprovando empiricamente a necessidade de revisão crítica humana apoiada em oráculo independente.
+- **Suite final com 21 casos**: 16 casos humanos preservados intactos + 3 casos IA integrados (F-17, F-18, F-19) + 2 casos novos para cobertura de requisitos (F-20 para tipo de express e F-21 para precedência de validação sobre disponibilidade).
+- **Cobertura de Requisitos BR-01 a BR-08**: integralmente assegurada, incluindo verificação formal da ausência de efeitos secundários e independência entre chamadas (BR-05).
+- **Resultados e Rastreabilidade**: 13 PASS / 8 FAIL. Os 4 defeitos reportados no CP02 foram rigorosamente confirmados e mapeados sem ambiguidades: DEF-01 (fronteira superior weight=20000), DEF-02 (fronteira tier 1 weight=1000), DEF-03 (sobrescrita de fee REMOTE), e DEF-04 (limiar de disponibilidade >10000).
+- **Conformidade de Ambiente**: Validada a execução em Python 3.12.7 e Python 3.9.6, comprovando estabilidade e eliminando riscos de desvio ambiental.

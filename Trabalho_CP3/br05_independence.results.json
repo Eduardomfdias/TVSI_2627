@@ -1,0 +1,221 @@
+{
+  "build": "T08-B1.0",
+  "rule": "BR-05",
+  "python": "3.12.7 (v3.12.7:0b05ead877f, Sep 30 2024, 23:18:00) [Clang 13.0.0 (clang-1300.0.29.30)]",
+  "verification_scope": {
+    "tested_properties": [
+      "repeatability_and_determinism",
+      "absence_of_residual_state",
+      "absence_of_observable_mutations",
+      "absence_of_external_side_effects"
+    ],
+    "execution_model": "In-process sequential calls on single Python runtime"
+  },
+  "tests": [
+    {
+      "test_id": "BR05-DET-01",
+      "property": "Repetibilidade dos resultados (determinismo)",
+      "description": "10 invoca\u00e7\u00f5es consecutivas com inputs id\u00eanticos no mesmo processo",
+      "input": {
+        "weight": 500,
+        "zone": "LOCAL",
+        "express": false
+      },
+      "expected": {
+        "status": "OK",
+        "fee": 5
+      },
+      "all_iterations_identical": true,
+      "verdict": "PASS"
+    },
+    {
+      "test_id": "BR05-RES-02",
+      "property": "Aus\u00eancia de estado residual entre chamadas",
+      "description": "Sequ\u00eancia intercalada alternando casos v\u00e1lidos, inv\u00e1lidos e indispon\u00edveis",
+      "steps": [
+        {
+          "step": 1,
+          "name": "V\u00e1lido inicial",
+          "input": {
+            "weight": 500,
+            "zone": "LOCAL",
+            "express": false
+          },
+          "expected": {
+            "status": "OK",
+            "fee": 5
+          },
+          "actual": {
+            "status": "OK",
+            "fee": 5
+          },
+          "match": true
+        },
+        {
+          "step": 2,
+          "name": "Inv\u00e1lido (peso negativo)",
+          "input": {
+            "weight": -10,
+            "zone": "LOCAL",
+            "express": false
+          },
+          "expected": {
+            "status": "INVALID",
+            "fee": null
+          },
+          "actual": {
+            "status": "INVALID",
+            "fee": null
+          },
+          "match": true
+        },
+        {
+          "step": 3,
+          "name": "V\u00e1lido p\u00f3s-inv\u00e1lido",
+          "input": {
+            "weight": 500,
+            "zone": "LOCAL",
+            "express": false
+          },
+          "expected": {
+            "status": "OK",
+            "fee": 5
+          },
+          "actual": {
+            "status": "OK",
+            "fee": 5
+          },
+          "match": true
+        },
+        {
+          "step": 4,
+          "name": "Indispon\u00edvel (peso 15000 REMOTE express)",
+          "input": {
+            "weight": 15000,
+            "zone": "REMOTE",
+            "express": true
+          },
+          "expected": {
+            "status": "UNAVAILABLE",
+            "fee": null
+          },
+          "actual": {
+            "status": "UNAVAILABLE",
+            "fee": null
+          },
+          "match": true
+        },
+        {
+          "step": 5,
+          "name": "V\u00e1lido p\u00f3s-indispon\u00edvel",
+          "input": {
+            "weight": 500,
+            "zone": "LOCAL",
+            "express": false
+          },
+          "expected": {
+            "status": "OK",
+            "fee": 5
+          },
+          "actual": {
+            "status": "OK",
+            "fee": 5
+          },
+          "match": true
+        },
+        {
+          "step": 6,
+          "name": "Inv\u00e1lido (tipo bool no peso)",
+          "input": {
+            "weight": true,
+            "zone": "LOCAL",
+            "express": false
+          },
+          "expected": {
+            "status": "INVALID",
+            "fee": null
+          },
+          "actual": {
+            "status": "INVALID",
+            "fee": null
+          },
+          "match": true
+        },
+        {
+          "step": 7,
+          "name": "V\u00e1lido p\u00f3s-tipo-inv\u00e1lido",
+          "input": {
+            "weight": 500,
+            "zone": "LOCAL",
+            "express": false
+          },
+          "expected": {
+            "status": "OK",
+            "fee": 5
+          },
+          "actual": {
+            "status": "OK",
+            "fee": 5
+          },
+          "match": true
+        },
+        {
+          "step": 8,
+          "name": "V\u00e1lido diferente (Tier 2)",
+          "input": {
+            "weight": 1001,
+            "zone": "LOCAL",
+            "express": false
+          },
+          "expected": {
+            "status": "OK",
+            "fee": 8
+          },
+          "actual": {
+            "status": "OK",
+            "fee": 8
+          },
+          "match": true
+        },
+        {
+          "step": 9,
+          "name": "V\u00e1lido de refer\u00eancia final",
+          "input": {
+            "weight": 500,
+            "zone": "LOCAL",
+            "express": false
+          },
+          "expected": {
+            "status": "OK",
+            "fee": 5
+          },
+          "actual": {
+            "status": "OK",
+            "fee": 5
+          },
+          "match": true
+        }
+      ],
+      "all_steps_matched": true,
+      "verdict": "PASS"
+    },
+    {
+      "test_id": "BR05-MUT-03",
+      "property": "Aus\u00eancia de muta\u00e7\u00f5es observ\u00e1veis",
+      "description": "Verifica\u00e7\u00e3o de isolamento de mem\u00f3ria, imutabilidade de inputs e do namespace do m\u00f3dulo",
+      "inputs_unmutated": true,
+      "caller_mutation_isolated": true,
+      "module_namespace_unmutated": true,
+      "verdict": "PASS"
+    },
+    {
+      "test_id": "BR05-EXT-04",
+      "property": "Aus\u00eancia de efeitos secund\u00e1rios externos (I/O e ambiente)",
+      "description": "Verifica\u00e7\u00e3o de aus\u00eancia de emiss\u00e3o para stdout/stderr e integridade de vari\u00e1veis de ambiente",
+      "no_stdout_stderr_leakage": true,
+      "no_environment_variables_modified": true,
+      "verdict": "PASS"
+    }
+  ],
+  "overall_verdict": "PASS"
+}

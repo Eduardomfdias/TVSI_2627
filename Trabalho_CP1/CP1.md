@@ -1,7 +1,7 @@
 # CP01 — Charter e Ambiente
 
-**T08 · Desenho de Testes com Assistência de IA · Build T08-B1.0**
-Data: 2026-10-22
+**Universidade do Minho — Tecnologias e Verificação de Sistemas de Informação 2026/27 — T08 — Grupo 5**  
+**Build:** T08-B1.0 · **Data de realização:** 2026-10-22 (Data prevista de checkpoint: 2026-10-27)
 
 ---
 
@@ -10,13 +10,11 @@ Data: 2026-10-22
 | Nome | Função | Responsabilidades |
 | --- | --- | --- |
 | Eduardo Dias | Coordenador / Test Lead | Charter, configuração do ambiente, revisão estática, coordenação do relatório final |
-| [Nome 2] | Desenhador de Testes | Desenho humano de casos de teste, partições de equivalência, análise de fronteiras |
-| [Nome 3] | Revisão IA e Execução | Classificação de candidatos IA, execução das suites de testes, recolha de evidências |
-| [Nome 4] | Analista de Defeitos e Cobertura | Registo de defeitos, mapeamento de cobertura, análise de risco residual |
+| Rui Carneiro | Desenhador de Testes | Desenho humano de casos de teste, partições de equivalência, análise de fronteiras, verificação de fee |
+| Érica Moreira | Revisão IA e Execução | Classificação de candidatos IA, execução das suites de testes, recolha de evidências |
+| Beatriz Barbosa | Analista de Defeitos e Cobertura | Registo de defeitos, mapeamento de cobertura, análise de risco residual |
 
-> Ajustar as linhas ao tamanho real do grupo. As funções podem sobrepor-se em grupos mais pequenos.
-
-Divisão de trabalho para o CP01: Eduardo Dias — configuração do ambiente, charter, revisão estática.
+Divisão de trabalho para o CP01: Eduardo Dias — configuração do ambiente, charter, revisão estática. Validação e revisão conjunta pelos membros do grupo.
 
 ---
 

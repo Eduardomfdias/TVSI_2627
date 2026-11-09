@@ -4,7 +4,7 @@
 
 Projeto universitário de TVSI 2026/27 — Desenho de Testes com Assistência de IA (T08-B1.0).
 
-**Função sob teste:** `calculate_shipping(weight: int, zone: str, express: bool) -> {status, fee}`
+**Função sob teste:** `quote(weight, zone, express)` em `shipping.py` -> `{status, fee}`
 
 **Trabalhos:**
 - `Trabalho_CP1/` — Checkpoint 1 (análise inicial)
