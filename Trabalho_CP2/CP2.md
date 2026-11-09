@@ -271,4 +271,4 @@ O oráculo independente (secção 4) foi aplicado a cada FAIL para identificar a
 | DEF-03 | `fee = 4` | BR-03 | H-10, H-12, H-13 |
 | DEF-04 | `weight > 10000` | BR-04 | H-14 |
 
-**Nota:** H-13 é afetado por DEF-03 e DEF-04 em simultâneo (fee errada e threshold de disponibilidade errado). O veredicto FAIL é o mesmo independentemente da ordem de correção.
+**Nota de rastreabilidade:** H-13 (com `weight = 5000`) situa-se na fronteira em que o serviço expresso para REMOTE é nominalmente disponível (segundo BR-04: *"At exactly 5000 it is available"*). Por conseguinte, H-13 não deteta DEF-04 (tanto a especificação como a implementação tratam o peso 5000 como disponível), falhando exclusivamente devido a DEF-03 (sobrescrita da tarifa base em REMOTE). O defeito DEF-04 é detetado na fronteira estritamente superior por H-14 (`weight = 5001`).

@@ -26,6 +26,7 @@ O trabalho foi desenvolvido estritamente a partir de um **oráculo de teste inde
 ```text
 TVSI_2627/
 ├── README.md                                  # Documentação principal do repositório
+├── Relatorio_Consolidado.md                   # Relatório técnico consolidado do projeto (CP01, CP02 e CP03)
 ├── CLAUDE.md                                  # Guia de contexto do projeto
 ├── .gitignore                                 # Regras de exclusão Git (macOS, Python)
 ├── TVSI_T08_Students_B1.0/                    # Pacote baseline oficial fornecido pelo docente
@@ -91,6 +92,7 @@ TVSI_2627/
 
 | Artefacto | Localização | Descrição |
 |---|---|---|
+| **Relatório Consolidado** | `Relatorio_Consolidado.md` | Relatório consolidado integral do projeto (CP01, CP02 e CP03) |
 | **Relatório CP01** | `Trabalho_CP1/CP1.md` | Charter de teste, papéis e verificação de ambiente |
 | **Relatório CP02** | `Trabalho_CP2/Relatorio_CP2.md` | Oráculo, suite humana e primeiros 4 defeitos |
 | **Relatório CP03** | `Trabalho_CP3/Relatorio_CP3.md` | Revisão IA, suite de 21 casos, cobertura e riscos |
@@ -155,4 +157,4 @@ A baseline original fornecida pelo docente foi intencionalmente preservada sem m
 | **DEF-01** | BR-01 | `shipping.py:3` | Usa `>= 20000`, rejeitando indevidamente `weight = 20000` como `INVALID` | `weight = 20000` é o limite superior válido (deve retornar `OK`, fee=12) | H-07 |
 | **DEF-02** | BR-02 | `shipping.py:7` | Usa `< 1000` em vez de `<= 1000`, cobrando taxa de tier 2 (8€) a `weight = 1000` | `weight = 1000` pertence ao tier 1 (deve retornar `OK`, fee=5) | H-03 |
 | **DEF-03** | BR-03 | `shipping.py:14` | Atribuição simples `fee = 4` substitui a fee base para entregas `REMOTE` | Suplemento `REMOTE` deve acumular sobre a fee base (`fee += 4`) | H-10, H-12, H-13, F-18 |
-| **DEF-04** | BR-04 | `shipping.py:5` | Limiar de indisponibilidade `REMOTE + express` usa `> 10000` | Deve retornar `UNAVAILABLE` para pesos estritamente superiores a 5000 g | H-14, F-19 (e threshold de H-13) |
+| **DEF-04** | BR-04 | `shipping.py:5` | Limiar de indisponibilidade `REMOTE + express` usa `> 10000` | Deve retornar `UNAVAILABLE` para pesos estritamente superiores a 5000 g | H-14, F-19 |

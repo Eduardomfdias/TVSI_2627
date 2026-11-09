@@ -154,7 +154,7 @@ Foram criados dois casos novos:
 | H-10 | ❌ FAIL | OK | **4** (esperado 9) | DEF-03 |
 | H-11 | ✅ PASS | OK | 11 | — |
 | H-12 | ❌ FAIL | OK | **10** (esperado 15) | DEF-03 |
-| H-13 | ❌ FAIL | OK | **10** (esperado 18) | DEF-03 (e limiar DEF-04) |
+| H-13 | ❌ FAIL | OK | **10** (esperado 18) | DEF-03 |
 | H-14 | ❌ FAIL | **OK/10** (esperado UNAVAILABLE) | 10 | DEF-04 |
 | H-15 | ✅ PASS | INVALID | null | — |
 | H-16 | ✅ PASS | INVALID | null | — |
