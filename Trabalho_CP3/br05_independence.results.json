@@ -7,9 +7,10 @@
       "repeatability_and_determinism",
       "absence_of_residual_state",
       "absence_of_observable_mutations",
-      "absence_of_external_side_effects"
+      "absence_of_delimited_external_side_effects"
     ],
-    "execution_model": "In-process sequential calls on single Python runtime"
+    "execution_model": "In-process sequential calls on single Python runtime",
+    "filesystem_scope_delimitation": "Monitors direct files in app_dir (name, size, mtime); does not scan recursive subdirectories or the wider filesystem."
   },
   "tests": [
     {
@@ -210,11 +211,11 @@
     },
     {
       "test_id": "BR05-EXT-04",
-      "property": "Aus\u00eancia de efeitos secund\u00e1rios externos (I/O, ambiente e sistema de ficheiros)",
-      "description": "Verifica\u00e7\u00e3o de aus\u00eancia de emiss\u00e3o para stdout/stderr, integridade de vari\u00e1veis de ambiente e aus\u00eancia de muta\u00e7\u00e3o de ficheiros",
+      "property": "Aus\u00eancia de efeitos secund\u00e1rios externos delimitados (I/O, ambiente e ficheiros diretos de app/)",
+      "description": "Verifica\u00e7\u00e3o de aus\u00eancia de emiss\u00e3o para stdout/stderr, integridade de vari\u00e1veis de ambiente e aus\u00eancia de altera\u00e7\u00f5es observ\u00e1veis nos ficheiros diretamente existentes em app_dir (nome, tamanho e timestamp)",
       "no_stdout_stderr_leakage": true,
       "no_environment_variables_modified": true,
-      "no_filesystem_modified": true,
+      "no_direct_app_files_modified": true,
       "verdict": "PASS"
     }
   ],

@@ -30,7 +30,8 @@
 | AMB-03 | BR-04 diz "above 5000 g". O limiar é exclusivo (>5000) ou inclusivo (≥5000)? | Exclusivo: `weight > 5000` com `REMOTE + express` → `UNAVAILABLE`; `weight = 5000` → disponível, fee = 18 €. |
 | AMB-04 | BR-01 não especifica o comportamento para `weight = None` ou `weight = string`. | Sim: qualquer valor que não seja `int` (excluindo `bool`) → `INVALID`/`null`. |
 
-> **Nota metodológica (Resolução para CP03):** Na ausência de esclarecimento formal adicional por parte do corpo docente, o grupo adotou a interpretação estrita e normativa decorrente das regras BR-01 ("excluding booleans" e "express an actual boolean") e BR-05 (precedência de validação): qualquer `bool` em `weight` e qualquer valor não-booleano em `express` é tratado por tipo (`isinstance`) como `INVALID`. Esta interpretação foi subsequentemente codificada, testada e confirmada na suite final do CP03 através dos casos `F-20` e `F-21`.
+> **Nota (Estado histórico no CP02):** AMB-01 e AMB-02 aguardam clarificação do professor antes de CP03.
+> *(Ver nota de atualização pós-CP03 na Secção 10 sobre a decisão metodológica autónoma adotada pelo grupo).*
 
 ---
 
@@ -225,6 +226,17 @@ Foram identificados **4 defeitos distintos** comparando os resultados da execuç
 3. Abrir `ai_candidates.json` (apenas após freeze confirmado do human — já feito)
 4. Classificar cada candidato AI: **accept / revise / reject** com justificação contra as BRs
 5. Comparar a suite AI com a suite humana e analisar cobertura
+
+---
+
+## 10. Nota de Atualização Posterior (Resolução documentada no CP03)
+
+O registo deste relatório reflete o estado histórico do projeto à data de entrega do **CP02 (28–30 de outubro de 2026)**. No âmbito dos trabalhos do **CP03 (08–10 de novembro de 2026)**, os pontos pendentes foram resolvidos e documentados com evidências no repositório:
+
+1. **Ambiente Python (Risco R4):** Mitigado através da validação da suite em **Python 3.12.7** (conforme o requisito de Python 3.10+), mantendo em simultâneo os resultados na versão **Python 3.9.6** (baseline). Ambas as versões demonstraram paridade estrita de comportamento (13 PASS / 8 FAIL).
+2. **Ambiguidades AMB-01 e AMB-02:** Na ausência de esclarecimento formal ou resposta escrita por parte do corpo docente, o grupo adotou uma **decisão metodológica autónoma** baseada na interpretação estrita das regras BR-01 e BR-05 (validação por tipo com rejeição de booleanos como `weight` e de não-booleanos como `express`). Esta resolução foi codificada e empiricamente validada na suite final através dos casos `F-20` e `F-21`.
+3. **Distribuição de Trabalho (Érica Moreira e Beatriz Barbosa):** A revisão dos 12 candidatos de IA, a construção da suite final de 21 casos e a matriz de cobertura dos requisitos BR-01 a BR-08 foram integralmente concluídas no CP03.
+4. **Risco R5 (Candidatos IA com expected errados):** Confirmado e mitigado no CP03 através da identificação de 3 erros conceituais nos candidatos de IA (AI-05, AI-06 e AI-09), corrigidos com recurso ao oráculo independente.
 
 ---
 

@@ -16,10 +16,12 @@ This verification script tests 4 distinct, well-defined properties:
    - Return dictionary instances are distinct objects in memory.
    - Mutating a previous return dictionary does not affect future return values.
    - Module-level attributes and global state in shipping.py remain strictly immutable.
-4. Absence of External Side Effects (BR05-EXT-04):
+4. Absence of Delimited External Side Effects (BR05-EXT-04):
    - No output emitted to sys.stdout / sys.stderr during function execution.
    - No changes to environment variables (os.environ).
-   - No filesystem modifications (working directory files unchanged).
+   - No observable changes to files directly located in app_dir (name, size, and timestamp).
+     (Delimited scope: monitors directly existing files in app_dir; does not scan recursive
+      subdirectories, full file content, or the wider host filesystem).
 """
 
 import sys, os, io, json, pathlib
@@ -30,7 +32,7 @@ sys.path.insert(0, str(app_dir))
 
 import shipping
 
-def verify_br05():
+def verify_br05(out_path=None):
     report = {
         "build": "T08-B1.0",
         "rule": "BR-05",
@@ -40,9 +42,10 @@ def verify_br05():
                 "repeatability_and_determinism",
                 "absence_of_residual_state",
                 "absence_of_observable_mutations",
-                "absence_of_external_side_effects"
+                "absence_of_delimited_external_side_effects"
             ],
-            "execution_model": "In-process sequential calls on single Python runtime"
+            "execution_model": "In-process sequential calls on single Python runtime",
+            "filesystem_scope_delimitation": "Monitors direct files in app_dir (name, size, mtime); does not scan recursive subdirectories or the wider filesystem."
         },
         "tests": []
     }
@@ -176,11 +179,11 @@ def verify_br05():
     ext_pass = no_io_output and no_env_change and no_fs_change
     report["tests"].append({
         "test_id": "BR05-EXT-04",
-        "property": "Ausência de efeitos secundários externos (I/O, ambiente e sistema de ficheiros)",
-        "description": "Verificação de ausência de emissão para stdout/stderr, integridade de variáveis de ambiente e ausência de mutação de ficheiros",
+        "property": "Ausência de efeitos secundários externos delimitados (I/O, ambiente e ficheiros diretos de app/)",
+        "description": "Verificação de ausência de emissão para stdout/stderr, integridade de variáveis de ambiente e ausência de alterações observáveis nos ficheiros diretamente existentes em app_dir (nome, tamanho e timestamp)",
         "no_stdout_stderr_leakage": no_io_output,
         "no_environment_variables_modified": no_env_change,
-        "no_filesystem_modified": no_fs_change,
+        "no_direct_app_files_modified": no_fs_change,
         "verdict": "PASS" if ext_pass else "FAIL"
     })
 
@@ -188,7 +191,14 @@ def verify_br05():
     overall = "PASS" if all(t["verdict"] == "PASS" for t in report["tests"]) else "FAIL"
     report["overall_verdict"] = overall
 
-    out_file = pathlib.Path(__file__).resolve().parent / "br05_independence.results.json"
+    if out_path is None:
+        if len(sys.argv) > 1:
+            out_file = pathlib.Path(sys.argv[1]).resolve()
+        else:
+            out_file = pathlib.Path(__file__).resolve().parent / "br05_independence.results.json"
+    else:
+        out_file = pathlib.Path(out_path).resolve()
+
     out_file.write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(f"BR-05 Multi-Property Verification finished with verdict: {overall}")
     print(f"Results written to: {out_file}")

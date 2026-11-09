@@ -175,9 +175,9 @@ Os expected results são derivados exclusivamente de BR-01–BR-05. A implementa
 - Érica Moreira: pendente (execução e revisão AI — CP03)
 - Beatriz Barbosa: pendente (análise de cobertura — CP03)
 
-**Por resolver:**
+**Por resolver (Estado histórico em CP02):**
 
-- Resolução metodológica de AMB-01/AMB-02: na ausência de esclarecimento formal do professor, adotada a interpretação estrita de tipo (BR-01/BR-05), validada no CP03 via F-20 e F-21
+- Clarificação AMB-01/AMB-02 com o professor (comportamento de booleans como weight e express)
 - Upgrade Python 3.9.6 → 3.10+ antes de CP03 (10 nov)
 
 **Próximas ações (CP03 — 10 nov):**
@@ -186,6 +186,13 @@ Os expected results são derivados exclusivamente de BR-01–BR-05. A implementa
 2. Executar `human_cases.json` com o runner; registar resultados e evidências
 3. Abrir `ai_candidates.json` (apenas após freeze confirmado do human)
 4. Classificar cada candidato AI: accept / revise / reject com justificação contra as BRs
+
+> **📌 Nota de Atualização Posterior (Resolução documentada no CP03):**  
+> O registo acima reflete o estado histórico do projeto à data de entrega do **CP02**. No âmbito do **CP03**, os pontos pendentes foram resolvidos:
+> 1. **Ambiente Python:** Validação da suite em **Python 3.12.7** (requisito 3.10+), mantendo em simultâneo a baseline em **Python 3.9.6**, com resultados estritamente idênticos (13 PASS / 8 FAIL).
+> 2. **AMB-01 e AMB-02:** Na ausência de esclarecimento formal docente, o grupo adotou uma **decisão metodológica autónoma** de validação estrita por tipo (`isinstance`), confirmada pelos casos `F-20` e `F-21`.
+> 3. **Tarefas de Érica Moreira e Beatriz Barbosa:** Concluídas no CP03 (revisão dos candidatos IA, suite final de 21 casos e matriz de cobertura BR-01 a BR-08).
+> 4. **Risco R5:** Mitigado pela deteção e correção de 3 erros conceituais nos candidatos IA através do oráculo independente.
 
 ---
 

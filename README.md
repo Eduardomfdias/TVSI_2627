@@ -55,7 +55,8 @@ TVSI_2627/
     ├── final_cases.results.json               # Evidência de execução em Python 3.9.6 (13 PASS / 8 FAIL)
     ├── final_cases.results.py312.json         # Evidência de execução em Python 3.12.7 (13 PASS / 8 FAIL)
     ├── verify_br05_independence.py            # Procedimento complementar de validação da regra BR-05
-    └── br05_independence.results.json         # Evidência da independência e ausência de efeitos secundários (PASS)
+    ├── br05_independence.results.json         # Evidência BR-05 em Python 3.9.6 (PASS)
+    └── br05_independence.py312.json          # Evidência BR-05 em Python 3.12.7 (PASS)
 ```
 
 ---
@@ -99,7 +100,8 @@ TVSI_2627/
 | **Suite Final Combinada** | `Trabalho_CP3/final_cases.json` | 21 casos finais (H-01 a H-16 + F-17 a F-21) |
 | **Resultados Finais (Py 3.9)** | `Trabalho_CP3/final_cases.results.json` | 13 PASS / 8 FAIL (baseline) |
 | **Resultados Finais (Py 3.12)** | `Trabalho_CP3/final_cases.results.py312.json` | 13 PASS / 8 FAIL (requisito 3.10+) |
-| **Validação BR-05** | `Trabalho_CP3/br05_independence.results.json` | Evidência de independência entre chamadas (PASS) |
+| **Validação BR-05 (Py 3.9)** | `Trabalho_CP3/br05_independence.results.json` | Evidência BR-05 em Python 3.9.6 (PASS) |
+| **Validação BR-05 (Py 3.12)** | `Trabalho_CP3/br05_independence.py312.json` | Evidência BR-05 em Python 3.12.7 (PASS) |
 | **Workbook Oficial** | `TVSI_T08_Students_B1.0/TestResults_T08_Template.xlsx` | Workbook Excel oficial com 6 separadores completos |
 
 ---

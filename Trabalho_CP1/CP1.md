@@ -89,7 +89,7 @@ A função calcula uma taxa de envio com base no peso, na zona de entrega e na o
 | --- | --- |
 | Sistema Operativo | macOS (Apple Silicon) |
 | Versão Python | 3.9.6 (Clang 21.0.0) — abaixo do requisito declarado de 3.10+ |
-| Aplicação de folha de cálculo | Microsoft Excel (compatível com LibreOffice Calc e formato OpenXML .xlsx) |
+| Aplicação de folha de cálculo | Folha de cálculo compatível com o formato OpenXML (.xlsx) |
 | Build em teste | T08-B1.0 |
 | Runner | `run_cases.py` (fornecido, não modificado) |
 | Baseline preservado | Sim — pacote original mantido sem alterações |

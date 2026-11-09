@@ -202,14 +202,21 @@ Para rigor metodológico, foram distinguidas e testadas **quatro propriedades es
      - Imutabilidade do namespace do módulo: inspeção de `shipping.__dict__` antes e depois das chamadas, comprovando que nenhuma variável global é criada ou modificada.
    - *Resultado observado:* Imutabilidade de inputs, isolamento de objetos e namespace preservados (**PASS**).
 
-4. **Ausência de Efeitos Secundários Externos (`BR05-EXT-04`):**
-   - *Procedimento:* Monitorização de streams de saída padrão (`sys.stdout`, `sys.stderr`), variáveis de ambiente (`os.environ`) e snapshot do sistema de ficheiros (ficheiros, tamanhos e timestamps na diretoria da aplicação) antes e após as invocações de `quote()`.
-   - *Resultado esperado:* Nenhuma escrita para stdout/stderr, nenhuma alteração em variáveis de ambiente e nenhuma criação, remoção ou mutação de ficheiros no sistema de ficheiros.
-   - *Resultado observado:* Streams de saída completamente limpos, ambiente inalterado e sistema de ficheiros estritamente intacto (**PASS**).
+4. **Ausência de Efeitos Secundários Externos Delimitados (`BR05-EXT-04`):**
+   - *Procedimento:* Monitorização de streams de saída padrão (`sys.stdout`, `sys.stderr`), variáveis de ambiente (`os.environ`) e snapshot dos ficheiros diretamente existentes na diretoria da aplicação (`app_dir`), comparando nome, tamanho e timestamp de modificação (`st_mtime_ns`) antes e após as invocações de `quote()`.
+   - *Resultado esperado:* Nenhuma escrita para stdout/stderr, nenhuma alteração em variáveis de ambiente e nenhuma alteração observável nos ficheiros diretamente monitorizados em `app_dir`.
+   - *Resultado observado:* Streams de saída completamente limpos, ambiente inalterado e ficheiros diretamente monitorizados em `app_dir` inalterados (**PASS**).
 
-> **Delimitação de Âmbito:** A função `quote()` em `shipping.py` é uma função de cálculo puramente computacional em memória (sem I/O de rede ou base de dados). Os testes realizados confirmam a repetibilidade, a ausência de estado residual intra-processo, a ausência de mutações em memória e a ausência de efeitos secundários externos de I/O, ambiente e sistema de ficheiros.
+> **Delimitação Rigorosa de Âmbito:** A função `quote()` em `shipping.py` é uma função de cálculo puramente computacional em memória (sem I/O de rede ou base de dados). A verificação realizada observa especificamente:
+> 1. Ausência de saída em `sys.stdout` e `sys.stderr`;
+> 2. Ausência de alterações nas variáveis de ambiente (`os.environ`);
+> 3. Ausência de alterações observáveis nos ficheiros diretamente existentes em `app_dir` (comparando nome, tamanho e timestamp `st_mtime_ns`).
+> 
+> *Nota de delimitação:* Este teste não realiza varrimento recursivo de subdiretorias, inspeção de conteúdo integral bit a bit, nem monitorização de todo o sistema de ficheiros do sistema operativo. Os resultados obtidos confirmam a repetibilidade, a ausência de estado residual intra-processo, a ausência de mutações em memória e a ausência de efeitos secundários externos nas áreas expressamente delimitadas e testadas.
 
-- **Evidência gerada:** `Trabalho_CP3/br05_independence.results.json` (Veredicto geral: **PASS**).
+- **Evidências geradas:**
+  - `Trabalho_CP3/br05_independence.results.json` — Execução em Python 3.9.6 (baseline): veredicto **PASS**.
+  - `Trabalho_CP3/br05_independence.py312.json` — Execução em Python 3.12.7 (conformidade 3.10+): veredicto **PASS**.
 
 ---
 
@@ -242,8 +249,9 @@ Para rigor metodológico, foram distinguidas e testadas **quatro propriedades es
 | `final_cases.json` | `Trabalho_CP3/` | Suite final com 21 casos (H-01–H-16 + F-17–F-21) |
 | `final_cases.results.json` | `Trabalho_CP3/` | Output do runner em Python 3.9.6 (baseline): 13 PASS / 8 FAIL, exit code 1 |
 | `final_cases.results.py312.json` | `Trabalho_CP3/` | Output do runner em Python 3.12.7 (requisito 3.10+): 13 PASS / 8 FAIL, exit code 1 |
-| `verify_br05_independence.py` | `Trabalho_CP3/` | Procedimento complementar de validação de independência e ausência de efeitos secundários (BR-05) |
-| `br05_independence.results.json` | `Trabalho_CP3/` | Evidência de execução da validação BR-05: veredicto PASS |
+| `verify_br05_independence.py` | `Trabalho_CP3/` | Procedimento complementar de validação de independência e efeitos secundários delimitados (BR-05) |
+| `br05_independence.results.json` | `Trabalho_CP3/` | Evidência de execução da validação BR-05 em Python 3.9.6: veredicto PASS |
+| `br05_independence.py312.json` | `Trabalho_CP3/` | Evidência de execução da validação BR-05 em Python 3.12.7: veredicto PASS |
 | `human_cases.json` | `Trabalho_CP2/` | Suite humana congelada em CP02 (16 casos H-01–H-16) |
 | `human_cases.results.json` | `Trabalho_CP2/` | Evidência de execução humana CP02 (10 PASS / 6 FAIL) |
 | `Relatorio_CP3.md` | `Trabalho_CP3/` | Relatório consolidado e auditado do CP03 |
