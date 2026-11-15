@@ -1,0 +1,8 @@
+expected == oráculo BR: True (21 casos)
+H-01..H-16 idênticos a CP2: True
+py312: Python 3.12.16 | 13 PASS / 8 FAIL | FAILs: H-03, H-07, H-10, H-12, H-13, H-14, F-18, F-19
+py39: Python 3.9.6 | 13 PASS / 8 FAIL | FAILs: H-03, H-07, H-10, H-12, H-13, H-14, F-18, F-19
+Paridade com execução anterior (py312): True
+Paridade py312 vs py39: True
+BR-05 py312: PASS
+BR-05 py39: PASS

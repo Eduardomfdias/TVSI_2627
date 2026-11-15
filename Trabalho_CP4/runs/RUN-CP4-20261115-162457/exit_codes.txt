@@ -1,0 +1,4 @@
+py312 exit=1
+py39 exit=1
+br05 py312 exit=0
+br05 py39 exit=0
