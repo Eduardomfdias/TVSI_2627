@@ -1,0 +1,44 @@
+{
+  "test_suite": "Runner Robustness & Exception Handling (Exit Code 2 Verification)",
+  "execution_date": "2026-11-16",
+  "tester": "Grupo 5",
+  "build": "T08-B1.0",
+  "results": [
+    {
+      "scenario": "Runner invoked without arguments",
+      "expected_exit_code": 2,
+      "actual_exit_code": 2,
+      "stdout": "Usage: python run_cases.py cases.json",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Runner invoked with non-existent file",
+      "expected_exit_code": 2,
+      "actual_exit_code": 2,
+      "stdout": "CASE FILE ERROR: [Errno 2] No such file or directory: 'non_existent_file.json'",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Runner invoked with malformed JSON syntax",
+      "expected_exit_code": 2,
+      "actual_exit_code": 2,
+      "stdout": "CASE FILE ERROR: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Runner invoked with duplicate case IDs",
+      "expected_exit_code": 2,
+      "actual_exit_code": 2,
+      "stdout": "CASE FILE ERROR: duplicate case IDs",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Runner invoked with non-list JSON root",
+      "expected_exit_code": 2,
+      "actual_exit_code": 2,
+      "stdout": "CASE FILE ERROR: cases must be a JSON list",
+      "verdict": "PASS"
+    }
+  ],
+  "overall_verdict": "PASS"
+}

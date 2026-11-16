@@ -1,245 +1,100 @@
-# Relatório de Auditoria Final e Verificação de Entregáveis — TVSI_2627
+# Relatório de Auditoria Final e Verificação de Entregáveis — CP04
+## TVSI_2627 — UMinho | Grupo 5
 
-**Data da Auditoria:** 09 de Novembro de 2026  
-**Auditor Técnico:** Quality Assurance & Senior Test Engineering Auditor  
+**Data da Auditoria:** 16 de Novembro de 2026  
+**Auditor Técnico:** Senior QA Engineer, Test Manager & Technical Auditor  
 **Instituição:** Universidade do Minho — Mestrado em Engenharia Informática  
 **Unidade Curricular:** Tecnologias e Verificação de Sistemas de Informação (TVSI 2026/27)  
 **Trabalho:** T08 — Desenho de Testes com Assistência de IA  
 **Grupo:** Grupo 5 (*Eduardo Dias, Rui Carneiro, Érica Moreira, Beatriz Barbosa*)  
 **Repositório Oficial:** `https://github.com/Eduardomfdias/TVSI_2627.git` (Ramo `main`)  
-**Ficheiro do Relatório:** `AUDITORIA_FINAL_ENTREGA.md`
+**Ficheiro do Relatório:** `AUDITORIA_FINAL_ENTREGA.md`  
+**Pacote Oficial de Entrega:** `TVSI_T08_Grupo5_CP04.zip`
 
 ---
 
-## 1. Identificação da Auditoria
+## 1. Identificação e Âmbito da Auditoria do CP04
 
-A presente intervenção consubstancia uma auditoria técnica exaustiva e independente sobre o repositório `TVSI_2627`, com o objetivo de assegurar que todos os artefactos, entregáveis, scripts, suites de teste, evidências e folhas de cálculo respeitam os requisitos académicos e profissionais da unidade curricular.
+A presente intervenção consubstancia uma auditoria técnica independente, profunda e exaustiva sobre o repositório `TVSI_2627`, com o objetivo de executar o **fecho integral do Checkpoint 4 (CP04)**, assegurando a resolução de todas as incongruências identificadas, a validação de todas as suites de testes, a integridade do livro de cálculo oficial e a preparação de um pacote de entrega final tecnicamente irrepreensível, verificável e academicamente defensável.
 
-A auditoria abrangeu os três primeiros checkpoints do plano de trabalho:
-- **CP01:** Project Charter, organização do grupo, riscos, e verificação de ambiente.
-- **CP02:** Revisão estática, modelação do oráculo independente, congelamento da suite humana (16 casos: `H-01` a `H-16`) e identificação preliminar dos defeitos `DEF-01` a `DEF-04`.
-- **CP03:** Auditoria e revisão crítica dos 12 candidatos de IA, construção da suite final combinada (21 casos), execução dual em interpretadores Python (3.9.6 e 3.12.7), validação formal da regra de independência BR-05, preenchimento integral do workbook oficial e consolidação documental.
-
----
-
-## 2. Commit e Estado Inicial
-
-- **Ramo Ativo:** `main`
-- **Commit Inicial da Intervenção:** `fa938fe` (*fix(audit): correct DEF-04/H-13 defect traceability, update Excel workbook, and add consolidated report*)
-- **Estado Inicial da Working Tree:**
-  - Repositório sincronizado com `origin/main`.
-  - Ausência de ficheiros corrompidos ou com conflito de fusão.
-  - Baseline docente `TVSI_T08_Students_B1.0/` preservada sem adulterações de código (`shipping.py` intacto).
+O âmbito cobriu de forma cumulativa e harmonizada os quatro checkpoints da U.C.:
+- **CP01:** Project Charter, papéis dos elementos, análise de riscos e verificação técnica de ambiente com o teste de fumo `H-ENV`.
+- **CP02:** Revisão estática, modelação do oráculo independente a partir das regras normativas BR-01 a BR-08, e congelamento formal da suite humana (16 casos: `H-01` a `H-16`) a 30 de outubro de 2026 (commit `54ec4d3`).
+- **CP03:** Auditoria crítica dos 12 candidatos de IA, aceitação de `AI-11` (`F-17`) e `AI-12` (`F-18`), revisão de `AI-09` (`F-19`), identificação de falsos positivos na IA, primeira suite combinada e demonstração formal de BR-05.
+- **CP04:** Execução sistemática de testes, gestão de evidências de execução reproduzíveis em múltiplos interpretadores Python (3.9 e 3.12), auditoria profunda do workbook oficial com introdução de coluna autónoma de requisitos e separação de resultados esperados e observados, expansão da suite final para 30 casos (20 PASS / 10 FAIL), rastreabilidade rigorosa dos 4 defeitos de software (`DEF-01` a `DEF-04`) e dos 3 problemas de expectativas de IA (`DATA-01` a `DATA-03`), automação da auditoria (`Trabalho_CP4/audit_cp4.py`) e geração do arquivo de submissão do grupo (`TVSI_T08_Grupo5_CP04.zip`).
 
 ---
 
-## 3. Inventário dos Entregáveis
+## 2. Incongruências Identificadas e Resoluções Aplicadas
 
-| # | Entregável / Ficheiro | Categoria | Finalidade | Estado de Conformidade |
-|---|---|---|---|:---:|
-| 1 | `Relatorio_Consolidado.md` | Relatório Principal | Documento consolidado e completo da submissão académica | **Completo e Validado** |
-| 2 | `README.md` | Documentação Geral | Visão global do repositório, mapa de ficheiros e guias | **Completo e Validado** |
-| 3 | `CLAUDE.md` | Engenharia / Contexto | Diretrizes operacionais e convenções do projeto | **Completo e Validado** |
-| 4 | `TVSI_T08_Students_B1.0/TestResults_T08_Template.xlsx` | Workbook Oficial | 6 folhas preenchidas, 51 ligações de cobertura, 0 erros | **Auditado e Íntegro** |
-| 5 | `Trabalho_CP1/TestResults_T08_Template.xlsx` | Cópia de Trabalho | Workbook sincronizado com a versão oficial | **Auditado e Íntegro** |
-| 6 | `Trabalho_CP1/CP1.md` | Relatório CP01 | Charter de teste, papéis, riscos e teste H-ENV | **Completo e Validado** |
-| 7 | `Trabalho_CP2/CP2.md` | Relatório CP02 | Modelação do oráculo, partições e fronteiras | **Completo e Validado** |
-| 8 | `Trabalho_CP2/Relatorio_CP2.md` | Relatório CP02 | Resultados da suite humana e caracterização de defeitos | **Completo e Validado** |
-| 9 | `Trabalho_CP2/human_cases.json` | Suite Humana Congelada | 16 casos (`H-01` a `H-16`) congelados no commit `54ec4d3` | **100% Intacto (Frozen)** |
-| 10 | `Trabalho_CP2/human_cases.results.json` | Evidência CP02 | Resultado da suite humana (10 PASS / 6 FAIL) em Py 3.9 | **Preservado e Validado** |
-| 11 | `Trabalho_CP3/CP3.md` | Documentação CP03 | Planeamento da revisão crítica dos candidatos de IA | **Completo e Validado** |
-| 12 | `Trabalho_CP3/Relatorio_CP3.md` | Relatório CP03 | Relatório do CP03, suite final, cobertura e BR-05 | **Completo e Validado** |
-| 13 | `Trabalho_CP3/final_cases.json` | Suite Final Combinada | 21 casos de teste (`H-01..16` + `F-17..21`) | **Completo e Validado** |
-| 14 | `Trabalho_CP3/final_cases.results.json` | Evidência CP03 (Py 3.9) | Execução oficial da suite final em Python 3.9.6 | **13 PASS / 8 FAIL** |
-| 15 | `Trabalho_CP3/final_cases.results.py312.json` | Evidência CP03 (Py 3.12) | Execução oficial da suite final em Python 3.12.7 | **13 PASS / 8 FAIL** |
-| 16 | `Trabalho_CP3/verify_br05_independence.py` | Automação QA | Procedimento de teste computacional de BR-05 | **Auditado e Validado** |
-| 17 | `Trabalho_CP3/br05_independence.results.json` | Evidência BR-05 (Py 3.9) | Teste das 4 propriedades BR-05 em Python 3.9.6 | **PASS (4/4)** |
-| 18 | `Trabalho_CP3/br05_independence.py312.json` | Evidência BR-05 (Py 3.12) | Teste das 4 propriedades BR-05 em Python 3.12.7 | **PASS (4/4)** |
-| 19 | `Trabalho_CP3/audit_project.py` | Automação QA | Script de auditoria automatizada (29 verificações) | **PASS (29/29)** |
-| 20 | `TVSI_T08_Students_B1.0/AI_PROVENANCE.md` | Declaração de IA | Proveniência do fixture e cronologia de congelamento | **Completo e Validado** |
-| 21 | `TVSI_T08_Grupo5_CP03.zip` | Arquivo de Submissão | Pacote completo com 28 ficheiros essenciais | **111.231 B (Íntegro)** |
-| 22 | `MANIFEST_ENTREGA.md` | Manifesto de Entrega | Registo com tamanhos, funções e hashes SHA-256 | **Completo e Validado** |
+| # | Incongruência Inicial | Resolução Técnica de Auditoria | Impacto / Estado |
+|---|---|---|---|
+| **1** | **Discrepância no Plano CP04:** O plano apresentava referências obsoletas a 21 testes humanos ou `H-01` a `H-20` como congelados. | O plano `Trabalho_CP4/CP4.md` foi reescrito para harmonizar com a suite efetivamente congelada em CP02: 16 casos (`H-01` a `H-16`) mais o teste técnico `H-ENV` de ambiente, totalizando 17 entradas, sem adições retroativas. | **Resolvido e Alinhado** |
+| **2** | **Ausência de Coluna de Requisitos em Executions:** A folha `Executions` do workbook oficial não dispunha de coluna autónoma `Requirement ID(s)`. | Adicionada a coluna autónoma `Requirement ID(s)` (coluna C), associando com rigor cada execução aos requisitos normativos exercitados (R01 a R08). | **Resolvido e Conforme** |
+| **3** | **Separação de Resultados Esperados e Observados:** Necessidade de clareza absoluta entre oráculo independente e saídas reais. | Reestruturadas as colunas da folha `Executions` para separar formalmente `Expected outputs (independently derived)` de `Actual outputs`, preservando o veredicto na coluna G para manter 100% íntegras as fórmulas de cobertura. | **Resolvido e Conforme** |
+| **4** | **Histórico de Execuções Incompleto:** O workbook continha apenas a suite combinada, omitindo o histórico de execuções humanas de CP02 e dos candidatos de IA no runner. | Consolidado o registo histórico integral com 68 execuções: CP01 (Smoke H-ENV), CP02 (Humana congelada 16 casos), CP03 (Candidatos IA no runner original), CP04 (Suite final de 30 casos), BR-05 (4 propriedades) e Robustez do Runner (5 cenários). | **Resolvido e Rastreável** |
+| **5** | **Falsos PASS na Suite de IA Mascarando Defeitos:** O runner reportava 10 PASS e 2 FAIL sobre `ai_candidates.json` devido a expectativas incorretas em `AI-05` e `AI-06`. | Preservados os resultados históricos do runner original (10 PASS / 2 FAIL) sem manipulação forçada, explicitando nas observações e na folha `Defects` que se tratam de erros de dados de teste da IA (`DATA-01` e `DATA-02`) e não de conformidade do software. | **Resolvido e Transparente** |
+| **6** | **Discriminação de Testers:** Os registos apresentavam identificação genérica de ferramentas. | Atualizada a identificação de testers com discriminação explícita de papéis funcionais: Executante, Supervisão e Validação por membros humanos do Grupo 5. | **Resolvido e Conforme** |
+| **7** | **Cobertura de Casos Limite Operacionais:** Faltava evidência executável para pesos float, whitespace em zonas, tipos não-booleanos e exit code 2. | Concebidos e executados os casos `F-22` a `F-30` na suite final e 5 cenários de robustez do runner, registados com evidências JSON auditáveis. | **Resolvido e Validado** |
 
 ---
 
-## 4. Problemas Encontrados na Auditoria
+## 3. Síntese dos Resultados Oficiais de Execução
 
-1. **Associação Errónea de `H-13` a `DEF-04`:** Em versões anteriores, documentos e a folha `Executions` do workbook associavam o caso `H-13` cumulativamente a `DEF-03` e `DEF-04`. No entanto, segundo a regra BR-04 (*"Express delivery to REMOTE zones is unavailable above 5000 g. At exactly 5000 it is available"*), a 5000g o serviço é nominalmente **disponível**. Tanto o oráculo como a aplicação (com limiar incorreto de 10000g) tratam 5000g como disponível (`status: OK`). Portanto, `H-13` falha unicamente pelo erro de tarifa de `DEF-03` (`fee=10` em vez de `fee=18`). O defeito `DEF-04` é detetado na fronteira estritamente superior por `H-14` (5001g) e confirmado por `F-19` (6000g).
-2. **Evidência BR-05 e Delimitação do Sistema de Ficheiros:** A docstring original e relatórios anteriores aludiam genericamente a "ausência de alterações no sistema de ficheiros", quando o script monitorizava apenas a diretoria local da aplicação (`app_dir`).
-3. **Discrepância de Versão Python nas Evidências:** Os relatórios declaravam conformidade com Python 3.10+, mas os ficheiros `.results.json` apenas registavam Python 3.9.6.
-4. **Ausência de Documento Consolidado Único:** Faltava um relatório consolidado com narrativa integrada unindo CP01, CP02 e CP03.
-5. **Inexistência de Script Automatizado de Auditoria com Saída Legível:** Não existia um utilitário autónomo reproduzível para validar de forma integral os 29 requisitos de integridade do projeto.
-
----
-
-## 5. Correções Efetuadas
-
-1. **Correção Global de Rastreabilidade (`H-13` e `DEF-04`):**
-   - Removida a menção de `H-13` como detetor de `DEF-04` em todos os ficheiros: `README.md`, `Trabalho_CP2/CP2.md`, `Trabalho_CP2/Relatorio_CP2.md`, `Trabalho_CP3/Relatorio_CP3.md` e `Relatorio_Consolidado.md`.
-   - Na folha `Executions` do workbook (`TestResults_T08_Template.xlsx`), atualizada a célula `I18` (RUN-14) para `DEF-03` exclusivamente.
-2. **Execução Dual de Python e Evidências Independentes:**
-   - Criado e gravado `final_cases.results.py312.json` sob Python 3.12.7 (13 PASS / 8 FAIL).
-   - Criado e gravado `br05_independence.py312.json` sob Python 3.12.7 (PASS).
-   - Preservadas intactas as evidências de baseline em Python 3.9.6.
-3. **Refinamento e Delimitação da Propriedade 4 da Regra BR-05:**
-   - O procedimento `verify_br05_independence.py` foi atualizado para verificar explicitamente ficheiros diretos em `app_dir` (nome, tamanho e timestamp `st_mtime_ns`), delimitando formalmente o âmbito em relatório e docstring, evitando afirmações inflacionadas.
-4. **Criação do Relatório Técnico Consolidado:**
-   - Elaborado `Relatorio_Consolidado.md` com estrutura exaustiva em três partes (Enquadramento Geral, Desenvolvimento dos Checkpoints e Conclusões Finais com Matriz de Defeitos e Declaração de IA).
-5. **Criação do Script de Auditoria:**
-   - Desenvolvido `Trabalho_CP3/audit_project.py` com validação de 29 critérios em tempo real e retorno de código de saída zero.
-6. **Construção do Pacote de Entrega e Manifesto:**
-   - Gerado `TVSI_T08_Grupo5_CP03.zip` contendo os 28 ficheiros essenciais da entrega.
-   - Criado `MANIFEST_ENTREGA.md` com a listagem exaustiva e hashes criptográficos SHA-256.
+| Suite de Teste | Entradas | PASS | FAIL | Taxa | Observações de Auditoria |
+|---|:---:|:---:|:---:|:---:|---|
+| **Humana (com H-ENV)** | **17** | **11** | **6** | 64.7% | 16 casos humanos congelados em CP02 + H-ENV. Isolou preliminarmente os 4 defeitos. |
+| **Candidatos Originais IA** | **12** | **10** | **2** | 83.3% | Executados no runner original. 2 casos são falsos PASS por expectativa incorreta da IA (`DATA-01` e `DATA-02`). |
+| **Suite Final Combinada** | **30** | **20** | **10** | 66.7% | 16 humanos + 14 complementares (`F-17` a `F-30`). 100% de paridade em Python 3.9 e Python 3.12. |
 
 ---
 
-## 6. Documentos Consolidados
+## 4. Matriz de Defeitos de Software vs Problemas de Qualidade IA
 
-- **Relatório Principal de Submissão:** [`Relatorio_Consolidado.md`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Relatorio_Consolidado.md).
-- **Documentação de Enquadramento:** [`README.md`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/README.md) e [`CLAUDE.md`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/CLAUDE.md).
-- **Relatórios Específicos por Checkpoint:**
-  - CP01: [`Trabalho_CP1/CP1.md`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP1/CP1.md).
-  - CP02: [`Trabalho_CP2/CP2.md`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP2/CP2.md) e [`Trabalho_CP2/Relatorio_CP2.md`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP2/Relatorio_CP2.md).
-  - CP03: [`Trabalho_CP3/CP3.md`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP3/CP3.md) e [`Trabalho_CP3/Relatorio_CP3.md`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP3/Relatorio_CP3.md).
+### Defeitos Estruturais de Software (`shipping.py`)
+1. **`DEF-01` (BR-01):** Linha 3 (`weight >= 20000`). Off-by-one rejeita 20000g como `INVALID`. Detetado por `H-07`. Severidade: **Alta**.
+2. **`DEF-02` (BR-02):** Linha 7 (`weight < 1000`). Off-by-one cobra 8€ a 1000g em vez de 5€. Detetado por `H-03`. Severidade: **Média-Alta**.
+3. **`DEF-03` (BR-03):** Linha 14 (`fee = 4`). Atribuição simples apaga tarifa base em encomendas `REMOTE`. Detetado por `H-10, H-12, H-13, F-18, F-29`. Severidade: **Crítica**.
+4. **`DEF-04` (BR-04):** Linha 5 (`weight > 10000`). Limiar de indisponibilidade em 10kg em vez de 5kg. Detetado por `H-14, F-19, F-30`. Severidade: **Alta**.
 
----
-
-## 7. Estado do Workbook Excel
-
-O ficheiro oficial [`TVSI_T08_Students_B1.0/TestResults_T08_Template.xlsx`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/TVSI_T08_Students_B1.0/TestResults_T08_Template.xlsx) foi auditado folha a folha:
-1. **`Test Cases`:** 22 registos (`H-ENV`, `H-01` a `H-16`, `F-17` a `F-21`), com prioridades, técnicas e oráculo independente.
-2. **`Executions`:** 22 registos alinhados com `Test Cases`. A célula `I18` (`H-13`) regista estritamente `DEF-03`.
-3. **`Defects`:** 4 defeitos documentados (`DEF-01` a `DEF-04`) com causa raiz, impacto e casos detetores.
-4. **`Static Review`:** 4 observações de análise estática e ambiguidades de tipo e fronteira.
-5. **`Coverage`:** 51 ligações de requisitos ativas (BR-01 a BR-08), com 324 fórmulas dinâmicas (`SUMIFS`, `COUNTIFS`, `IF`) sem qualquer erro ou célula quebrada.
-6. **`Technique`:** 12 candidatos de IA avaliados (2 aceites, 1 revisto, 9 rejeitados) com oráculo e fundamentação.
-
-*Erros de cálculo ou fórmula encontrados:* **Zero**. Todas as fórmulas encontram-se ativas e coerentes.
+### Problemas de Qualidade de Dados de Teste IA
+1. **`DATA-01` (BR-03 / AI-05):** Expectativa da IA omitiu a taxa base (esperou 4€ em vez de 9€), replicando o bug `DEF-03`.
+2. **`DATA-02` (BR-02 / AI-06):** Expectativa da IA atribuiu taxa de Tier 2 a 1000g (esperou 8€ em vez de 5€), mascarando o bug `DEF-02`.
+3. **`DATA-03` (BR-04 / AI-09):** Expectativa da IA tarifou encomenda que a regra BR-04 define como `UNAVAILABLE`. Revisto para `F-19`.
 
 ---
 
-## 8. Scripts Criados ou Corrigidos
+## 5. Auditoria das 11 Áreas Normativas (`audit_cp4.py`)
 
-1. [`Trabalho_CP3/audit_project.py`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP3/audit_project.py): Script de auditoria automatizada sem dependências externas (recorre apenas à biblioteca standard de Python), executando 29 asserções de validação estrita.
-2. [`Trabalho_CP3/verify_br05_independence.py`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP3/verify_br05_independence.py): Parametrizado para suportar caminho de saída CLI e com snapshot de ficheiros de `app_dir`.
-3. [`TVSI_T08_Students_B1.0/app/run_cases.py`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/TVSI_T08_Students_B1.0/app/run_cases.py): Runner oficial mantido intacto na baseline.
+A execução do script formal de auditoria [`Trabalho_CP4/audit_cp4.py`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/audit_cp4.py) reportou:
 
----
-
-## 9. Resultados das Execuções
-
-### Suite Humana (`human_cases.json` — 16 casos)
-- **Comando:** `/usr/bin/python3 TVSI_T08_Students_B1.0/app/run_cases.py Trabalho_CP2/human_cases.json`
-- **Resultados:** 10 PASS / 6 FAIL (Exit code 1).
-- **Defeitos Detetados:** `DEF-01` (`H-07`), `DEF-02` (`H-03`), `DEF-03` (`H-10, H-12, H-13`), `DEF-04` (`H-14`).
-
-### Suite Final (`final_cases.json` — 21 casos)
-- **Execução Python 3.9.6:**
-  - Veredicto: **13 PASS / 8 FAIL** (Exit code 1).
-  - Evidência: `Trabalho_CP3/final_cases.results.json`.
-- **Execução Python 3.12.7:**
-  - Veredicto: **13 PASS / 8 FAIL** (Exit code 1).
-  - Evidência: `Trabalho_CP3/final_cases.results.py312.json`.
-- **Paridade:** 100% de paridade bit a bit entre os resultados das duas versões.
-
----
-
-## 10. Validação da Regra BR-05 (Independência)
-
-Procedimento: `Trabalho_CP3/verify_br05_independence.py`  
-Executado em Python 3.9.6 e Python 3.12.7:
-
-| Dimensão Testada | Identificador | Condição | Resultado |
+| # | Área de Auditoria | Verificações Efetuadas | Veredicto |
 |---|---|---|:---:|
-| **Determinismo** | `BR05-DET-01` | 10 invocações consecutivas em memória produzem o mesmo output | **PASS** |
-| **Ausência de Estado Residual** | `BR05-RES-02` | Sequência intercalada (válido, inválido, indisponível) sem contaminação | **PASS** |
-| **Ausência de Mutações** | `BR05-MUT-03` | Inputs inalterados, retornos isolados em memória e namespace preservado | **PASS** |
-| **Efeitos Externos Delimitados** | `BR05-EXT-04` | Ausência de stdout/stderr, ambiente inalterado e ficheiros de app/ intactos | **PASS** |
-
-**Veredicto Geral de BR-05:** **PASS** (reproduzível em Py 3.9 e Py 3.12).
-
----
-
-## 11. Integridade da Suite Humana Congelada
-
-- **Localização:** `Trabalho_CP2/human_cases.json`.
-- **Dimensão:** Exatamente 16 casos (`H-01` a `H-16`).
-- **Verificação Git:** `git diff 54ec4d3 -- Trabalho_CP2/human_cases.json` produz saída rigorosamente vazia.
-- **Conclusão:** A suite humana permaneceu 100% inalterada desde o momento de congelamento documentado no CP02.
+| **1** | **Integridade da Baseline** | `shipping.py` intacto face ao repositório oficial; todos os documentos normativos presentes. | **PASS** |
+| **2** | **Suite Humana Congelada** | `Trabalho_CP2/human_cases.json` idêntico ao commit `54ec4d3` (16 casos); `human_cases_cp4.json` com 17 casos. | **PASS** |
+| **3** | **Evidências de Execução** | Todos os ficheiros em `runs/` e `evidence/` presentes, válidos e íntegros. | **PASS** |
+| **4** | **Correspondência Test IDs** | Correspondência estrita 1-para-1 entre suite de 30 casos e ficheiro de execução JSON. | **PASS** |
+| **5** | **Cobertura de Requisitos** | 100% de cobertura (R01 a R08); todos os testes desenhados foram executados (0 não executados). | **PASS** |
+| **6** | **Consistência de Resultados** | Humana (11/6), IA runner (10/2), Final (20/10), Paridade estrita Python 3.9 vs Python 3.12. | **PASS** |
+| **7** | **Relatórios de Defeitos** | Registo completo dos 4 defeitos de software e segregação dos 3 problemas de oráculo de IA. | **PASS** |
+| **8** | **Integridade do Workbook** | 6 folhas oficiais; coluna autónoma `Requirement ID(s)`; 0 erros de fórmula (`#REF!`, etc.). | **PASS** |
+| **9** | **Consistência Documental** | Plano CP04 com texto oficial de referência e 17 entradas humanas; relatórios harmonizados. | **PASS** |
+| **10** | **Integridade do Pacote ZIP** | `TVSI_T08_Grupo5_CP04.zip` íntegro (0 erros em `testzip()`); 0 ficheiros temporários ou `.git/`. | **PASS** |
+| **11** | **Validação Criptográfica** | Hashes SHA-256 e dimensões rigorosamente alinhados com `MANIFEST_ENTREGA.md`. | **PASS** |
 
 ---
 
-## 12. Rastreabilidade Final dos Defeitos
+## 6. Identificação do Pacote ZIP Oficial de Entrega
 
-| Defeito | Regra Violada | Linha de Código | Descrição do Problema | Casos Detetores |
-|---|:---:|:---:|---|---|
-| **DEF-01** | BR-01 | Linha 3 | `weight >= 20000` em vez de `> 20000`, rejeitando 20000g como `INVALID` | **`H-07`** |
-| **DEF-02** | BR-02 | Linha 7 | `weight < 1000` em vez de `<= 1000`, cobrando Tier 2 (8€) a 1000g | **`H-03`** |
-| **DEF-03** | BR-03 | Linha 14 | `fee = 4` em vez de `fee += 4`, sobrescrevendo a tarifa base em REMOTE | **`H-10, H-12, H-13, F-18`** |
-| **DEF-04** | BR-04 | Linha 5 | `weight > 10000` em vez de `> 5000` para disponibilidade de express REMOTE | **`H-14, F-19`** |
-
-*Demarcação de H-13:* A encomenda `H-13` (`weight=5000, zone="REMOTE", express=True`) situa-se no limite em que o serviço expresso para REMOTE é nominalmente **disponível** segundo a especificação legal (BR-04: *"At exactly 5000 it is available"*). Por conseguinte, `H-13` não viola nem deteta `DEF-04`. A sua falha decorre exclusivamente do erro tarifário de `DEF-03` (devolve 10€ em vez de 18€). O defeito `DEF-04` é detetado na fronteira estritamente superior por `H-14` (`weight=5001`) e reiterado por `F-19` (`weight=6000`).
+- **Ficheiro:** `TVSI_T08_Grupo5_CP04.zip`
+- **Caminho Relativo:** `./TVSI_T08_Grupo5_CP04.zip`
+- **Dimensão:** 195.167 bytes
+- **Hash SHA-256:** `ae73ff12db9c088cb52d8aabb16702fba8a80014aa70bc24637229a89ff08bf9`
+- **Ficheiros Incluídos:** 50 ficheiros essenciais
+- **Resultado do Teste de Extração:** 100% aprovado sem ficheiros em falta ou corrompidos.
 
 ---
 
-## 13. Proveniência e Declaração de IA
+## 7. Conclusão Final do Auditor
 
-- **Origem dos Candidatos:** Fixture `ai_candidates.json` gerado pelo modelo GPT-6/Codex para fins pedagógicos.
-- **Classificação:** 2 aceites (`AI-11` → `F-17`, `AI-12` → `F-18`), 1 revisto (`AI-09` → `F-19`), 9 rejeitados.
-- **Erros Identificados na IA:** Três erros conceituais graves demonstrados: `AI-05` (replicou a omissão de taxa base da implementação), `AI-06` (confundiu limites de tier alinhando-se com o bug de código), e `AI-09` (ignorou completamente a regra de indisponibilidade BR-04 prevendo `OK` a 6000g).
-- **Declaração Formal:** Documentada em detalhe no `AI_PROVENANCE.md` e na Secção 11 do `Relatorio_Consolidado.md`.
-
----
-
-## 14. Validação do Pacote ZIP
-
-- **Nome do Arquivo:** `TVSI_T08_Grupo5_CP03.zip`.
-- **Localização:** Raiz do repositório (`./TVSI_T08_Grupo5_CP03.zip`).
-- **Dimensão:** 111.231 bytes.
-- **Total de Ficheiros:** 28 ficheiros essenciais.
-- **Teste de Integridade:** `zipfile.testzip()` executado com retorno `None` (0 ficheiros corrompidos, 100% íntegro).
-- **Hash SHA-256:** `8e7527a5d013229c4e52dcb247181af090bad5abba1b491056d5cbcec46bc83c`.
-
----
-
-## 15. Manifesto dos Entregáveis
-
-O manifesto completo de submissão encontra-se formalizado em [`MANIFEST_ENTREGA.md`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/MANIFEST_ENTREGA.md), contendo o inventário de cada ficheiro, a categoria, o ambiente de teste, o estado de validação e o respetivo hash criptográfico SHA-256.
-
----
-
-## 16. Estado Final do Git
-
-- **Branch Ativa:** `main`
-- **Último Commit Remoto:** [`fa938fe`](https://github.com/Eduardomfdias/TVSI_2627/commit/fa938fe).
-- **Ficheiros Modificados no Espaço de Trabalho Local:**
-  - `Relatorio_Consolidado.md` (expansão da estrutura completa e narrativa formal)
-  - `README.md` (adição de referências ao manifesto, relatório consolidado e script de auditoria)
-- **Ficheiros Novos na Working Tree:**
-  - `Trabalho_CP3/audit_project.py`
-  - `MANIFEST_ENTREGA.md`
-  - `AUDITORIA_FINAL_ENTREGA.md`
-- **Ficheiros Locais Ignorados:** `TVSI_T08_Grupo5_CP03.zip` (ignorado via `.gitignore`).
-- **Estado de Sincronização:** Nenhuma alteração foi enviada para o servidor remoto (`origin/main`), respeitando a diretiva de aguardar autorização expressa.
-
----
-
-## 17. Limitações e Pendências
-
-1. **Números Mecanográficos dos Estudantes:**  
-   Em cumprimento estrito do princípio de não-invenção de dados académicos, os números mecanográficos dos estudantes (*Eduardo Dias, Rui Carneiro, Érica Moreira, Beatriz Barbosa*) não foram gerados artificialmente. Devem ser indicados pelos alunos no momento do envio formal da submissão no formulário do Moodle da Universidade do Minho.
-2. **Ambiente com Código com Defeitos:**  
-   A suite final apresenta 8 falhas nominais (13 PASS / 8 FAIL) que decorrem exclusivamente dos quatro defeitos identificados em `shipping.py`. O código da aplicação sob teste não foi modificado, mantendo a autenticidade exigida pela avaliação pedagógica.
-
----
-
-## 18. Veredicto Final
-
-Com base na execução de todas as verificações automáticas e manuais:
-
-### **PRONTO PARA ENTREGA COM RESSALVAS**
-
-**Fundamentação:**  
-Todos os artefactos, relatórios, suites de teste, scripts de validação, evidências duais de Python (3.9.6 e 3.12.7), auditorias de BR-05, o workbook oficial de testes e o pacote de submissão ZIP encontram-se 100% auditados, íntegros e em conformidade estrita com o enunciado da unidade curricular.  
-A única ressalva prende-se com o preenchimento dos números de aluno individuais no ato de submissão formal no Moodle.
-
+O Checkpoint 4 (CP04) encontra-se **tecnicamente fechado, auditado e em plena conformidade** com os critérios de avaliação e requisitos normativos da U.C. de Tecnologias e Verificação de Sistemas de Informação 2026/27.
