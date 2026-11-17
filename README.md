@@ -41,7 +41,7 @@ TVSI_2627/
 │   ├── StudentAssignment.md / .html           # Guião e requisitos de avaliação do trabalho
 │   ├── START_HERE.md / .html                  # Instruções de arranque inicial
 │   ├── AI_PROVENANCE.md / .html               # Registo de proveniência da IA e cronologia de congelamento
-│   ├── TestResults_T08_Template.xlsx          # Livro Excel oficial (6 folhas, coluna Requirement IDs, 0 erros)
+│   ├── TestResults_T08_Template.xlsx          # Livro Excel oficial (6 folhas, coluna Requirement IDs, OpenXML validado)
 │   └── app/                                   # Ambiente de execução da aplicação
 │       ├── shipping.py                        # Objeto de teste (função quote) - baseline intocada
 │       ├── run_cases.py                       # Runner oficial de testes JSON

@@ -23,7 +23,7 @@ O presente documento constitui o registo final da auditoria técnica exaustiva, 
 
 Todas as verificações obedecem aos princípios fundamentais de engenharia de software e integridade académica:
 1. **Preservação Absoluta da Baseline:** O ficheiro `shipping.py` (`TVSI_T08_Students_B1.0/app/shipping.py`) permanece idêntico bit-a-bit ao commit inicial `9d9f950`. A implementação de referência sob teste **contém quatro defeitos estruturais intencionais** e não foi alterada para fazer os testes passar.
-2. **Preservação da Suite Humana Congelada (CP02):** A suite humana congelada no commit `54ec4d3` (`H-01` a `H-16`) foi integralmente preservada, acompanhada do caso técnico de ambiente `H-ENV` (17 entradas normativas no total).
+2. **Preservação da Suite Humana Congelada (CP02):** A componente humana compreende 16 casos de teste concebidos pelos estudantes (`H-01..H-16`), preservados desde o CP02, e um controlo técnico de ambiente (`H-ENV`). No total, são 17 entradas de execução, das quais 16 correspondem a casos de teste normativos.
 3. **Preservação das Evidências Empíricas:** Não foram apagados runs nem substituídos resultados observados por esperados; as falhas legítimas foram registadas como evidência primária da presença dos defeitos.
 4. **Segregação Categórica de Defeitos vs. Erros de IA:** Os defeitos de software na implementação (`DEF-01` a `DEF-04`) foram isolados e distinguidos das anomalias de especificação dos modelos LLM (`DATA-01` a `DATA-03`).
 
@@ -60,19 +60,20 @@ Para garantir absoluta clareza conceptual, distinguem-se:
 
 ### Tabela de Reconciliação Metodológica das Execuções
 
-| Bloco de Execução | ID de Ensaio | Casos Únicos | Execuções Lógicas (Excel) | Execuções Físicas (Runtimes) | Veredicto Observado | Evidência Primária no Repositório |
-|---|---|:---:|:---:|:---:|:---:|---|
-| **Ambiente de Teste** | `RUN-ENV-01` | 1 | 1 | 1 | 1 PASS | `Trabalho_CP4/runs/human_17_execution.json` |
-| **Suite Humana Congelada** | `RUN-H02-01..16` | 16 | 16 | 16 | 10 PASS / 6 FAIL | `Trabalho_CP2/human_cases.results.json` |
-| **Candidatos de IA** | `RUN-AI-01..12` | 12 | 12 | 12 | 10 PASS / 2 FAIL | `Trabalho_CP4/runs/ai_candidates_execution.json` |
-| **Suite Final Integrada** | `RUN-CP4-01..30` | 30 | 30 | 60 *(30 em Py 3.9 + 30 em Py 3.12)* | 20 PASS / 10 FAIL | `Trabalho_CP4/runs/final_cases_execution.json` & `.py312.json` |
-| **Propriedades BR-05** | `RUN-CTRL-01..04` | 4 | 4 | 4 | 4 PASS | `Trabalho_CP4/evidence/br05_independence_cp4.json` |
-| **Robustez do Runner CLI** | `RUN-ROB-01..05` | 5 | 5 | 5 | 5 PASS | `Trabalho_CP4/evidence/runner_robustness_evidence.json` |
-| **Total Global** | — | **68** | **68** | **98** | **50 PASS / 18 FAIL** *(no Excel)* | `TestResults_T08_Template.xlsx` |
+| Bloco de Execução | ID de Ensaio | Registos Lógicos (Excel) | Execuções Físicas (Runtimes) | Veredicto Observado | Evidência Primária no Repositório |
+|---|---|:---:|:---:|:---:|---|
+| **Ambiente de Teste** | `RUN-ENV-01` | 1 | 1 | 1 PASS | `Trabalho_CP4/runs/human_17_execution.json` |
+| **Suite Humana Congelada** | `RUN-H02-01..16` | 16 | 16 | 10 PASS / 6 FAIL | `Trabalho_CP2/human_cases.results.json` |
+| **Candidatos de IA** | `RUN-AI-01..12` | 12 | 12 | 10 PASS / 2 FAIL | `Trabalho_CP4/runs/ai_candidates_execution.json` |
+| **Suite Final Integrada** | `RUN-CP4-01..30` | 30 | 60 *(30 em Py 3.9 + 30 em Py 3.12)* | 20 PASS / 10 FAIL | `Trabalho_CP4/runs/final_cases_execution.json` & `.py312.json` |
+| **Propriedades BR-05** | `RUN-CTRL-01..04` | 4 | 4 | 4 PASS | `Trabalho_CP4/evidence/br05_independence_cp4.json` |
+| **Robustez do Runner CLI** | `RUN-ROB-01..05` | 5 | 5 | 5 PASS | `Trabalho_CP4/evidence/runner_robustness_evidence.json` |
+| **Total Global** | — | **68** | **98** | **50 PASS / 18 FAIL** *(no Excel)* | `TestResults_T08_Template.xlsx` |
 
-$$\text{Execuções Lógicas Reconciliadas} = 1 + 16 + 12 + 30 + 4 + 5 = \mathbf{68}$$
+$$\text{Registos Lógicos Reconciliados} = 1 + 16 + 12 + 30 + 4 + 5 = \mathbf{68}$$
 $$\text{Execuções Físicas Totais} = 1 + 16 + 12 + (30 \times 2) + 4 + 5 = \mathbf{98}$$
 
+*Nota: O catálogo contém 31 identificadores de teste únicos: H-ENV, H-01..H-16 e F-17..F-30. As 68 execuções lógicas representam registos de execução, incluindo repetições dos mesmos casos em diferentes fases ou contextos, não correspondendo a 68 casos de teste únicos.*  
 *Reconciliação quantitativa consistente com os registos de execução e as evidências identificadas.*
 
 ---
@@ -127,8 +128,7 @@ Os defeitos decorrem de erros estruturais no código fornecido de `shipping.py` 
 - **Folhas Preservadas (6 folhas):** `Test Cases`, `Executions`, `Defects`, `Static Review`, `Coverage`, `Technique`.
 - **Coluna de Requisitos Autónoma:** Célula `C4` contém `'Requirement ID(s)'`.
 - **Fórmulas de Cobertura R01..R08:** 324 fórmulas na folha `Coverage` ligam dinamicamente casos e execuções aos requisitos (Diferença entre desenhados e executados = 0).
-- **Erros de Fórmula Armazenados:** **0 erros** (`#REF!`, `#VALUE!`, `#NAME?`, `#DIV/0!`, `#N/A`).
-- **Âmbito e Limitação da Validação (Validação OpenXML):** A validação estrutural OpenXML confirmou a legibilidade e a integridade sintática dos componentes XML analisados, incluindo a estrutura das folhas, os namespaces e a presença das fórmulas de rastreabilidade. Não foi efetuado recálculo dinâmico independente das fórmulas, devido à indisponibilidade do LibreOffice no ambiente de execução. Consequentemente, os resultados desta validação não são apresentados como prova de correção dos valores calculados.
+- **Inspeção Estrutural OpenXML:** A inspeção estrutural OpenXML identificou as fórmulas de rastreabilidade previstas e não detetou problemas estruturais nos componentes XML analisados. Não foi efetuado recálculo dinâmico independente das fórmulas, devido à indisponibilidade do LibreOffice no ambiente de execução. Consequentemente, esta validação não constitui prova independente da correção dos valores calculados.
 
 ---
 

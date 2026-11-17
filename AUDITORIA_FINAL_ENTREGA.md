@@ -71,7 +71,7 @@ A execução do script formal de auditoria [`Trabalho_CP4/audit_cp4.py`](file://
 | # | Área de Auditoria | Verificações Efetuadas | Veredicto |
 |---|---|---|:---:|
 | **1** | **Integridade da Baseline** | `shipping.py` intacto face ao commit `9d9f950`; todos os documentos normativos docentes presentes. | **PASS** |
-| **2** | **Suite Humana Congelada** | `Trabalho_CP2/human_cases.json` idêntico ao commit `54ec4d3` (16 casos); `human_cases_cp4.json` com 17 entradas normativas. | **PASS** |
+| **2** | **Suite Humana Congelada** | `Trabalho_CP2/human_cases.json` idêntico ao commit `54ec4d3` (16 casos); `human_cases_cp4.json` com 17 entradas de execução (16 casos de teste normativos H-01..H-16 e o controlo técnico H-ENV). | **PASS** |
 | **3** | **Validação JSON do Repositório** | Todos os 33 ficheiros JSON do repositório validados estruturalmente e sintaticamente. | **PASS** |
 | **4** | **Unicidade de Test IDs** | Todos os `test_id` são globalmente únicos e válidos nas 4 suites. | **PASS** |
 | **5** | **Suite–Evidência Mapping** | Correspondência estrita 1-para-1 entre suite de 30 casos e ficheiro de execução JSON. | **PASS** |
@@ -96,18 +96,19 @@ A execução do script formal de auditoria [`Trabalho_CP4/audit_cp4.py`](file://
 
 ---
 
-## 7. Reconciliação Rigorosa das Execuções (68 Lógicas vs 98 Físicas)
+## 7. Reconciliação Rigorosa das Execuções (68 Registos Lógicos vs 98 Execuções Físicas)
 
-| Bloco de Execução | ID de Ensaio | Casos Únicos | Execuções Lógicas (Excel) | Execuções Físicas (Runtimes) | Veredicto Observado | Evidência Primária no Repositório |
-|---|---|:---:|:---:|:---:|:---:|---|
-| **Ambiente de Teste** | `RUN-ENV-01` | 1 | 1 | 1 | 1 PASS | `Trabalho_CP4/runs/human_17_execution.json` |
-| **Suite Humana Congelada** | `RUN-H02-01..16` | 16 | 16 | 16 | 10 PASS / 6 FAIL | `Trabalho_CP2/human_cases.results.json` |
-| **Candidatos de IA** | `RUN-AI-01..12` | 12 | 12 | 12 | 10 PASS / 2 FAIL | `Trabalho_CP4/runs/ai_candidates_execution.json` |
-| **Suite Final Integrada** | `RUN-CP4-01..30` | 30 | 30 | 60 *(30 em Py 3.9 + 30 em Py 3.12)* | 20 PASS / 10 FAIL | `Trabalho_CP4/runs/final_cases_execution.json` & `.py312.json` |
-| **Propriedades BR-05** | `RUN-CTRL-01..04` | 4 | 4 | 4 | 4 PASS | `Trabalho_CP4/evidence/br05_independence_cp4.json` |
-| **Robustez do Runner CLI** | `RUN-ROB-01..05` | 5 | 5 | 5 | 5 PASS | `Trabalho_CP4/evidence/runner_robustness_evidence.json` |
-| **Total Global** | — | **68** | **68** | **98** | **50 PASS / 18 FAIL** *(no Excel)* | `TestResults_T08_Template.xlsx` |
+| Bloco de Execução | ID de Ensaio | Registos Lógicos (Excel) | Execuções Físicas (Runtimes) | Veredicto Observado | Evidência Primária no Repositório |
+|---|---|:---:|:---:|:---:|---|
+| **Ambiente de Teste** | `RUN-ENV-01` | 1 | 1 | 1 PASS | `Trabalho_CP4/runs/human_17_execution.json` |
+| **Suite Humana Congelada** | `RUN-H02-01..16` | 16 | 16 | 10 PASS / 6 FAIL | `Trabalho_CP2/human_cases.results.json` |
+| **Candidatos de IA** | `RUN-AI-01..12` | 12 | 12 | 10 PASS / 2 FAIL | `Trabalho_CP4/runs/ai_candidates_execution.json` |
+| **Suite Final Integrada** | `RUN-CP4-01..30` | 30 | 60 *(30 em Py 3.9 + 30 em Py 3.12)* | 20 PASS / 10 FAIL | `Trabalho_CP4/runs/final_cases_execution.json` & `.py312.json` |
+| **Propriedades BR-05** | `RUN-CTRL-01..04` | 4 | 4 | 4 PASS | `Trabalho_CP4/evidence/br05_independence_cp4.json` |
+| **Robustez do Runner CLI** | `RUN-ROB-01..05` | 5 | 5 | 5 PASS | `Trabalho_CP4/evidence/runner_robustness_evidence.json` |
+| **Total Global** | — | **68** | **98** | **50 PASS / 18 FAIL** *(no Excel)* | `TestResults_T08_Template.xlsx` |
 
+*Nota: O catálogo contém 31 identificadores de teste únicos: H-ENV, H-01..H-16 e F-17..F-30. As 68 execuções lógicas representam registos de execução, incluindo repetições dos mesmos casos em diferentes fases ou contextos, não correspondendo a 68 casos de teste únicos.*  
 *Reconciliação quantitativa consistente com os registos de execução e as evidências identificadas.*
 
 ---
@@ -135,8 +136,8 @@ A execução do script formal de auditoria [`Trabalho_CP4/audit_cp4.py`](file://
 
 O processo de teste, conceção de casos, gestão de evidências e os artefactos entregáveis do Checkpoint 4 (CP04) encontram-se **tecnicamente validados e auditados nos limites formalmente comprovados**, estando a baseline `shipping.py` preservada e os seus 4 defeitos de software empiricamente caracterizados.
 
-**Declaração de Âmbito sobre o Workbook Excel (Validação OpenXML):**  
-A validação estrutural OpenXML confirmou a legibilidade e a integridade sintática dos componentes XML analisados, incluindo a estrutura das folhas, os namespaces e a presença das fórmulas de rastreabilidade. Não foi efetuado recálculo dinâmico independente das fórmulas, devido à indisponibilidade do LibreOffice no ambiente de execução. Consequentemente, os resultados desta validação não são apresentados como prova de correção dos valores calculados.
+**Declaração de Âmbito sobre o Workbook Excel (Inspeção Estrutural OpenXML):**  
+A inspeção estrutural OpenXML identificou as fórmulas de rastreabilidade previstas e não detetou problemas estruturais nos componentes XML analisados. Não foi efetuado recálculo dinâmico independente das fórmulas, devido à indisponibilidade do LibreOffice no ambiente de execução. Consequentemente, esta validação não constitui prova independente da correção dos valores calculados.
 
 **Veredicto Final:**  
 **CP04 — FECHADO E VALIDADO, COM LIMITAÇÕES DOCUMENTADAS.**

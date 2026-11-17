@@ -16,11 +16,11 @@
 O presente documento constitui o relatório formal e exaustivo da auditoria integral realizada ao repositório Git, aos documentos académicos, ao livro de cálculo oficial Excel (`TestResults_T08_Template.xlsx`), a todas as evidências empíricas de execução, aos scripts de auditoria automatizada e ao pacote de entrega (`TVSI_T08_Grupo5_CP04.zip`).
 
 1. **Integridade da Baseline e Defeitos:** O módulo `shipping.py` permanece rigorosamente inalterado em relação ao commit inicial `9d9f950`. Os 4 defeitos estruturais da SUT (`DEF-01` a `DEF-04`) foram confirmados por testes reproduzíveis e preservados para fins de avaliação docente do desenho de testes.
-2. **Workbook Excel Canónico:** O ficheiro `Trabalho_CP4/TestResults_T08_Template.xlsx` (33.151 bytes | SHA-256 `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef`) encontra-se 100% preenchido nas suas 6 folhas oficiais (`Test Cases`, `Executions`, `Defects`, `Static Review`, `Coverage`, `Technique`), com 0 campos obrigatórios vazios e 0 erros de fórmula. As 4 cópias existentes no repositório encontram-se sincronizadas bit-a-bit.
+2. **Workbook Excel Canónico:** O ficheiro `Trabalho_CP4/TestResults_T08_Template.xlsx` (33.151 bytes | SHA-256 `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef`) encontra-se 100% preenchido nas suas 6 folhas oficiais (`Test Cases`, `Executions`, `Defects`, `Static Review`, `Coverage`, `Technique`), com 0 campos obrigatórios vazios e estrutura OpenXML validada. As 4 cópias existentes no repositório encontram-se sincronizadas bit-a-bit.
 3. **Reconciliação das Execuções:** A contagem de 68 linhas de execução lógica no Excel e 98 execuções físicas multiplataforma ($1 + 16 + 12 + 60 + 4 + 5 = 98$) está plenamente comprovada por registos JSON auditáveis.
 4. **Auditoria Técnica:** O script `Trabalho_CP4/audit_cp4.py` reporta **27 PASS | 0 FAIL | 0 WARNING | 0 BLOCKED** e a suite de meta-testes de robustez `Trabalho_CP4/test_auditor_robustness.py` reporta **6/6 testes de mutação aprovados**.
-5. **Pacote de Entrega:** O arquivo `TVSI_T08_Grupo5_CP04.zip` agrega exatamente 51 ficheiros (50 artefactos de projeto + 1 manifesto), possui 204.739 bytes e soma SHA-256 `11ba7b2dd785eedf32194c60b965e39858a6d4b61d662ab83c37e020863edcc5`, validada a 100% por teste de extração profunda.
-6. **Sincronização Remota:** Ambas as branches `main` e `cp04-final` encontram-se sincronizadas com o repositório remoto GitHub no commit `dc45f4d44359cf562f7e7a2d269a453e8643aaf3`.
+5. **Pacote de Entrega:** O arquivo `TVSI_T08_Grupo5_CP04.zip` agrega exatamente 51 ficheiros (50 artefactos de projeto + 1 manifesto), validado a 100% por teste de extração profunda.
+6. **Sincronização Remota:** Ambas as branches `main` e `cp04-final` encontram-se rigorosamente sincronizadas com o repositório remoto GitHub. Commit de consolidação documental publicado: `3b86f316049ae8d4261a928266ddb3b493d30c0f` (precedido pelo commit de integração `dc45f4d44359cf562f7e7a2d269a453e8643aaf3`).
 
 ---
 
@@ -103,7 +103,7 @@ O manifesto oficial (`MANIFEST_ENTREGA.md`) enumera os 50 ficheiros do projeto q
 | `Technique` | 8 colunas (A–H): Candidate ID / origin, Rule / boundary, Original expectation, Independent oracle, Accept / revise / reject, Reason / duplicate, Final test IDs, Comparison evidence. | **12 candidatos de IA** (`AI-01` a `AI-12`) integralmente analisados e confrontados com os oráculos humanos independentes. Total de 96 células preenchidas. | 0 | **CONFORME (100% Preenchido)** |
 
 #### Declaração de Âmbito sobre a Validação OpenXML
-> *"A validação estrutural OpenXML confirmou a legibilidade e a integridade sintática dos componentes XML analisados, incluindo a estrutura das folhas, os namespaces e a presença das fórmulas de rastreabilidade. Não foi efetuado recálculo dinâmico independente das fórmulas, devido à indisponibilidade do LibreOffice no ambiente de execução. Consequentemente, os resultados desta validação não são apresentados como prova de correção dos valores calculados."*
+> *"A inspeção estrutural OpenXML identificou as fórmulas de rastreabilidade previstas e não detetou problemas estruturais nos componentes XML analisados. Não foi efetuado recálculo dinâmico independente das fórmulas, devido à indisponibilidade do LibreOffice no ambiente de execução. Consequentemente, esta validação não constitui prova independente da correção dos valores calculados."*
 
 ---
 
@@ -113,7 +113,7 @@ Todos os documentos académicos foram auditados quanto à completude, consistên
 
 1. **Autoria e Identificação:** Todos os 11 relatórios e planos identificam univocamente o Grupo 5 e os quatro autores (*Eduardo Dias, Rui Carneiro, Érica Moreira e Beatriz Barbosa*), a instituição (*Universidade do Minho*) e a unidade curricular (*TVSI 2026/27*).
 2. **Consistência Normativa:**
-   - A suite humana está uniformemente referenciada em todos os documentos como **17 entradas normativas** (16 casos desenhados pelos estudantes `H-01..16` congelados no commit `54ec4d3` + 1 caso de validação de ambiente `H-ENV`), eliminando menções obsoletas a 21 casos.
+   - A componente humana compreende 16 casos de teste concebidos pelos estudantes (`H-01..H-16`), preservados desde o CP02, e um controlo técnico de ambiente (`H-ENV`). No total, são 17 entradas de execução, das quais 16 correspondem a casos de teste normativos (eliminando menções obsoletas a 21 casos).
    - A taxonomia dos defeitos (`DEF-01` a `DEF-04`) e das anomalias de IA (`DATA-01` a `DATA-03`) está rigorosamente harmonizada entre `README.md`, `Relatorio_Consolidado.md`, `Relatorio_CP4.md`, `AUDITORIA_FINAL_ENTREGA.md` e `FECHO_FINAL_CP04.md`.
 3. **Qualidade Académica:** Distinção conceitual rigorosa entre falhas observadas legítimas (que comprovam a eficácia dos testes em isolar defeitos) e a conformidade metodológica do processo de teste (100% conforme).
 
@@ -123,19 +123,20 @@ Todos os documentos académicos foram auditados quanto à completude, consistên
 
 #### Tabela de Reconciliação Rigorosa das Execuções
 
-| Bloco de Execução | ID de Ensaio | Casos Únicos | Execuções Lógicas (Excel) | Execuções Físicas (Runtimes) | Veredicto Observado | Ficheiro de Prova / Evidência Primária |
-|---|---|:---:|:---:|:---:|:---:|---|
-| **Ambiente de Teste** | `RUN-ENV-01` | 1 | 1 | 1 | 1 PASS | `Trabalho_CP4/runs/human_17_execution.json` |
-| **Suite Humana Congelada** | `RUN-H02-01..16` | 16 | 16 | 16 | 10 PASS / 6 FAIL | `Trabalho_CP2/human_cases.results.json` |
-| **Candidatos de IA** | `RUN-AI-01..12` | 12 | 12 | 12 | 10 PASS / 2 FAIL | `Trabalho_CP4/runs/ai_candidates_execution.json` |
-| **Suite Final Integrada** | `RUN-CP4-01..30` | 30 | 30 | 60 *(30 em Py 3.9 + 30 em Py 3.12)* | 20 PASS / 10 FAIL | `Trabalho_CP4/runs/final_cases_execution.json` & `.py312.json` |
-| **Propriedades BR-05** | `RUN-CTRL-01..04` | 4 | 4 | 4 | 4 PASS | `Trabalho_CP4/evidence/br05_independence_cp4.json` |
-| **Robustez do Runner CLI** | `RUN-ROB-01..05` | 5 | 5 | 5 | 5 PASS | `Trabalho_CP4/evidence/runner_robustness_evidence.json` |
-| **Total Global** | — | **68** | **68** | **98** | **50 PASS / 18 FAIL** *(no Excel)* | `Trabalho_CP4/TestResults_T08_Template.xlsx` |
+| Bloco de Execução | ID de Ensaio | Registos Lógicos (Excel) | Execuções Físicas (Runtimes) | Veredicto Observado | Ficheiro de Prova / Evidência Primária |
+|---|---|:---:|:---:|:---:|---|
+| **Ambiente de Teste** | `RUN-ENV-01` | 1 | 1 | 1 PASS | `Trabalho_CP4/runs/human_17_execution.json` |
+| **Suite Humana Congelada** | `RUN-H02-01..16` | 16 | 16 | 10 PASS / 6 FAIL | `Trabalho_CP2/human_cases.results.json` |
+| **Candidatos de IA** | `RUN-AI-01..12` | 12 | 12 | 10 PASS / 2 FAIL | `Trabalho_CP4/runs/ai_candidates_execution.json` |
+| **Suite Final Integrada** | `RUN-CP4-01..30` | 30 | 60 *(30 em Py 3.9 + 30 em Py 3.12)* | 20 PASS / 10 FAIL | `Trabalho_CP4/runs/final_cases_execution.json` & `.py312.json` |
+| **Propriedades BR-05** | `RUN-CTRL-01..04` | 4 | 4 | 4 PASS | `Trabalho_CP4/evidence/br05_independence_cp4.json` |
+| **Robustez do Runner CLI** | `RUN-ROB-01..05` | 5 | 5 | 5 PASS | `Trabalho_CP4/evidence/runner_robustness_evidence.json` |
+| **Total Global** | — | **68** | **98** | **50 PASS / 18 FAIL** *(no Excel)* | `Trabalho_CP4/TestResults_T08_Template.xlsx` |
 
-$$\text{Execuções Lógicas Reconciliadas} = 1 + 16 + 12 + 30 + 4 + 5 = \mathbf{68}$$
+$$\text{Registos Lógicos Reconciliados} = 1 + 16 + 12 + 30 + 4 + 5 = \mathbf{68}$$
 $$\text{Execuções Físicas Totais} = 1 + 16 + 12 + (30 \times 2) + 4 + 5 = \mathbf{98}$$
 
+*Nota: O catálogo contém 31 identificadores de teste únicos: H-ENV, H-01..H-16 e F-17..F-30. As 68 execuções lógicas representam registos de execução, incluindo repetições dos mesmos casos em diferentes fases ou contextos, não correspondendo a 68 casos de teste únicos.*  
 *Reconciliação quantitativa consistente com os registos de execução e as evidências identificadas.*
 
 - **Nota sobre BR-05:** Confirmado que o bloco BR-05 corresponde exatamente a **4 execuções físicas** (e não 8), testando as 4 propriedades de determinismo, ausência de estado residual, não mutação e ausência de efeitos colaterais no sistema de ficheiros delimitado no interpretador Python 3.9.
@@ -146,13 +147,13 @@ $$\text{Execuções Físicas Totais} = 1 + 16 + 12 + (30 \times 2) + 4 + 5 = \ma
 
 - **Ficheiro de Submissão:** `TVSI_T08_Grupo5_CP04.zip`
 - **Contagem de Ficheiros:** Exatamente **51 ficheiros** (50 artefactos de projeto + 1 manifesto `MANIFEST_ENTREGA.md`).
-- **Dimensão Exata:** **204.739 bytes**
-- **SHA-256 Definitivo:** `11ba7b2dd785eedf32194c60b965e39858a6d4b61d662ab83c37e020863edcc5`
+- **Dimensão Exata:** **204.969 bytes**
+- **SHA-256 Definitivo:** `4e02653c4c93da4f5a250ac5828c75d723717fb305f80d72f0c305125af95369`
 - **Validação Estrutural ZIP:** `zipfile.testzip()` executado sem erros (`None`). Ausência absoluta de ficheiros temporários, de sistema (`.DS_Store`) ou de controlo de versões (`.git/`).
 - **Validação de Extração:** Extração temporária comprovou correspondência estrita bit-a-bit e hash-a-hash para todos os 51 ficheiros.
 - **Manifesto Interno:** `MANIFEST_ENTREGA.md` audita os 50 ficheiros de projeto sem dependência circular.
 - **Ficheiro Externo de Validação:** `TVSI_T08_Grupo5_CP04.zip.sha256` contém a assinatura criptográfica:  
-  `11ba7b2dd785eedf32194c60b965e39858a6d4b61d662ab83c37e020863edcc5  TVSI_T08_Grupo5_CP04.zip`
+  `4e02653c4c93da4f5a250ac5828c75d723717fb305f80d72f0c305125af95369  TVSI_T08_Grupo5_CP04.zip`
 
 ---
 
@@ -176,10 +177,11 @@ $$\text{Execuções Físicas Totais} = 1 + 16 + 12 + (30 \times 2) + 4 + 5 = \ma
 
 ### H. Estado do Git e Sincronização GitHub
 
-- **Commit de Fecho:** `dc45f4d44359cf562f7e7a2d269a453e8643aaf3`
-  - Mensagem: *"CP04: finalize integrity audit, excel hash reconciliation, and delivery reports"*
-- **Ramo Principal (`main`):** `dc45f4d44359cf562f7e7a2d269a453e8643aaf3` (em paridade com `origin/main`).
-- **Ramo de Fecho (`cp04-final`):** `dc45f4d44359cf562f7e7a2d269a453e8643aaf3` (em paridade com `origin/cp04-final`).
+- **Rastreabilidade de Commits de Fecho:**
+  - Commit de integração e reconciliação prévia: `dc45f4d44359cf562f7e7a2d269a453e8643aaf3` (*"CP04: finalize integrity audit, excel hash reconciliation, and delivery reports"*)
+  - Commit de consolidação documental inicial: `3b86f316049ae8d4261a928266ddb3b493d30c0f` (*"docs(cp04): add RELATORIO_AUDITORIA_FINAL_ENTREGA_CP04.md formal audit report"*)
+  - Commit final publicado: será o commit gerado nesta intervenção documental cirúrgica.
+- **Ramo Principal (`main`) e Ramo de Fecho (`cp04-final`):** Mantidos em rigorosa paridade remota no GitHub.
 - **Working Tree:** `nothing to commit, working tree clean`.
 - **Integridade da Baseline:** Zero alterações a `shipping.py` e zero modificações a evidências históricas.
 

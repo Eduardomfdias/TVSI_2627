@@ -15,11 +15,11 @@ A tabela seguinte enumera os 50 ficheiros do projeto incluídos na entrega, deta
 
 | Ficheiro | Dimensão (Bytes) | SHA-256 |
 |---|:---:|---|
-| `AUDITORIA_FINAL_ENTREGA.md` | 14,620 | `f2c1e8bfc1869b1dd1baf6d38f786df364fab70650390f4503ea054ee0e223b5` |
+| `AUDITORIA_FINAL_ENTREGA.md` | 14,875 | `bdb8897be371f85a89daae8964304f500fe46bab26da133667f6d4918b04f21d` |
 | `CLAUDE.md` | 2,179 | `24468175d9c2783d8735cad09ea0c8ba39dc5b7bdaea1a3c462c5e7e7a76b2eb` |
-| `FECHO_FINAL_CP04.md` | 15,591 | `e67a528a09e00fd31346d78d1386975f228c7458c974ce3a20ecbe8a4d73b9b7` |
-| `README.md` | 11,687 | `c8272239e62094fc6ecd7fc0b95ef64f8e2f6728be53bb1e0a9ee377c8a3dccb` |
-| `Relatorio_Consolidado.md` | 20,469 | `475fdbdc47fb0eb51600c4c9c646676b46235a5d88e4d3fecdb4e6de022d281f` |
+| `FECHO_FINAL_CP04.md` | 15,695 | `7000d4508ef82c828f79648ed113a261b4bafae873f6809d84d5e37a22bfd62c` |
+| `README.md` | 11,696 | `32e896ab305ae28b36da511ef1eef6bf80423a81673531b945001dc7a257c120` |
+| `Relatorio_Consolidado.md` | 20,468 | `09d6d440a410d96fc818adc852201f05211c21126eacb8f3e7200ebabd6b1e4c` |
 | `TVSI_T08_Students_B1.0/AI_PROVENANCE.html` | 2,826 | `3ea599d9581c9002ec8b8c10acbb2c19a48124b982bdaadd379b22f8df6b703d` |
 | `TVSI_T08_Students_B1.0/AI_PROVENANCE.md` | 4,714 | `f365eef25a652acb4f8ec6d33d97dc73324b5dbcebaa85119ab2e86c1070d309` |
 | `TVSI_T08_Students_B1.0/BusinessRules.html` | 4,058 | `73c84d8502d9a762b29143788bac66d19bc48ec1acf5bedae249945d52d27a6e` |
@@ -50,8 +50,8 @@ A tabela seguinte enumera os 50 ficheiros do projeto incluídos na entrega, deta
 | `Trabalho_CP3/final_cases.results.json` | 6,491 | `2e45f0f76f78bc5c448d216138eb591d886215f3fe8d3141b391d9546e848eaa` |
 | `Trabalho_CP3/final_cases.results.py312.json` | 6,503 | `11947899754c2672cc3cd11922c50d60079dbb162b85d5263bf1cd5f6d2ab343` |
 | `Trabalho_CP3/verify_br05_independence.py` | 10,347 | `61e53b7e18449b64f7d3542cdc761d40b1699257bf13a6f5ee1a456d43a8ad6a` |
-| `Trabalho_CP4/CP4.md` | 8,838 | `a5c8af5d04b6aad1634cff72d8958b8ee339bd4e2f077c20a78c46c39bcd2bbf` |
-| `Trabalho_CP4/Relatorio_CP4.md` | 16,919 | `2ad311aba3e984d020ead44adf848ff1c50fa639a3cbacd6a519e5d65f3abb4c` |
+| `Trabalho_CP4/CP4.md` | 8,869 | `80509013fd2977a17082005d90a3ce6337b75497f0483db8e420765ff502eb5f` |
+| `Trabalho_CP4/Relatorio_CP4.md` | 16,923 | `e1ed00c94938dafbfcc8c91157c88046a1d82cba4bc09736c41feabcc156fb6c` |
 | `Trabalho_CP4/TestResults_T08_Template.xlsx` | 33,151 | `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef` |
 | `Trabalho_CP4/audit_cp4.py` | 27,016 | `9e655390b52a5a0bac35fb19c25f739739147f4daf134820590c92ddf5a7a0e3` |
 | `Trabalho_CP4/evidence/br05_independence_cp4.json` | 6,160 | `dc94cb77e4f0ff6b7d5b1d3df0d91e34de52b9c98bb332c9b59cd7762a01568d` |
