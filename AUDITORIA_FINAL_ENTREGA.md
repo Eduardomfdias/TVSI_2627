@@ -88,9 +88,10 @@ A execução do script formal de auditoria [`Trabalho_CP4/audit_cp4.py`](file://
 
 - **Ficheiro:** `TVSI_T08_Grupo5_CP04.zip`
 - **Caminho Relativo:** `./TVSI_T08_Grupo5_CP04.zip`
-- **Dimensão:** 195.167 bytes
-- **Hash SHA-256:** `ae73ff12db9c088cb52d8aabb16702fba8a80014aa70bc24637229a89ff08bf9`
-- **Ficheiros Incluídos:** 50 ficheiros essenciais
+- **Dimensão:** 203,556 bytes
+- **Hash SHA-256:** `fbf1791b0a92a456854a35452d701bbd51dd1ad06b30aff108a5ca27941ae829`
+- **Ficheiro Externo de Validação:** `TVSI_T08_Grupo5_CP04.zip.sha256`
+- **Ficheiros Incluídos:** 51 ficheiros essenciais
 - **Resultado do Teste de Extração:** 100% aprovado sem ficheiros em falta ou corrompidos.
 
 ---
