@@ -5,19 +5,19 @@
 **Build sob Teste:** T08-B1.0  
 **Grupo:** Grupo 5 (Eduardo Dias, Rui Carneiro, Érica Moreira, Beatriz Barbosa)  
 **Arquivo Consolidado de Submissão:** `TVSI_T08_Grupo5_CP04.zip`  
-**Total de Ficheiros Integrados no Pacote:** 51
+**Reconciliação do Inventário:** O arquivo ZIP agrega exatamente **51 ficheiros**: os **50 artefactos de projeto** atestados na tabela abaixo, acompanhados do presente documento de inventário (`MANIFEST_ENTREGA.md`).
 
 ---
 
-## 1. REGISTO CRIPTOGRÁFICO DE INTEGRIDADE DOS FICHEIROS (SHA-256)
+## 1. REGISTO CRIPTOGRÁFICO DE INTEGRIDADE DOS FICHEIROS DO PROJETO (SHA-256)
 
-A tabela seguinte regista a dimensão em bytes e o hash criptográfico SHA-256 de cada ficheiro constituinte do projeto de entrega.
+A tabela seguinte enumera os 50 ficheiros do projeto incluídos na entrega, detalhando o caminho relativo, a dimensão exata em bytes e o respetivo hash criptográfico SHA-256.
 
 | Ficheiro | Dimensão (Bytes) | SHA-256 |
 |---|:---:|---|
-| `AUDITORIA_FINAL_ENTREGA.md` | 10,131 | `2f4ee9fddb1bbbc6c88f7ae5807517f249c72d4e3d64c06f558d3274be603e11` |
+| `AUDITORIA_FINAL_ENTREGA.md` | 10,587 | `8bc427c1cf01e9a89054fdf6701c34e74ea93ec94a858394153695a73b1140bd` |
 | `CLAUDE.md` | 2,179 | `24468175d9c2783d8735cad09ea0c8ba39dc5b7bdaea1a3c462c5e7e7a76b2eb` |
-| `FECHO_FINAL_CP04.md` | 16,609 | `2b2f77d4756cc4614c4ef2b91a55326be84c578109ecf94ade34b93cec87a133` |
+| `FECHO_FINAL_CP04.md` | 12,974 | `9ae26c20e36bb1943a05b99e83173ac5b3e7174ea4d2c836a5e984fa1ce82ab0` |
 | `README.md` | 11,687 | `c8272239e62094fc6ecd7fc0b95ef64f8e2f6728be53bb1e0a9ee377c8a3dccb` |
 | `Relatorio_Consolidado.md` | 20,469 | `475fdbdc47fb0eb51600c4c9c646676b46235a5d88e4d3fecdb4e6de022d281f` |
 | `TVSI_T08_Students_B1.0/AI_PROVENANCE.html` | 2,826 | `3ea599d9581c9002ec8b8c10acbb2c19a48124b982bdaadd379b22f8df6b703d` |
@@ -53,7 +53,7 @@ A tabela seguinte regista a dimensão em bytes e o hash criptográfico SHA-256 d
 | `Trabalho_CP4/CP4.md` | 8,838 | `a5c8af5d04b6aad1634cff72d8958b8ee339bd4e2f077c20a78c46c39bcd2bbf` |
 | `Trabalho_CP4/Relatorio_CP4.md` | 16,919 | `2ad311aba3e984d020ead44adf848ff1c50fa639a3cbacd6a519e5d65f3abb4c` |
 | `Trabalho_CP4/TestResults_T08_Template.xlsx` | 33,151 | `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef` |
-| `Trabalho_CP4/audit_cp4.py` | 25,243 | `84aa8dca091208c89e0a95742b0603b2928caeeb7310151cef6e28c28b4d2dd1` |
+| `Trabalho_CP4/audit_cp4.py` | 25,804 | `e37c9d4b6ce9aef89eae2e35d7f440553154b15c25960a39db7fb0b93b49d781` |
 | `Trabalho_CP4/evidence/br05_independence_cp4.json` | 6,160 | `dc94cb77e4f0ff6b7d5b1d3df0d91e34de52b9c98bb332c9b59cd7762a01568d` |
 | `Trabalho_CP4/evidence/runner_robustness_evidence.json` | 1,380 | `317aee17be2d63a59aecce058d2d59e18b428a93955ab76b2525462196c5a307` |
 | `Trabalho_CP4/final_cases.json` | 5,475 | `31714bcb90702751107b21a27cc77d0a7f62d59ef158c6ae415b6ba42e6d1ffd` |
@@ -70,8 +70,9 @@ A tabela seguinte regista a dimensão em bytes e o hash criptográfico SHA-256 d
 
 ## 2. ARQUIVO DE SUBMISSÃO CONSOLIDADO (ZIP)
 
-O pacote de submissão para o Moodle (`TVSI_T08_Grupo5_CP04.zip`) agrega exatamente os ficheiros acima listados.
-Para evitar dependências circulares de cálculo e autorreferência no manifesto contido dentro do próprio arquivo, o hash de integridade SHA-256 do arquivo ZIP final é mantido no ficheiro externo de verificação:
+O pacote de submissão para a plataforma Moodle (`TVSI_T08_Grupo5_CP04.zip`) agrega exatamente os 51 ficheiros indicados (50 ficheiros de projeto mais o `MANIFEST_ENTREGA.md`).
+
+Para evitar dependências circulares de cálculo e autorreferência no manifesto contido dentro do próprio arquivo, o hash de integridade SHA-256 do arquivo ZIP final é atestado no ficheiro externo de verificação:
 - `TVSI_T08_Grupo5_CP04.zip.sha256`
 
-Este manifesto atesta com exatidão matemática a proveniência e a conformidade integral de todos os artefactos entregues.
+Este manifesto atesta com exatidão matemática a proveniência, imutabilidade e rastreabilidade integral de todos os artefactos entregues.

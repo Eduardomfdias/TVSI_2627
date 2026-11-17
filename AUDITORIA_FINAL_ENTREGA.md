@@ -1,7 +1,7 @@
 # Relatório de Auditoria Final e Verificação de Entregáveis — CP04
 ## TVSI_2627 — UMinho | Grupo 5
 
-**Data da Auditoria:** 16 de Novembro de 2026  
+**Data da Auditoria:** 17 de Novembro de 2026  
 **Auditor Técnico:** Senior QA Engineer, Test Manager & Technical Auditor  
 **Instituição:** Universidade do Minho — Mestrado em Engenharia Informática  
 **Unidade Curricular:** Tecnologias e Verificação de Sistemas de Informação (TVSI 2026/27)  
@@ -32,7 +32,7 @@ O âmbito cobriu de forma cumulativa e harmonizada os quatro checkpoints da U.C.
 | **1** | **Discrepância no Plano CP04:** O plano apresentava referências obsoletas a 21 testes humanos ou `H-01` a `H-20` como congelados. | O plano `Trabalho_CP4/CP4.md` foi reescrito para harmonizar com a suite efetivamente congelada em CP02: 16 casos (`H-01` a `H-16`) mais o teste técnico `H-ENV` de ambiente, totalizando 17 entradas, sem adições retroativas. | **Resolvido e Alinhado** |
 | **2** | **Ausência de Coluna de Requisitos em Executions:** A folha `Executions` do workbook oficial não dispunha de coluna autónoma `Requirement ID(s)`. | Adicionada a coluna autónoma `Requirement ID(s)` (coluna C), associando com rigor cada execução aos requisitos normativos exercitados (R01 a R08). | **Resolvido e Conforme** |
 | **3** | **Separação de Resultados Esperados e Observados:** Necessidade de clareza absoluta entre oráculo independente e saídas reais. | Reestruturadas as colunas da folha `Executions` para separar formalmente `Expected outputs (independently derived)` de `Actual outputs`, preservando o veredicto na coluna G para manter 100% íntegras as fórmulas de cobertura. | **Resolvido e Conforme** |
-| **4** | **Histórico de Execuções Incompleto:** O workbook continha apenas a suite combinada, omitindo o histórico de execuções humanas de CP02 e dos candidatos de IA no runner. | Consolidado o registo histórico integral com 68 execuções: CP01 (Smoke H-ENV), CP02 (Humana congelada 16 casos), CP03 (Candidatos IA no runner original), CP04 (Suite final de 30 casos), BR-05 (4 propriedades) e Robustez do Runner (5 cenários). | **Resolvido e Rastreável** |
+| **4** | **Histórico de Execuções Incompleto:** O workbook continha apenas a suite combinada, omitindo o histórico de execuções humanas de CP02 e dos candidatos de IA no runner. | Consolidado o registo histórico integral com 68 execuções lógicas: CP01 (Smoke H-ENV), CP02 (Humana congelada 16 casos), CP03 (Candidatos IA no runner original), CP04 (Suite final de 30 casos), BR-05 (4 propriedades) e Robustez do Runner (5 cenários). | **Resolvido e Rastreável** |
 | **5** | **Falsos PASS na Suite de IA Mascarando Defeitos:** O runner reportava 10 PASS e 2 FAIL sobre `ai_candidates.json` devido a expectativas incorretas em `AI-05` e `AI-06`. | Preservados os resultados históricos do runner original (10 PASS / 2 FAIL) sem manipulação forçada, explicitando nas observações e na folha `Defects` que se tratam de erros de dados de teste da IA (`DATA-01` e `DATA-02`) e não de conformidade do software. | **Resolvido e Transparente** |
 | **6** | **Discriminação de Testers:** Os registos apresentavam identificação genérica de ferramentas. | Atualizada a identificação de testers com discriminação explícita de papéis funcionais: Executante, Supervisão e Validação por membros humanos do Grupo 5. | **Resolvido e Conforme** |
 | **7** | **Cobertura de Casos Limite Operacionais:** Faltava evidência executável para pesos float, whitespace em zonas, tipos não-booleanos e exit code 2. | Concebidos e executados os casos `F-22` a `F-30` na suite final e 5 cenários de robustez do runner, registados com evidências JSON auditáveis. | **Resolvido e Validado** |
@@ -52,10 +52,10 @@ O âmbito cobriu de forma cumulativa e harmonizada os quatro checkpoints da U.C.
 ## 4. Matriz de Defeitos de Software vs Problemas de Qualidade IA
 
 ### Defeitos Estruturais de Software (`shipping.py`)
-1. **`DEF-01` (BR-01):** Linha 3 (`weight >= 20000`). Off-by-one rejeita 20000g como `INVALID`. Detetado por `H-07`. Severidade: **Alta**.
-2. **`DEF-02` (BR-02):** Linha 7 (`weight < 1000`). Off-by-one cobra 8€ a 1000g em vez de 5€. Detetado por `H-03`. Severidade: **Média-Alta**.
-3. **`DEF-03` (BR-03):** Linha 14 (`fee = 4`). Atribuição simples apaga tarifa base em encomendas `REMOTE`. Detetado por `H-10, H-12, H-13, F-18, F-29`. Severidade: **Crítica**.
-4. **`DEF-04` (BR-04):** Linha 5 (`weight > 10000`). Limiar de indisponibilidade em 10kg em vez de 5kg. Detetado por `H-14, F-19, F-30`. Severidade: **Alta**.
+1. **`DEF-01` (BR-01):** Condição `weight >= 20000` na linha 3. Off-by-one rejeita 20000g como `INVALID`. Detetado por `H-07`. Severidade: **Alta**.
+2. **`DEF-02` (BR-02):** Condição `if weight < 1000:` na linha 7. Off-by-one cobra 8€ a 1000g em vez de 5€. Detetado por `H-03`. Severidade: **Média-Alta**.
+3. **`DEF-03` (BR-03):** Atribuição `fee = 4` na linha 14. Atribuição simples apaga tarifa base em encomendas `REMOTE`. Detetado por `H-10, H-12, H-13, F-18, F-29`. Severidade: **Crítica**.
+4. **`DEF-04` (BR-04):** Condição `weight > 10000` na linha 5. Limiar de indisponibilidade em 10kg em vez de 5kg. Detetado por `H-14, F-19, F-30`. Severidade: **Alta**.
 
 ### Problemas de Qualidade de Dados de Teste IA
 1. **`DATA-01` (BR-03 / AI-05):** Expectativa da IA omitiu a taxa base (esperou 4€ em vez de 9€), replicando o bug `DEF-03`.
@@ -64,23 +64,24 @@ O âmbito cobriu de forma cumulativa e harmonizada os quatro checkpoints da U.C.
 
 ---
 
-## 5. Auditoria das 11 Áreas Normativas (`audit_cp4.py`)
+## 5. Auditoria das 12 Áreas Normativas (`audit_cp4.py`)
 
-A execução do script formal de auditoria [`Trabalho_CP4/audit_cp4.py`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/audit_cp4.py) reportou:
+A execução do script formal de auditoria [`Trabalho_CP4/audit_cp4.py`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/audit_cp4.py) reportou 26 verificações com veredicto **PASS**:
 
 | # | Área de Auditoria | Verificações Efetuadas | Veredicto |
 |---|---|---|:---:|
-| **1** | **Integridade da Baseline** | `shipping.py` intacto face ao repositório oficial; todos os documentos normativos presentes. | **PASS** |
-| **2** | **Suite Humana Congelada** | `Trabalho_CP2/human_cases.json` idêntico ao commit `54ec4d3` (16 casos); `human_cases_cp4.json` com 17 casos. | **PASS** |
-| **3** | **Evidências de Execução** | Todos os ficheiros em `runs/` e `evidence/` presentes, válidos e íntegros. | **PASS** |
-| **4** | **Correspondência Test IDs** | Correspondência estrita 1-para-1 entre suite de 30 casos e ficheiro de execução JSON. | **PASS** |
-| **5** | **Cobertura de Requisitos** | 100% de cobertura (R01 a R08); todos os testes desenhados foram executados (0 não executados). | **PASS** |
-| **6** | **Consistência de Resultados** | Humana (11/6), IA runner (10/2), Final (20/10), Paridade estrita Python 3.9 vs Python 3.12. | **PASS** |
-| **7** | **Relatórios de Defeitos** | Registo completo dos 4 defeitos de software e segregação dos 3 problemas de oráculo de IA. | **PASS** |
-| **8** | **Integridade do Workbook** | 6 folhas oficiais; coluna autónoma `Requirement ID(s)`; 0 erros de fórmula (`#REF!`, etc.). | **PASS** |
-| **9** | **Consistência Documental** | Plano CP04 com texto oficial de referência e 17 entradas humanas; relatórios harmonizados. | **PASS** |
-| **10** | **Integridade do Pacote ZIP** | `TVSI_T08_Grupo5_CP04.zip` íntegro (0 erros em `testzip()`); 0 ficheiros temporários ou `.git/`. | **PASS** |
-| **11** | **Validação Criptográfica** | Hashes SHA-256 e dimensões rigorosamente alinhados com `MANIFEST_ENTREGA.md`. | **PASS** |
+| **1** | **Integridade da Baseline** | `shipping.py` intacto face ao commit `9d9f950`; todos os documentos normativos docentes presentes. | **PASS** |
+| **2** | **Suite Humana Congelada** | `Trabalho_CP2/human_cases.json` idêntico ao commit `54ec4d3` (16 casos); `human_cases_cp4.json` com 17 entradas normativas. | **PASS** |
+| **3** | **Validação JSON do Repositório** | Todos os 33 ficheiros JSON do repositório validados estruturalmente e sintaticamente. | **PASS** |
+| **4** | **Unicidade de Test IDs** | Todos os `test_id` são globalmente únicos e válidos nas 4 suites. | **PASS** |
+| **5** | **Suite–Evidência Mapping** | Correspondência estrita 1-para-1 entre suite de 30 casos e ficheiro de execução JSON. | **PASS** |
+| **6** | **Resultados e Oráculos** | Execução direta de 30 casos resulta em 20 PASS / 10 FAIL; paridade absoluta em Python 3.9 e 3.12. | **PASS** |
+| **7** | **Cobertura de Requisitos** | 100% de cobertura (R01 a R08); todos os testes desenhados foram executados (0 não executados). | **PASS** |
+| **8** | **Segregação de Defeitos** | Registo completo dos 4 defeitos de software e segregação dos 3 problemas de oráculo de IA. | **PASS** |
+| **9** | **Integridade do Workbook** | 6 folhas oficiais; coluna autónoma `Requirement ID(s)`; 68 execuções reconciliadas; 0 erros de fórmula. | **PASS** |
+| **10** | **Consistência Documental** | Plano CP04 com texto oficial de referência e 17 entradas humanas; relatórios harmonizados. | **PASS** |
+| **11** | **Integridade do Pacote ZIP** | `TVSI_T08_Grupo5_CP04.zip` íntegro (0 erros em `testzip()`); extração temporária 100% idêntica; 0 ficheiros de sistema. | **PASS** |
+| **12** | **Validação Criptográfica** | Hashes SHA-256 de 50 ficheiros no manifesto e hash externo em `.zip.sha256` 100% coincidentes. | **PASS** |
 
 ---
 
@@ -88,14 +89,13 @@ A execução do script formal de auditoria [`Trabalho_CP4/audit_cp4.py`](file://
 
 - **Ficheiro:** `TVSI_T08_Grupo5_CP04.zip`
 - **Caminho Relativo:** `./TVSI_T08_Grupo5_CP04.zip`
-- **Dimensão:** 203,556 bytes
-- **Hash SHA-256:** `fbf1791b0a92a456854a35452d701bbd51dd1ad06b30aff108a5ca27941ae829`
-- **Ficheiro Externo de Validação:** `TVSI_T08_Grupo5_CP04.zip.sha256`
-- **Ficheiros Incluídos:** 51 ficheiros essenciais
+- **Ficheiro Externo de Validação:** `TVSI_T08_Grupo5_CP04.zip.sha256` (contém o SHA-256 definitivo do pacote)
+- **Ficheiros Incluídos:** 51 ficheiros essenciais (50 artefactos de projeto + 1 manifesto)
 - **Resultado do Teste de Extração:** 100% aprovado sem ficheiros em falta ou corrompidos.
+- **Resultado do Teste CRC:** 0 ficheiros corrompidos (`testzip()` retornou None).
 
 ---
 
 ## 7. Conclusão Final do Auditor
 
-O Checkpoint 4 (CP04) encontra-se **tecnicamente fechado, auditado e em plena conformidade** com os critérios de avaliação e requisitos normativos da U.C. de Tecnologias e Verificação de Sistemas de Informação 2026/27.
+O processo de teste, conceção de casos, gestão de evidências e os artefactos entregáveis do Checkpoint 4 (CP04) encontram-se **tecnicamente validados e auditados nos limites formalmente comprovados**, estando a baseline `shipping.py` preservada e os seus 4 defeitos de software empiricamente caracterizados.

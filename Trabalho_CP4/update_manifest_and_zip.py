@@ -14,6 +14,7 @@ zip_path = ROOT / "TVSI_T08_Grupo5_CP04.zip"
 zip_sha_path = ROOT / "TVSI_T08_Grupo5_CP04.zip.sha256"
 
 # Exactly the 51 files that constitute the CP04 submission package
+# (50 project payload files + 1 self-describing MANIFEST_ENTREGA.md)
 files = [
     "AUDITORIA_FINAL_ENTREGA.md",
     "CLAUDE.md",
@@ -83,7 +84,7 @@ def generate_manifest_and_zip():
         if not (ROOT / f).is_file():
             raise FileNotFoundError(f"Required deliverable missing on disk: {f}")
     
-    # 2. Compute SHA-256 and byte sizes of all 50 files (excluding MANIFEST_ENTREGA.md itself)
+    # 2. Compute SHA-256 and byte sizes of all 50 payload files (excluding MANIFEST_ENTREGA.md itself)
     manifest_entries = {}
     for f in files:
         if f != "MANIFEST_ENTREGA.md":
@@ -93,6 +94,9 @@ def generate_manifest_and_zip():
                 "sha256": sha256_file(p)
             }
     
+    total_payload_files = len(manifest_entries)
+    total_zip_files = len(files)
+    
     # 3. Write clean, non-circular MANIFEST_ENTREGA.md
     manifest_header = f"""# MANIFESTO DE ENTREGA — CP04
 ## Projeto TVSI 2026/27 — T08 — Grupo 5
@@ -101,13 +105,13 @@ def generate_manifest_and_zip():
 **Build sob Teste:** T08-B1.0  
 **Grupo:** Grupo 5 (Eduardo Dias, Rui Carneiro, Érica Moreira, Beatriz Barbosa)  
 **Arquivo Consolidado de Submissão:** `TVSI_T08_Grupo5_CP04.zip`  
-**Total de Ficheiros Integrados no Pacote:** {len(files)}
+**Reconciliação do Inventário:** O arquivo ZIP agrega exatamente **{total_zip_files} ficheiros**: os **{total_payload_files} artefactos de projeto** atestados na tabela abaixo, acompanhados do presente documento de inventário (`MANIFEST_ENTREGA.md`).
 
 ---
 
-## 1. REGISTO CRIPTOGRÁFICO DE INTEGRIDADE DOS FICHEIROS (SHA-256)
+## 1. REGISTO CRIPTOGRÁFICO DE INTEGRIDADE DOS FICHEIROS DO PROJETO (SHA-256)
 
-A tabela seguinte regista a dimensão em bytes e o hash criptográfico SHA-256 de cada ficheiro constituinte do projeto de entrega.
+A tabela seguinte enumera os {total_payload_files} ficheiros do projeto incluídos na entrega, detalhando o caminho relativo, a dimensão exata em bytes e o respetivo hash criptográfico SHA-256.
 
 | Ficheiro | Dimensão (Bytes) | SHA-256 |
 |---|:---:|---|
@@ -118,17 +122,18 @@ A tabela seguinte regista a dimensão em bytes e o hash criptográfico SHA-256 d
         hsh = manifest_entries[f]["sha256"]
         table_rows.append(f"| `{f}` | {sz:,} | `{hsh}` |")
     
-    manifest_footer = """
+    manifest_footer = f"""
 
 ---
 
 ## 2. ARQUIVO DE SUBMISSÃO CONSOLIDADO (ZIP)
 
-O pacote de submissão para o Moodle (`TVSI_T08_Grupo5_CP04.zip`) agrega exatamente os ficheiros acima listados.
-Para evitar dependências circulares de cálculo e autorreferência no manifesto contido dentro do próprio arquivo, o hash de integridade SHA-256 do arquivo ZIP final é mantido no ficheiro externo de verificação:
+O pacote de submissão para a plataforma Moodle (`TVSI_T08_Grupo5_CP04.zip`) agrega exatamente os {total_zip_files} ficheiros indicados ({total_payload_files} ficheiros de projeto mais o `MANIFEST_ENTREGA.md`).
+
+Para evitar dependências circulares de cálculo e autorreferência no manifesto contido dentro do próprio arquivo, o hash de integridade SHA-256 do arquivo ZIP final é atestado no ficheiro externo de verificação:
 - `TVSI_T08_Grupo5_CP04.zip.sha256`
 
-Este manifesto atesta com exatidão matemática a proveniência e a conformidade integral de todos os artefactos entregues.
+Este manifesto atesta com exatidão matemática a proveniência, imutabilidade e rastreabilidade integral de todos os artefactos entregues.
 """
     manifest_text = manifest_header + "\n".join(table_rows) + manifest_footer
     (ROOT / "MANIFEST_ENTREGA.md").write_text(manifest_text, encoding="utf-8")
@@ -158,13 +163,13 @@ Este manifesto atesta com exatidão matemática a proveniência e a conformidade
             
     # 6. Deep extraction test to verify bit-by-bit integrity
     with tempfile.TemporaryDirectory() as tmpdir:
-        tmp_path = pathlib.Path(tmpdir)
+        tmp_p = pathlib.Path(tmpdir)
         with zipfile.ZipFile(zip_path, "r") as zf:
-            zf.extractall(tmp_path)
+            zf.extractall(tmp_p)
             
         for f in files:
             orig = ROOT / f
-            extr = tmp_path / f
+            extr = tmp_p / f
             if not extr.is_file():
                 raise FileNotFoundError(f"Extracted file missing: {f}")
             if orig.stat().st_size != extr.stat().st_size:
@@ -195,7 +200,7 @@ Este manifesto atesta com exatidão matemática a proveniência e a conformidade
             rel_cons.write_text(new_r_text, encoding="utf-8")
             
     print(f"Package created: {zip_path.name}")
-    print(f"Total files: {len(files)}")
+    print(f"Total files in ZIP: {len(files)} ({total_payload_files} payload + 1 manifest)")
     print(f"ZIP Size: {z_size:,} bytes")
     print(f"ZIP SHA-256: {z_hash}")
     print(f"External SHA-256 verification file written: {zip_sha_path.name}")

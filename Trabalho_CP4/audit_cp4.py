@@ -9,7 +9,7 @@ Validates the 12 rigorous QA and Audit areas:
 2. Frozen Human Suite Preservation (CP02 commit 54ec4d3 integrity, H-ENV + H-01..H-16 = 17 entries)
 3. JSON Syntax & Schema Validity (All repository JSON files)
 4. Uniqueness of Test IDs (Across all suites)
-5. Suite-to-Evidence Correspondence (1-to-1 input/expected mapping)
+5. Suite–Evidence Correspondence (1-to-1 input/expected mapping)
 6. Individual Execution Results & Oracles Verification (Deterministic run comparison in Py 3.9 & 3.12)
 7. End-to-End Requirement Traceability (R01..R08 100% coverage, 0 unexecuted)
 8. Defect vs AI Expectation Data Quality Segregation (DEF-01..04 vs DATA-01..03)
@@ -173,9 +173,9 @@ def run_deep_audit():
         log_result("FAIL", "Suite Test ID validation failed", str(suite_id_errors))
 
     # -------------------------------------------------------------------------
-    # AREA 5: Suite-to-Evidence Correspondence
+    # AREA 5: Suite–Evidence Correspondence
     # -------------------------------------------------------------------------
-    print("\n[AREA 5/12] Verifying Suite-to-Evidence Mapping...")
+    print("\n[AREA 5/12] Verifying Suite–Evidence Mapping...")
     final_cases_file = ROOT_DIR / "Trabalho_CP4/final_cases.json"
     final_run_file = ROOT_DIR / "Trabalho_CP4/runs/final_cases_execution.json"
     if final_cases_file.is_file() and final_run_file.is_file():
@@ -443,6 +443,14 @@ def run_deep_audit():
         else:
             log_result("FAIL", f"Manifest hash verification failed ({len(hash_mismatches)} mismatches)", str(hash_mismatches[:3]))
 
+        # Reconcile inventory: 50 manifest entries + 1 MANIFEST_ENTREGA.md = 51 files in ZIP
+        if len(table_matches) == 50 and zip_path.is_file():
+            with zipfile.ZipFile(zip_path, "r") as zf:
+                if len(zf.namelist()) == 51:
+                    log_result("PASS", "Inventory exact reconciliation: 50 manifest payload files + 1 manifest = 51 files in ZIP")
+                else:
+                    log_result("FAIL", "Inventory count mismatch between manifest and ZIP", f"ZIP has {len(zf.namelist())}")
+
         # Also verify external zip sha256 file
         if zip_sha_file.is_file() and zip_path.is_file():
             content = zip_sha_file.read_text(encoding="utf-8").strip()
@@ -475,7 +483,7 @@ def run_deep_audit():
         print("\nOVERALL STATUS: CONDITIONALLY ACCEPTED (Warnings present)")
         return 0
     else:
-        print("\nOVERALL STATUS: AUDIT PASSED — 100% NORMATIVE COMPLIANCE ACHIEVED")
+        print("\nOVERALL STATUS: AUDIT PASSED — TEST PROCESS & ARTIFACTS FULLY VALIDATED (4 SUT DEFECTS CONFIRMED)")
         return 0
 
 if __name__ == "__main__":

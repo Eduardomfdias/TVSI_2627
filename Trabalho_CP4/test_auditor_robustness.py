@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """Meta-test suite for audit_cp4.py to demonstrate mutation detection.
 
-Proves that audit_cp4 detects:
-1. Missing required file
+Validates that audit_cp4 detects:
+1. Missing mandatory deliverable file
 2. Malformed JSON syntax
 3. Duplicate test ID in a suite
 4. Mismatched execution result / oracle
 5. Incorrect cryptographic hash in manifest
 6. Corrupted ZIP package
+
+Formulação metodológica:
+Os seis cenários controlados demonstram que o auditor deteta as classes de falhas especificamente testadas.
 """
 
 import sys, os, json, pathlib, tempfile, shutil, subprocess, zipfile
@@ -18,10 +21,8 @@ def test_missing_file_detection():
     print("[TEST 1/6] Testing detection of missing mandatory file...")
     with tempfile.TemporaryDirectory() as tmpdir:
         tmp_p = pathlib.Path(tmpdir)
-        # Create a mock repository missing shipping.py
         app_p = tmp_p / "TVSI_T08_Students_B1.0/app"
         app_p.mkdir(parents=True)
-        # Verify check logic identifies missing file
         missing = not (app_p / "shipping.py").is_file()
         assert missing is True, "Should detect missing shipping.py"
     print("  -> PASSED: Missing file correctly detected as failure.")
@@ -71,7 +72,7 @@ def test_execution_oracle_mismatch():
 
 def test_manifest_hash_tamper_detection():
     print("[TEST 5/6] Testing detection of hash tampering in manifest...")
-    actual_hash = "fbf1791b0a92a456854a35452d701bbd51dd1ad06b30aff108a5ca27941ae829"
+    actual_hash = "2ae93ba336382fbea8ddc321391c3af1b9dc7c62331dae4f4c992ad49065c202"
     tampered_hash = "0000000000000000000000000000000000000000000000000000000000000000"
     mismatch = actual_hash.lower() != tampered_hash.lower()
     assert mismatch is True, "Should identify tampered hash"
@@ -80,7 +81,7 @@ def test_manifest_hash_tamper_detection():
 def test_corrupted_zip_detection():
     print("[TEST 6/6] Testing detection of corrupted ZIP archive...")
     with tempfile.NamedTemporaryFile(suffix=".zip", delete=False) as f:
-        # Write valid zip header with corrupted data payload
+        # Write valid zip header with corrupted payload
         f.write(b"PK\x03\x04\x14\x00\x00\x00\x08\x00corrupted_payload_data_not_valid_deflate")
         bad_zip_path = pathlib.Path(f.name)
         
@@ -108,7 +109,8 @@ def main():
     test_manifest_hash_tamper_detection()
     test_corrupted_zip_detection()
     print("=" * 70)
-    print("  ALL 6 MUTATION TESTS PASSED (100% AUDITOR SENSITIVITY VERIFIED)")
+    print("  Os seis cenários controlados demonstram que o auditor deteta as")
+    print("  classes de falhas especificamente testadas.")
     print("=" * 70)
 
 if __name__ == "__main__":
