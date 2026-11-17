@@ -78,7 +78,7 @@ A execução do script formal de auditoria [`Trabalho_CP4/audit_cp4.py`](file://
 | **6** | **Resultados e Oráculos** | Execução direta de 30 casos resulta em 20 PASS / 10 FAIL; paridade absoluta em Python 3.9 e 3.12. | **PASS** |
 | **7** | **Cobertura de Requisitos** | 100% de cobertura (R01 a R08); todos os testes desenhados foram executados (0 não executados). | **PASS** |
 | **8** | **Segregação de Defeitos** | Registo completo dos 4 defeitos de software e segregação dos 3 problemas de oráculo de IA. | **PASS** |
-| **9** | **Integridade do Workbook** | 6 folhas oficiais; coluna autónoma `Requirement ID(s)`; 68 execuções reconciliadas; 0 erros de fórmula. | **PASS** |
+| **9** | **Integridade do Workbook** | 6 folhas oficiais; coluna autónoma `Requirement ID(s)`; 68 execuções reconciliadas; validação estrutural OpenXML das 324 fórmulas. | **PASS** |
 | **10** | **Consistência Documental** | Plano CP04 com texto oficial de referência e 17 entradas humanas; relatórios harmonizados. | **PASS** |
 | **11** | **Integridade do Pacote ZIP** | `TVSI_T08_Grupo5_CP04.zip` íntegro (0 erros em `testzip()`); extração temporária 100% idêntica; 0 ficheiros de sistema. | **PASS** |
 | **12** | **Validação Criptográfica** | Hashes SHA-256 de 50 ficheiros no manifesto e hash externo em `.zip.sha256` 100% coincidentes. | **PASS** |
@@ -99,3 +99,6 @@ A execução do script formal de auditoria [`Trabalho_CP4/audit_cp4.py`](file://
 ## 7. Conclusão Final do Auditor
 
 O processo de teste, conceção de casos, gestão de evidências e os artefactos entregáveis do Checkpoint 4 (CP04) encontram-se **tecnicamente validados e auditados nos limites formalmente comprovados**, estando a baseline `shipping.py` preservada e os seus 4 defeitos de software empiricamente caracterizados.
+
+**Declaração de Âmbito sobre o Workbook Excel:**  
+Foi realizada uma validação estrutural do workbook, incluindo a inspeção das 324 fórmulas, das referências celulares e das dependências identificadas no XML OpenXML. Foram também inspecionadas estaticamente as fórmulas COUNTIFS/SUMIFS e a sua coerência estrutural. Não foi possível efetuar um recálculo dinâmico independente através do LibreOffice, pelo que a validação dos resultados calculados fica limitada aos valores armazenados e às verificações estáticas disponíveis.

@@ -15,9 +15,9 @@ A tabela seguinte enumera os 50 ficheiros do projeto incluídos na entrega, deta
 
 | Ficheiro | Dimensão (Bytes) | SHA-256 |
 |---|:---:|---|
-| `AUDITORIA_FINAL_ENTREGA.md` | 10,587 | `8bc427c1cf01e9a89054fdf6701c34e74ea93ec94a858394153695a73b1140bd` |
+| `AUDITORIA_FINAL_ENTREGA.md` | 11,168 | `4e2d873f285ef6c3c49bcc669482a143af87b3df612c62c3ced2e20f794e29c2` |
 | `CLAUDE.md` | 2,179 | `24468175d9c2783d8735cad09ea0c8ba39dc5b7bdaea1a3c462c5e7e7a76b2eb` |
-| `FECHO_FINAL_CP04.md` | 12,974 | `9ae26c20e36bb1943a05b99e83173ac5b3e7174ea4d2c836a5e984fa1ce82ab0` |
+| `FECHO_FINAL_CP04.md` | 13,603 | `b4bc5f5a681d43b1c519b7711a467ee2600cdd30ad0817a24f29e776a1b57afe` |
 | `README.md` | 11,687 | `c8272239e62094fc6ecd7fc0b95ef64f8e2f6728be53bb1e0a9ee377c8a3dccb` |
 | `Relatorio_Consolidado.md` | 20,469 | `475fdbdc47fb0eb51600c4c9c646676b46235a5d88e4d3fecdb4e6de022d281f` |
 | `TVSI_T08_Students_B1.0/AI_PROVENANCE.html` | 2,826 | `3ea599d9581c9002ec8b8c10acbb2c19a48124b982bdaadd379b22f8df6b703d` |

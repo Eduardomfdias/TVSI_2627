@@ -56,7 +56,7 @@ Todas as verificações obedecem aos princípios fundamentais de engenharia de s
 Para garantir absoluta clareza conceptual, distinguem-se:
 1. **Casos de Teste Únicos:** Entidades de teste distintas concebidas nas suites (`H-ENV`, `H-01..16`, `AI-01..12`, `F-17..30`, `BR05-01..04`, `ROB-01..05`).
 2. **Linhas de Execução Lógica no Workbook (68):** Linhas formais de registo no livro de cálculo oficial [TestResults_T08_Template.xlsx](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/TVSI_T08_Students_B1.0/TestResults_T08_Template.xlsx) (folha `Executions`), correspondendo a um ensaio por caso de teste lógico.
-3. **Execuções Físicas Totais Multiplataforma (102):** Invocações efetivas do interpretador Python em runtime, incluindo a execução paralela de paridade da suite final (Python 3.9 e Python 3.12) e verificação repetida de propriedades.
+3. **Execuções Físicas Totais Multiplataforma (98):** Invocações efetivas do interpretador Python em runtime, incluindo a execução paralela de paridade da suite final (30 em Python 3.9 + 30 em Python 3.12 = 60 execuções físicas), perfazendo um total de 98 execuções físicas comprovadas por evidências JSON ($1 + 16 + 12 + 60 + 4 + 5 = 98$).
 
 ### Tabela de Reconciliação Metodológica das Execuções
 
@@ -66,11 +66,12 @@ Para garantir absoluta clareza conceptual, distinguem-se:
 | **Suite Humana Congelada** | `RUN-H02-01..16` | 16 | 16 | 16 | 10 PASS / 6 FAIL | `Trabalho_CP2/human_cases.results.json` |
 | **Candidatos de IA** | `RUN-AI-01..12` | 12 | 12 | 12 | 10 PASS / 2 FAIL | `Trabalho_CP4/runs/ai_candidates_execution.json` |
 | **Suite Final Integrada** | `RUN-CP4-01..30` | 30 | 30 | 60 *(30 em Py 3.9 + 30 em Py 3.12)* | 20 PASS / 10 FAIL | `Trabalho_CP4/runs/final_cases_execution.json` & `.py312.json` |
-| **Propriedades BR-05** | `RUN-CTRL-01..04` | 4 | 4 | 8 *(4 em Py 3.9 + 4 em Py 3.12)* | 4 PASS | `Trabalho_CP4/evidence/br05_independence_cp4.json` |
+| **Propriedades BR-05** | `RUN-CTRL-01..04` | 4 | 4 | 4 | 4 PASS | `Trabalho_CP4/evidence/br05_independence_cp4.json` |
 | **Robustez do Runner CLI** | `RUN-ROB-01..05` | 5 | 5 | 5 | 5 PASS | `Trabalho_CP4/evidence/runner_robustness_evidence.json` |
-| **Total Global** | — | **68** | **68** | **102** | **50 PASS / 18 FAIL** *(no Excel)* | `TestResults_T08_Template.xlsx` |
+| **Total Global** | — | **68** | **68** | **98** | **50 PASS / 18 FAIL** *(no Excel)* | `TestResults_T08_Template.xlsx` |
 
 $$\text{Execuções Lógicas Reconciliadas} = 1 + 16 + 12 + 30 + 4 + 5 = \mathbf{68}$$
+$$\text{Execuções Físicas Totais} = 1 + 16 + 12 + (30 \times 2) + 4 + 5 = \mathbf{98}$$
 
 ---
 
@@ -111,8 +112,8 @@ Os defeitos decorrem de erros estruturais no código fornecido de `shipping.py` 
 - **Folhas Preservadas (6 folhas):** `Test Cases`, `Executions`, `Defects`, `Static Review`, `Coverage`, `Technique`.
 - **Coluna de Requisitos Autónoma:** Célula `C4` contém `'Requirement ID(s)'`.
 - **Fórmulas de Cobertura R01..R08:** 324 fórmulas na folha `Coverage` ligam dinamicamente casos e execuções aos requisitos (Diferença entre desenhados e executados = 0).
-- **Erros de Fórmula:** **0 erros** (`#REF!`, `#VALUE!`, `#NAME?`, `#DIV/0!`, `#N/A`).
-- **Limitação de Recálculo:** Declarada a ausência de motor LibreOffice headless no ambiente; a integridade foi verificada por parsing XML estrutural OpenXML e inspeção estática das fórmulas.
+- **Erros de Fórmula Armazenados:** **0 erros** (`#REF!`, `#VALUE!`, `#NAME?`, `#DIV/0!`, `#N/A`).
+- **Âmbito e Limitação da Validação:** Foi realizada uma validação estrutural do workbook, incluindo a inspeção das 324 fórmulas, das referências celulares e das dependências identificadas no XML OpenXML. Foram também inspecionadas estaticamente as fórmulas COUNTIFS/SUMIFS e a sua coerência estrutural. Não foi possível efetuar um recálculo dinâmico independente através do LibreOffice, pelo que a validação dos resultados calculados fica limitada aos valores armazenados e às verificações estáticas disponíveis.
 
 ---
 
@@ -142,7 +143,7 @@ Os defeitos decorrem de erros estruturais no código fornecido de `shipping.py` 
 
 ## 11. LIMITAÇÕES TÉCNICAS DECLARADAS
 
-1. **Recálculo Office:** A ausência do software LibreOffice no ambiente impediu o recálculo dinâmico automatizado de fórmulas no Excel; a integridade foi comprovada via inspeção estática do esquema OpenXML.
+1. **Validação do Excel sem Recálculo Independente:** Não foi possível efetuar um recálculo dinâmico independente através do LibreOffice, pelo que a validação dos resultados calculados fica limitada aos valores armazenados, às verificações estáticas disponíveis e à validação estrutural do XML OpenXML.
 2. **Ambiente Multiplataforma:** As execuções em Python 3.12 foram consolidadas nos registos JSON de paridade, mantendo-se no workbook Excel a convenção de uma linha de ensaio lógica por caso de teste (68 linhas).
 
 ---
