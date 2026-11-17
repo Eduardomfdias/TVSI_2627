@@ -242,7 +242,7 @@ def run_deep_audit():
     # AREA 7: End-to-End Requirement Traceability
     # -------------------------------------------------------------------------
     print("\n[AREA 7/12] Auditing End-to-End Requirement Traceability...")
-    wb_file = ROOT_DIR / "TVSI_T08_Students_B1.0/TestResults_T08_Template.xlsx"
+    wb_file = ROOT_DIR / "Trabalho_CP4/TestResults_T08_Template.xlsx"
     with zipfile.ZipFile(wb_file, "r") as z:
         ns_xl = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
         s5_xml = ET.fromstring(z.read("xl/worksheets/sheet5.xml"))
@@ -286,47 +286,67 @@ def run_deep_audit():
     # AREA 9: Excel Workbook Integrity & Executions Reconciled Count
     # -------------------------------------------------------------------------
     print("\n[AREA 9/12] Auditing Excel Workbook & Reconciling Executions Count...")
-    with zipfile.ZipFile(wb_file, "r") as z:
-        wb_xml = ET.fromstring(z.read("xl/workbook.xml"))
-        sheets = [s.attrib["name"] for s in wb_xml.findall(f".//{ns_xl}sheet")]
-        expected_sheets = ["Test Cases", "Executions", "Defects", "Static Review", "Coverage", "Technique"]
-        if sheets == expected_sheets:
-            log_result("PASS", "Workbook contains exactly the 6 official sheets in order")
-        else:
-            log_result("FAIL", "Workbook sheets mismatch", f"Got: {sheets}")
+    canonical_wb = ROOT_DIR / "Trabalho_CP4/TestResults_T08_Template.xlsx"
+    if not canonical_wb.is_file():
+        log_result("FAIL", "Canonical workbook missing", str(canonical_wb))
+    else:
+        with zipfile.ZipFile(canonical_wb, "r") as z:
+            wb_xml = ET.fromstring(z.read("xl/workbook.xml"))
+            sheets = [s.attrib["name"] for s in wb_xml.findall(f".//{ns_xl}sheet")]
+            expected_sheets = ["Test Cases", "Executions", "Defects", "Static Review", "Coverage", "Technique"]
+            if sheets == expected_sheets:
+                log_result("PASS", f"Canonical workbook ({canonical_wb.name}) contains exactly the 6 official sheets in order")
+            else:
+                log_result("FAIL", "Workbook sheets mismatch", f"Got: {sheets}")
 
-        s2_xml = ET.fromstring(z.read("xl/worksheets/sheet2.xml"))
-        c4_cell = next((c for c in s2_xml.findall(f".//{ns_xl}c") if c.attrib.get("r") == "C4"), None)
-        c4_val = c4_cell.find(f"{ns_xl}v").text if c4_cell is not None and c4_cell.find(f"{ns_xl}v") is not None else ""
-        if "Requirement" in c4_val:
-            log_result("PASS", f"Autonomous 'Requirement ID(s)' column present in Executions (Cell C4: '{c4_val}')")
-        else:
-            log_result("FAIL", "Autonomous Requirement column missing in Executions", f"C4: '{c4_val}'")
+            s2_xml = ET.fromstring(z.read("xl/worksheets/sheet2.xml"))
+            c4_cell = next((c for c in s2_xml.findall(f".//{ns_xl}c") if c.attrib.get("r") == "C4"), None)
+            c4_val = c4_cell.find(f"{ns_xl}v").text if c4_cell is not None and c4_cell.find(f"{ns_xl}v") is not None else ""
+            if "Requirement" in c4_val:
+                log_result("PASS", f"Autonomous 'Requirement ID(s)' column present in Executions (Cell C4: '{c4_val}')")
+            else:
+                log_result("FAIL", "Autonomous Requirement column missing in Executions", f"C4: '{c4_val}'")
 
-        # Reconcile exact 68 execution rows
-        execution_rows = []
-        for r in s2_xml.findall(f".//{ns_xl}row")[4:]:
-            cells = {c.attrib.get("r")[0]: c.find(f"{ns_xl}v").text if c.find(f"{ns_xl}v") is not None else "" for c in r.findall(f"{ns_xl}c")}
-            if cells.get("A"):
-                execution_rows.append(cells)
-        
-        if len(execution_rows) == 68:
-            log_result("PASS", "Reconciled exactly 68 execution rows in Executions sheet (1 ENV + 16 H + 12 AI + 30 Final + 4 BR05 + 5 Robustness)")
-        else:
-            log_result("FAIL", "Executions row count mismatch", f"Count: {len(execution_rows)}")
+            # Reconcile exact 68 execution rows
+            execution_rows = []
+            for r in s2_xml.findall(f".//{ns_xl}row")[4:]:
+                cells = {c.attrib.get("r")[0]: c.find(f"{ns_xl}v").text if c.find(f"{ns_xl}v") is not None else "" for c in r.findall(f"{ns_xl}c")}
+                if cells.get("A"):
+                    execution_rows.append(cells)
+            
+            if len(execution_rows) == 68:
+                log_result("PASS", "Reconciled exactly 68 execution rows in Executions sheet (1 ENV + 16 H + 12 AI + 30 Final + 4 BR05 + 5 Robustness)")
+            else:
+                log_result("FAIL", "Executions row count mismatch", f"Count: {len(execution_rows)}")
 
-        # Check for formula errors across all sheets
-        errors = []
-        for i, sname in enumerate(sheets, 1):
-            s_xml = ET.fromstring(z.read(f"xl/worksheets/sheet{i}.xml"))
-            for c in s_xml.findall(f".//{ns_xl}c"):
-                v = c.find(f"{ns_xl}v")
-                if v is not None and v.text and any(err in v.text for err in ["#REF!", "#VALUE!", "#NAME?", "#DIV/0!", "#N/A"]):
-                    errors.append(f"{sname}:{c.attrib.get('r')} = {v.text}")
-        if not errors:
-            log_result("PASS", "Zero formula errors (#REF!, #VALUE!, etc.) across all 6 workbook sheets")
+            # Check for formula errors across all sheets
+            errors = []
+            for i, sname in enumerate(sheets, 1):
+                s_xml = ET.fromstring(z.read(f"xl/worksheets/sheet{i}.xml"))
+                for c in s_xml.findall(f".//{ns_xl}c"):
+                    v = c.find(f"{ns_xl}v")
+                    if v is not None and v.text and any(err in v.text for err in ["#REF!", "#VALUE!", "#NAME?", "#DIV/0!", "#N/A"]):
+                        errors.append(f"{sname}:{c.attrib.get('r')} = {v.text}")
+            if not errors:
+                log_result("PASS", "Zero formula errors (#REF!, #VALUE!, etc.) across all 6 workbook sheets")
+            else:
+                log_result("FAIL", "Formula errors detected in workbook", str(errors))
+
+        # Check replica workbooks consistency
+        can_bytes = canonical_wb.read_bytes()
+        replicas = [
+            ROOT_DIR / "TVSI_T08_Students_B1.0/TestResults_T08_Template.xlsx",
+            ROOT_DIR / "Trabalho_CP1/TestResults_T08_Template.xlsx",
+            ROOT_DIR / "Trabalho_CP4/TVSI_T08_Students_B1.0_CP4/TestResults_T08_Template.xlsx"
+        ]
+        rep_mismatches = []
+        for rep in replicas:
+            if rep.is_file() and rep.read_bytes() != can_bytes:
+                rep_mismatches.append(str(rep.relative_to(ROOT_DIR)))
+        if not rep_mismatches:
+            log_result("PASS", f"All repository workbook replicas match canonical {canonical_wb.relative_to(ROOT_DIR)} bit-for-bit")
         else:
-            log_result("FAIL", "Formula errors detected in workbook", str(errors))
+            log_result("FAIL", "Workbook replicas mismatch canonical version", str(rep_mismatches))
 
     # -------------------------------------------------------------------------
     # AREA 10: Documentation Cross-Consistency
