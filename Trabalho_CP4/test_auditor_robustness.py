@@ -6,7 +6,7 @@ to demonstrate that the integrated auditor actively detects the 6 required failu
 1. Missing mandatory deliverable file
 2. Malformed JSON syntax
 3. Duplicate test ID in a suite
-4. Mismatched execution result / oracle divergence
+4. Inconsistency introduced in a final-suite test expectation, detected through suite-to-evidence mismatch and/or global result-distribution changes
 5. Incorrect cryptographic hash in manifest
 6. Corrupted ZIP package
 
@@ -95,7 +95,7 @@ def test_duplicate_id_detection():
     finally:
         tmp.cleanup()
 
-def test_oracle_divergence_detection():
+def test_final_suite_expectation_inconsistency_detection():
     print("[TEST 4/6] Inconsistência introduzida na expectativa de um caso da suite final, com verificação da deteção da divergência entre a suite e a evidência de execução e/ou da alteração da distribuição global de resultados...")
     tmp, sandbox = create_isolated_sandbox()
     try:
@@ -108,7 +108,7 @@ def test_oracle_divergence_detection():
         assert proc.returncode != 0, f"Auditor should exit with non-zero code on oracle divergence, got {proc.returncode}"
         assert ("Direct execution count mismatch" in proc.stdout or "Suite-to-evidence mismatch" in proc.stdout), "Auditor should detect divergence in final cases"
         assert "FAIL" in proc.stdout, "Auditor output should flag FAIL"
-        print("  -> PASSED: Integrated auditor trapped expected fee mutation divergence with exit code", proc.returncode)
+        print("  -> PASSED: Integrated auditor detected the final-suite expectation inconsistency with exit code", proc.returncode)
     finally:
         tmp.cleanup()
 
@@ -152,7 +152,7 @@ def main():
     test_missing_file_detection()
     test_malformed_json_detection()
     test_duplicate_id_detection()
-    test_oracle_divergence_detection()
+    test_final_suite_expectation_inconsistency_detection()
     test_manifest_hash_tamper_detection()
     test_corrupted_zip_detection()
     
