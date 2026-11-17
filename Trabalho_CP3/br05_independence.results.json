@@ -1,7 +1,7 @@
 {
   "build": "T08-B1.0",
   "rule": "BR-05",
-  "python": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+  "python": "3.9.6 (default, May 22 2026, 11:13:45) \n[Clang 21.0.0 (clang-2100.1.1.101)]",
   "verification_scope": {
     "tested_properties": [
       "repeatability_and_determinism",
