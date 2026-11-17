@@ -53,7 +53,7 @@ A tabela seguinte enumera os 50 ficheiros do projeto incluídos na entrega, deta
 | `Trabalho_CP4/CP4.md` | 8,869 | `80509013fd2977a17082005d90a3ce6337b75497f0483db8e420765ff502eb5f` |
 | `Trabalho_CP4/Relatorio_CP4.md` | 16,923 | `e1ed00c94938dafbfcc8c91157c88046a1d82cba4bc09736c41feabcc156fb6c` |
 | `Trabalho_CP4/TestResults_T08_Template.xlsx` | 33,151 | `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef` |
-| `Trabalho_CP4/audit_cp4.py` | 27,016 | `9e655390b52a5a0bac35fb19c25f739739147f4daf134820590c92ddf5a7a0e3` |
+| `Trabalho_CP4/audit_cp4.py` | 27,383 | `0bafca36c72682638e340d7f504b67979e15fb537f9792eadc8b09c064f74be2` |
 | `Trabalho_CP4/evidence/br05_independence_cp4.json` | 6,160 | `dc94cb77e4f0ff6b7d5b1d3df0d91e34de52b9c98bb332c9b59cd7762a01568d` |
 | `Trabalho_CP4/evidence/runner_robustness_evidence.json` | 1,380 | `317aee17be2d63a59aecce058d2d59e18b428a93955ab76b2525462196c5a307` |
 | `Trabalho_CP4/final_cases.json` | 5,475 | `31714bcb90702751107b21a27cc77d0a7f62d59ef158c6ae415b6ba42e6d1ffd` |

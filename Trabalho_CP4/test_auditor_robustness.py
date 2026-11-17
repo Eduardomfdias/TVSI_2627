@@ -1,117 +1,167 @@
 #!/usr/bin/env python3
-"""Meta-test suite for audit_cp4.py to demonstrate mutation detection.
+"""Integrated Mutation Meta-Test Suite for audit_cp4.py.
 
-Validates that audit_cp4 detects:
+Executes audit_cp4.py against isolated temporary sandboxes with controlled mutations
+to demonstrate that the integrated auditor actively detects the 6 required failure classes:
 1. Missing mandatory deliverable file
 2. Malformed JSON syntax
 3. Duplicate test ID in a suite
-4. Mismatched execution result / oracle
+4. Mismatched execution result / oracle divergence
 5. Incorrect cryptographic hash in manifest
 6. Corrupted ZIP package
 
 Formulação metodológica:
-Os seis cenários controlados demonstram que o auditor deteta as classes de falhas especificamente testadas.
+Os seis cenários controlados demonstram que o auditor integrado deteta as
+classes de falhas especificamente testadas através de execução em ambiente temporário.
 """
 
-import sys, os, json, pathlib, tempfile, shutil, subprocess, zipfile
+import sys
+import os
+import json
+import pathlib
+import tempfile
+import shutil
+import subprocess
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-def test_missing_file_detection():
-    print("[TEST 1/6] Testing detection of missing mandatory file...")
-    with tempfile.TemporaryDirectory() as tmpdir:
-        tmp_p = pathlib.Path(tmpdir)
-        app_p = tmp_p / "TVSI_T08_Students_B1.0/app"
-        app_p.mkdir(parents=True)
-        missing = not (app_p / "shipping.py").is_file()
-        assert missing is True, "Should detect missing shipping.py"
-    print("  -> PASSED: Missing file correctly detected as failure.")
+def create_isolated_sandbox():
+    """Creates a temporary isolated copy of the repository for safe mutation testing."""
+    tmp = tempfile.TemporaryDirectory()
+    sandbox = pathlib.Path(tmp.name)
+    for item in ROOT.iterdir():
+        if item.name in (".git", ".DS_Store", "brain"):
+            continue
+        dest = sandbox / item.name
+        if item.is_dir():
+            shutil.copytree(item, dest, symlinks=True)
+        else:
+            shutil.copy2(item, dest)
+    return tmp, sandbox
 
-def test_invalid_json_detection():
-    print("[TEST 2/6] Testing detection of invalid JSON syntax...")
-    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
-        f.write("{ invalid json: missing quotes }")
-        bad_json_path = pathlib.Path(f.name)
-    
-    detected = False
+def run_auditor_in_sandbox(sandbox_path):
+    """Executes audit_cp4.py as a subprocess inside the given isolated sandbox."""
+    script_path = sandbox_path / "Trabalho_CP4/audit_cp4.py"
+    proc = subprocess.run(
+        [sys.executable, str(script_path)],
+        cwd=sandbox_path,
+        capture_output=True,
+        text=True
+    )
+    return proc
+
+def test_missing_file_detection():
+    print("[TEST 1/6] Testing integrated detection of missing mandatory deliverable...")
+    tmp, sandbox = create_isolated_sandbox()
     try:
-        with open(bad_json_path) as jf:
-            json.load(jf)
-    except json.JSONDecodeError:
-        detected = True
+        # Remove a mandatory normative file
+        target = sandbox / "TVSI_T08_Students_B1.0/BusinessRules.md"
+        target.unlink()
+        proc = run_auditor_in_sandbox(sandbox)
+        assert proc.returncode != 0, f"Auditor should exit with non-zero code on missing file, got {proc.returncode}"
+        assert "Missing normative documents" in proc.stdout, "Auditor should explicitly flag missing normative document"
+        assert "FAIL" in proc.stdout, "Auditor output should flag FAIL"
+        print("  -> PASSED: Integrated auditor trapped missing file with exit code", proc.returncode)
     finally:
-        bad_json_path.unlink()
-        
-    assert detected is True, "Should detect JSONDecodeError"
-    print("  -> PASSED: Malformed JSON syntax successfully trapped.")
+        tmp.cleanup()
+
+def test_malformed_json_detection():
+    print("[TEST 2/6] Testing integrated detection of malformed JSON syntax...")
+    tmp, sandbox = create_isolated_sandbox()
+    try:
+        target = sandbox / "Trabalho_CP4/final_cases.json"
+        target.write_text("{ malformed: json, missing quotes, }", encoding="utf-8")
+        proc = run_auditor_in_sandbox(sandbox)
+        assert proc.returncode != 0, f"Auditor should exit with non-zero code on malformed JSON, got {proc.returncode}"
+        assert "JSON syntax errors detected" in proc.stdout, "Auditor should report JSON syntax error"
+        assert "FAIL" in proc.stdout, "Auditor output should flag FAIL"
+        print("  -> PASSED: Integrated auditor trapped malformed JSON syntax with exit code", proc.returncode)
+    finally:
+        tmp.cleanup()
 
 def test_duplicate_id_detection():
-    print("[TEST 3/6] Testing detection of duplicate test IDs...")
-    mock_suite = [
-        {"id": "H-01", "input": {}, "expected": {}},
-        {"id": "H-01", "input": {}, "expected": {}}
-    ]
-    ids = [c["id"] for c in mock_suite]
-    has_duplicates = len(ids) != len(set(ids))
-    assert has_duplicates is True, "Should detect duplicate ID"
-    print("  -> PASSED: Duplicate Test IDs successfully flagged.")
+    print("[TEST 3/6] Testing integrated detection of duplicate test IDs...")
+    tmp, sandbox = create_isolated_sandbox()
+    try:
+        target = sandbox / "Trabalho_CP4/final_cases.json"
+        data = json.loads(target.read_text(encoding="utf-8"))
+        data[1]["id"] = data[0]["id"]
+        target.write_text(json.dumps(data, indent=2), encoding="utf-8")
+        proc = run_auditor_in_sandbox(sandbox)
+        assert proc.returncode != 0, f"Auditor should exit with non-zero code on duplicate ID, got {proc.returncode}"
+        assert "duplicate IDs detected" in proc.stdout, "Auditor should flag duplicate ID"
+        assert "FAIL" in proc.stdout, "Auditor output should flag FAIL"
+        print("  -> PASSED: Integrated auditor trapped duplicate test IDs with exit code", proc.returncode)
+    finally:
+        tmp.cleanup()
 
-def test_execution_oracle_mismatch():
-    print("[TEST 4/6] Testing detection of oracle execution mismatch...")
-    # Inject wrong expected fee for weight 500, LOCAL, False (normative fee=5)
-    wrong_case = {"weight": 500, "zone": "LOCAL", "express": False}
-    wrong_expected = {"status": "OK", "fee": 999}
-    
-    # Import actual shipping function
-    sys.path.insert(0, str(ROOT / "TVSI_T08_Students_B1.0/app"))
-    import shipping
-    actual = shipping.quote(wrong_case["weight"], wrong_case["zone"], wrong_case["express"])
-    verdict = "PASS" if actual == wrong_expected else "FAIL"
-    assert verdict == "FAIL", "Should fail on oracle mismatch"
-    print("  -> PASSED: Execution mismatch successfully trapped as FAIL.")
+def test_oracle_divergence_detection():
+    print("[TEST 4/6] Testing integrated detection of execution result / oracle divergence...")
+    tmp, sandbox = create_isolated_sandbox()
+    try:
+        target = sandbox / "Trabalho_CP4/final_cases.json"
+        data = json.loads(target.read_text(encoding="utf-8"))
+        # Mutate expected fee of case 0 from 5 to 9999
+        data[0]["expected"]["fee"] = 9999
+        target.write_text(json.dumps(data, indent=2), encoding="utf-8")
+        proc = run_auditor_in_sandbox(sandbox)
+        assert proc.returncode != 0, f"Auditor should exit with non-zero code on oracle divergence, got {proc.returncode}"
+        assert ("Direct execution count mismatch" in proc.stdout or "Suite-to-evidence mismatch" in proc.stdout), "Auditor should detect divergence in final cases"
+        assert "FAIL" in proc.stdout, "Auditor output should flag FAIL"
+        print("  -> PASSED: Integrated auditor trapped oracle divergence with exit code", proc.returncode)
+    finally:
+        tmp.cleanup()
 
 def test_manifest_hash_tamper_detection():
-    print("[TEST 5/6] Testing detection of hash tampering in manifest...")
-    actual_hash = "2ae93ba336382fbea8ddc321391c3af1b9dc7c62331dae4f4c992ad49065c202"
-    tampered_hash = "0000000000000000000000000000000000000000000000000000000000000000"
-    mismatch = actual_hash.lower() != tampered_hash.lower()
-    assert mismatch is True, "Should identify tampered hash"
-    print("  -> PASSED: Cryptographic hash mismatch successfully flagged.")
+    print("[TEST 5/6] Testing integrated detection of hash tampering in manifest...")
+    tmp, sandbox = create_isolated_sandbox()
+    try:
+        manifest_p = sandbox / "MANIFEST_ENTREGA.md"
+        content = manifest_p.read_text(encoding="utf-8")
+        # Tamper hash of CLAUDE.md
+        assert "24468175d9c2" in content, "Known SHA prefix of CLAUDE.md must exist in manifest"
+        content = content.replace("24468175d9c2", "000000000000")
+        manifest_p.write_text(content, encoding="utf-8")
+        proc = run_auditor_in_sandbox(sandbox)
+        assert proc.returncode != 0, f"Auditor should exit with non-zero code on tampered manifest, got {proc.returncode}"
+        assert "Manifest hash verification failed" in proc.stdout, "Auditor should report manifest hash mismatch"
+        assert "FAIL" in proc.stdout, "Auditor output should flag FAIL"
+        print("  -> PASSED: Integrated auditor trapped manifest hash tampering with exit code", proc.returncode)
+    finally:
+        tmp.cleanup()
 
 def test_corrupted_zip_detection():
-    print("[TEST 6/6] Testing detection of corrupted ZIP archive...")
-    with tempfile.NamedTemporaryFile(suffix=".zip", delete=False) as f:
-        # Write valid zip header with corrupted payload
-        f.write(b"PK\x03\x04\x14\x00\x00\x00\x08\x00corrupted_payload_data_not_valid_deflate")
-        bad_zip_path = pathlib.Path(f.name)
-        
-    detected = False
+    print("[TEST 6/6] Testing integrated detection of corrupted ZIP package...")
+    tmp, sandbox = create_isolated_sandbox()
     try:
-        with zipfile.ZipFile(bad_zip_path, "r") as zf:
-            if zf.testzip() is not None:
-                detected = True
-    except (zipfile.BadZipFile, Exception):
-        detected = True
+        zip_p = sandbox / "TVSI_T08_Grupo5_CP04.zip"
+        zip_p.write_bytes(b"PK\x03\x04corrupted_payload_data_not_valid_deflate")
+        proc = run_auditor_in_sandbox(sandbox)
+        assert proc.returncode != 0, f"Auditor should exit with non-zero code on corrupted ZIP, got {proc.returncode}"
+        assert ("ZIP archive corrupted" in proc.stdout or "Extraction mismatches detected" in proc.stdout), "Auditor should report corrupted ZIP"
+        assert "FAIL" in proc.stdout, "Auditor output should flag FAIL"
+        print("  -> PASSED: Integrated auditor trapped corrupted ZIP archive with exit code", proc.returncode)
     finally:
-        bad_zip_path.unlink()
-        
-    assert detected is True, "Should detect bad zip file"
-    print("  -> PASSED: Corrupted ZIP archive successfully identified.")
+        tmp.cleanup()
 
 def main():
     print("=" * 70)
-    print("  AUDITOR ROBUSTNESS & MUTATION DETECTION VERIFICATION")
+    print("  AUDITOR ROBUSTNESS & INTEGRATED MUTATION VERIFICATION")
     print("=" * 70)
+    
     test_missing_file_detection()
-    test_invalid_json_detection()
+    test_malformed_json_detection()
     test_duplicate_id_detection()
-    test_execution_oracle_mismatch()
+    test_oracle_divergence_detection()
     test_manifest_hash_tamper_detection()
     test_corrupted_zip_detection()
+    
     print("=" * 70)
-    print("  Os seis cenários controlados demonstram que o auditor deteta as")
-    print("  classes de falhas especificamente testadas.")
+    print("  Os seis cenários controlados demonstram que o auditor integrado")
+    print("  deteta as classes de falhas especificamente testadas através de")
+    print("  execução isolada em ambiente temporário.")
     print("=" * 70)
+    return 0
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

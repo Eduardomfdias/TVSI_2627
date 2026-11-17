@@ -328,9 +328,9 @@ def run_deep_audit():
                     if v is not None and v.text and any(err in v.text for err in ["#REF!", "#VALUE!", "#NAME?", "#DIV/0!", "#N/A"]):
                         errors.append(f"{sname}:{c.attrib.get('r')} = {v.text}")
             if not errors:
-                log_result("PASS", "Zero formula errors (#REF!, #VALUE!, etc.) across all 6 workbook sheets")
+                log_result("PASS", "OpenXML structural inspection: zero cell formula error indicators (#REF!, #VALUE!, etc.) stored across all 6 sheets")
             else:
-                log_result("FAIL", "Formula errors detected in workbook", str(errors))
+                log_result("FAIL", "Cell formula error indicators stored in workbook XML", str(errors))
 
         # Check replica workbooks consistency
         can_bytes = canonical_wb.read_bytes()
@@ -396,44 +396,47 @@ def run_deep_audit():
     print("\n[AREA 11/12] Verifying Submission ZIP Package Integrity...")
     zip_path = ROOT_DIR / "TVSI_T08_Grupo5_CP04.zip"
     if zip_path.is_file():
-        with zipfile.ZipFile(zip_path, "r") as zf:
-            corrupt = zf.testzip()
-            if corrupt is None:
-                log_result("PASS", f"ZIP archive '{zip_path.name}' is structurally intact (0 corrupted files)")
-            else:
-                log_result("FAIL", f"ZIP archive corrupted file: {corrupt}")
-            
-            namelist = zf.namelist()
-            if zip_path.name in namelist:
-                log_result("FAIL", "ZIP archive contains itself (circular dependency)!")
-            else:
-                log_result("PASS", "ZIP archive is free of self-referential archive inclusion")
-
-            forbidden = [f for f in namelist if ".git/" in f or "__pycache__" in f or ".DS_Store" in f]
-            if not forbidden:
-                log_result("PASS", "ZIP archive clean: zero git/cache/system files included")
-            else:
-                log_result("FAIL", "Forbidden files found in ZIP", str(forbidden))
-
-            # Perform deep extraction check in temporary directory
-            with tempfile.TemporaryDirectory() as tmpdir:
-                tmp_p = pathlib.Path(tmpdir)
-                zf.extractall(tmp_p)
-                extraction_errors = []
-                for fname in namelist:
-                    src_f = ROOT_DIR / fname
-                    ext_f = tmp_p / fname
-                    if not ext_f.is_file():
-                        extraction_errors.append(f"Missing extracted: {fname}")
-                    elif src_f.stat().st_size != ext_f.stat().st_size:
-                        extraction_errors.append(f"Size diff: {fname}")
-                    elif calculate_sha256(src_f) != calculate_sha256(ext_f):
-                        extraction_errors.append(f"Hash diff: {fname}")
-                
-                if not extraction_errors:
-                    log_result("PASS", f"Deep extraction test: all {len(namelist)} extracted files match repository bit-for-bit")
+        try:
+            with zipfile.ZipFile(zip_path, "r") as zf:
+                corrupt = zf.testzip()
+                if corrupt is None:
+                    log_result("PASS", f"ZIP archive '{zip_path.name}' is structurally intact (0 corrupted files)")
                 else:
-                    log_result("FAIL", "Extraction mismatches detected", str(extraction_errors[:3]))
+                    log_result("FAIL", f"ZIP archive corrupted file: {corrupt}")
+                
+                namelist = zf.namelist()
+                if zip_path.name in namelist:
+                    log_result("FAIL", "ZIP archive contains itself (circular dependency)!")
+                else:
+                    log_result("PASS", "ZIP archive is free of self-referential archive inclusion")
+
+                forbidden = [f for f in namelist if ".git/" in f or "__pycache__" in f or ".DS_Store" in f]
+                if not forbidden:
+                    log_result("PASS", "ZIP archive clean: zero git/cache/system files included")
+                else:
+                    log_result("FAIL", "Forbidden files found in ZIP", str(forbidden))
+
+                # Perform deep extraction check in temporary directory
+                with tempfile.TemporaryDirectory() as tmpdir:
+                    tmp_p = pathlib.Path(tmpdir)
+                    zf.extractall(tmp_p)
+                    extraction_errors = []
+                    for fname in namelist:
+                        src_f = ROOT_DIR / fname
+                        ext_f = tmp_p / fname
+                        if not ext_f.is_file():
+                            extraction_errors.append(f"Missing extracted: {fname}")
+                        elif src_f.stat().st_size != ext_f.stat().st_size:
+                            extraction_errors.append(f"Size diff: {fname}")
+                        elif calculate_sha256(src_f) != calculate_sha256(ext_f):
+                            extraction_errors.append(f"Hash diff: {fname}")
+                    
+                    if not extraction_errors:
+                        log_result("PASS", f"Deep extraction test: all {len(namelist)} extracted files match repository bit-for-bit")
+                    else:
+                        log_result("FAIL", "Extraction mismatches detected", str(extraction_errors[:3]))
+        except (zipfile.BadZipFile, Exception) as e:
+            log_result("FAIL", f"ZIP archive corrupted or unreadable: {zip_path.name}", str(e))
     else:
         log_result("WARNING", f"ZIP archive '{zip_path.name}' not yet generated (Pending creation step)")
 
