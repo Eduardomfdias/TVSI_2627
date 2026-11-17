@@ -135,14 +135,14 @@ Os defeitos decorrem de erros estruturais no código fornecido de `shipping.py` 
 ## 9. SCRIPT DE AUDITORIA E META-TESTES DE SENSIBILIDADE
 
 - **Script Principal:** [Trabalho_CP4/audit_cp4.py](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/audit_cp4.py) — 12 áreas de auditoria com **27 PASS | 0 FAIL | 0 WARNING | 0 BLOCKED**.
-- **Meta-Testes de Mutação:** [Trabalho_CP4/test_auditor_robustness.py](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/test_auditor_robustness.py) — 6 testes com fixtures temporárias:
+- **Meta-Testes de Mutação:** [Trabalho_CP4/test_auditor_robustness.py](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/test_auditor_robustness.py) — 6 testes executados de forma integrada contra o auditor real em sandboxes temporários isolados:
   - Ficheiro em falta: detetado (PASS);
   - JSON malformado: detetado (PASS);
   - IDs duplicados: detetado (PASS);
-  - Oráculos divergentes: detetado (PASS);
-  - Hashes adulterados: detetado (PASS);
-  - ZIP corrompido: detetado (PASS).
-- **Formulação Metodológica:** *Os seis cenários controlados demonstram que o auditor deteta as classes de falhas especificamente testadas.*
+  - Inconsistência introduzida na expectativa de um caso da suite final, com verificação da deteção da divergência entre a suite e a evidência de execução e/ou da alteração da distribuição global de resultados: detetado (PASS);
+  - Hashes adulterados no manifesto: detetado (PASS);
+  - ZIP corrompido: detetado com separação de `BadZipFile` (PASS).
+- **Formulação Metodológica:** *Os seis cenários controlados demonstram que o auditor integrado deteta as seis classes de falhas especificamente introduzidas nos ambientes temporários de teste. A cobertura não deve ser interpretada como demonstração exaustiva da deteção de todas as possíveis divergências entre a SUT e os oráculos independentes.*
 
 ---
 
@@ -153,6 +153,7 @@ Os defeitos decorrem de erros estruturais no código fornecido de `shipping.py` 
 - **Ficheiro Externo de Validação:** [TVSI_T08_Grupo5_CP04.zip.sha256](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/TVSI_T08_Grupo5_CP04.zip.sha256) (contém a soma criptográfica SHA-256 e dimensão exata do arquivo consolidado, eliminando qualquer dependência circular de cálculo)
 - **Validação CRC:** `zipfile.testzip()` executado com veredicto `None` (0 erros).
 - **Validação por Extração:** Extração temporária confirmou 100% de correspondência byte a byte e hash a hash com o repositório.
+- **Declaração de Disponibilização:** Os requisitos técnicos, os artefactos versionados, os relatórios de auditoria e a sincronização das branches Git foram concluídos e validados. A integridade do pacote ZIP foi verificada no ambiente local de geração e submissão, não estando o ficheiro binário publicado no repositório GitHub; encontra-se publicada a respetiva assinatura SHA-256 externa.
 
 ---
 
@@ -161,6 +162,8 @@ Os defeitos decorrem de erros estruturais no código fornecido de `shipping.py` 
 1. **Validação do Excel sem Recálculo Independente:** A validação estrutural OpenXML confirmou a legibilidade e a integridade sintática dos componentes XML analisados, incluindo a estrutura das folhas, os namespaces e a presença das fórmulas de rastreabilidade. Não foi efetuado recálculo dinâmico independente das fórmulas, devido à indisponibilidade do LibreOffice no ambiente de execução. Consequentemente, os resultados desta validação não são apresentados como prova de correção dos valores calculados.
 2. **Ambiente Multiplataforma:** As execuções em Python 3.12 foram consolidadas nos registos JSON de paridade, mantendo-se no workbook Excel a convenção de uma linha de ensaio lógica por caso de teste (68 linhas).
 3. **Preservação dos Defeitos da SUT:** Os 4 defeitos conhecidos de `shipping.py` permanecem inalterados por imperativo metodológico de integridade dos testes.
+4. **Disponibilização do Pacote ZIP e Política de Versionamento:** O pacote binário comprimido `TVSI_T08_Grupo5_CP04.zip` não está publicado no repositório GitHub em cumprimento do `.gitignore` (`*.zip`), sendo gerado e validado no ambiente local de submissão e rastreada a respetiva assinatura criptográfica externa `TVSI_T08_Grupo5_CP04.zip.sha256`.
+5. **Âmbito dos Meta-Testes de Robustez:** Os seis cenários controlados cobrem especificamente as seis classes de falhas testadas em sandboxes isolados, não constituindo demonstração exaustiva de todas as formas possíveis de divergência entre a SUT e os oráculos independentes.
 
 ---
 

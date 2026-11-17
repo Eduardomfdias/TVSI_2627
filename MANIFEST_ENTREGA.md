@@ -17,7 +17,7 @@ A tabela seguinte enumera os 50 ficheiros do projeto incluídos na entrega, deta
 |---|:---:|---|
 | `AUDITORIA_FINAL_ENTREGA.md` | 14,875 | `bdb8897be371f85a89daae8964304f500fe46bab26da133667f6d4918b04f21d` |
 | `CLAUDE.md` | 2,179 | `24468175d9c2783d8735cad09ea0c8ba39dc5b7bdaea1a3c462c5e7e7a76b2eb` |
-| `FECHO_FINAL_CP04.md` | 15,695 | `7000d4508ef82c828f79648ed113a261b4bafae873f6809d84d5e37a22bfd62c` |
+| `FECHO_FINAL_CP04.md` | 17,268 | `fc4580384107d07814d6e0da5a4555cb8a0fd40a7eaef37e6e7a94769d1ebf2c` |
 | `README.md` | 11,696 | `32e896ab305ae28b36da511ef1eef6bf80423a81673531b945001dc7a257c120` |
 | `Relatorio_Consolidado.md` | 20,468 | `09d6d440a410d96fc818adc852201f05211c21126eacb8f3e7200ebabd6b1e4c` |
 | `TVSI_T08_Students_B1.0/AI_PROVENANCE.html` | 2,826 | `3ea599d9581c9002ec8b8c10acbb2c19a48124b982bdaadd379b22f8df6b703d` |
@@ -53,7 +53,7 @@ A tabela seguinte enumera os 50 ficheiros do projeto incluídos na entrega, deta
 | `Trabalho_CP4/CP4.md` | 8,869 | `80509013fd2977a17082005d90a3ce6337b75497f0483db8e420765ff502eb5f` |
 | `Trabalho_CP4/Relatorio_CP4.md` | 16,923 | `e1ed00c94938dafbfcc8c91157c88046a1d82cba4bc09736c41feabcc156fb6c` |
 | `Trabalho_CP4/TestResults_T08_Template.xlsx` | 33,151 | `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef` |
-| `Trabalho_CP4/audit_cp4.py` | 27,383 | `0bafca36c72682638e340d7f504b67979e15fb537f9792eadc8b09c064f74be2` |
+| `Trabalho_CP4/audit_cp4.py` | 27,498 | `71b9cd523c1ce7f1eb70feab804c829be805654f90789684aec70d970ebc328e` |
 | `Trabalho_CP4/evidence/br05_independence_cp4.json` | 6,160 | `dc94cb77e4f0ff6b7d5b1d3df0d91e34de52b9c98bb332c9b59cd7762a01568d` |
 | `Trabalho_CP4/evidence/runner_robustness_evidence.json` | 1,380 | `317aee17be2d63a59aecce058d2d59e18b428a93955ab76b2525462196c5a307` |
 | `Trabalho_CP4/final_cases.json` | 5,475 | `31714bcb90702751107b21a27cc77d0a7f62d59ef158c6ae415b6ba42e6d1ffd` |

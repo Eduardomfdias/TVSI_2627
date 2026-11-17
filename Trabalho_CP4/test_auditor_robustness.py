@@ -96,7 +96,7 @@ def test_duplicate_id_detection():
         tmp.cleanup()
 
 def test_oracle_divergence_detection():
-    print("[TEST 4/6] Testing integrated detection of execution result / oracle divergence...")
+    print("[TEST 4/6] Inconsistência introduzida na expectativa de um caso da suite final, com verificação da deteção da divergência entre a suite e a evidência de execução e/ou da alteração da distribuição global de resultados...")
     tmp, sandbox = create_isolated_sandbox()
     try:
         target = sandbox / "Trabalho_CP4/final_cases.json"
@@ -108,7 +108,7 @@ def test_oracle_divergence_detection():
         assert proc.returncode != 0, f"Auditor should exit with non-zero code on oracle divergence, got {proc.returncode}"
         assert ("Direct execution count mismatch" in proc.stdout or "Suite-to-evidence mismatch" in proc.stdout), "Auditor should detect divergence in final cases"
         assert "FAIL" in proc.stdout, "Auditor output should flag FAIL"
-        print("  -> PASSED: Integrated auditor trapped oracle divergence with exit code", proc.returncode)
+        print("  -> PASSED: Integrated auditor trapped expected fee mutation divergence with exit code", proc.returncode)
     finally:
         tmp.cleanup()
 
@@ -138,7 +138,7 @@ def test_corrupted_zip_detection():
         zip_p.write_bytes(b"PK\x03\x04corrupted_payload_data_not_valid_deflate")
         proc = run_auditor_in_sandbox(sandbox)
         assert proc.returncode != 0, f"Auditor should exit with non-zero code on corrupted ZIP, got {proc.returncode}"
-        assert ("ZIP archive corrupted" in proc.stdout or "Extraction mismatches detected" in proc.stdout), "Auditor should report corrupted ZIP"
+        assert ("ZIP archive invalid or corrupted" in proc.stdout or "ZIP archive corrupted" in proc.stdout or "Extraction mismatches detected" in proc.stdout), "Auditor should report corrupted ZIP"
         assert "FAIL" in proc.stdout, "Auditor output should flag FAIL"
         print("  -> PASSED: Integrated auditor trapped corrupted ZIP archive with exit code", proc.returncode)
     finally:
@@ -158,8 +158,10 @@ def main():
     
     print("=" * 70)
     print("  Os seis cenários controlados demonstram que o auditor integrado")
-    print("  deteta as classes de falhas especificamente testadas através de")
-    print("  execução isolada em ambiente temporário.")
+    print("  deteta as seis classes de falhas especificamente introduzidas")
+    print("  nos ambientes temporários de teste. A cobertura não deve ser")
+    print("  interpretada como demonstração exaustiva da deteção de todas as")
+    print("  possíveis divergências entre a SUT e os oráculos independentes.")
     print("=" * 70)
     return 0
 

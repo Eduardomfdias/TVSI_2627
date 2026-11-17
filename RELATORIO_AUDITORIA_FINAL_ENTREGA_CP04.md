@@ -19,8 +19,8 @@ O presente documento constitui o relatório formal e exaustivo da auditoria inte
 2. **Workbook Excel Canónico:** O ficheiro `Trabalho_CP4/TestResults_T08_Template.xlsx` (33.151 bytes | SHA-256 `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef`) encontra-se 100% preenchido nas suas 6 folhas oficiais (`Test Cases`, `Executions`, `Defects`, `Static Review`, `Coverage`, `Technique`), com 0 campos obrigatórios vazios e estrutura OpenXML validada. As 4 cópias existentes no repositório encontram-se sincronizadas bit-a-bit.
 3. **Reconciliação das Execuções:** A contagem de 68 linhas de execução lógica no Excel e 98 execuções físicas multiplataforma ($1 + 16 + 12 + 60 + 4 + 5 = 98$) está plenamente comprovada por registos JSON auditáveis.
 4. **Auditoria Técnica:** O script `Trabalho_CP4/audit_cp4.py` reporta **27 PASS | 0 FAIL | 0 WARNING | 0 BLOCKED** e a suite de meta-testes de robustez `Trabalho_CP4/test_auditor_robustness.py` reporta **6/6 testes de mutação aprovados**.
-5. **Pacote de Entrega:** O arquivo `TVSI_T08_Grupo5_CP04.zip` agrega exatamente 51 ficheiros (50 artefactos de projeto + 1 manifesto), validado a 100% por teste de extração profunda.
-6. **Sincronização Remota:** Ambas as branches `main` e `cp04-final` encontram-se rigorosamente sincronizadas com o repositório remoto GitHub. A sequência histórica de consolidação do CP04 regista o commit de integração `dc45f4d44359cf562f7e7a2d269a453e8643aaf3`, o commit de sincronização remota `3b86f316049ae8d4261a928266ddb3b493d30c0f`, o commit de correções cirúrgicas `d2cf9bebc7554b580f283a9fbc5cb79ca65c383c`, culminando no commit final de integridade e robustez `docs(cp04): finalize audit evidence and delivery integrity`.
+5. **Pacote de Entrega e Assinatura Criptográfica:** O arquivo `TVSI_T08_Grupo5_CP04.zip` agrega exatamente 51 ficheiros (50 artefactos de projeto + 1 manifesto), validado a 100% por teste de extração profunda. Os requisitos técnicos, os artefactos versionados, os relatórios de auditoria e a sincronização das branches Git foram concluídos e validados. A integridade do pacote ZIP foi verificada no ambiente local de geração e submissão, não estando o ficheiro binário publicado no repositório GitHub; encontra-se publicada a respetiva assinatura SHA-256 externa.
+6. **Sincronização Remota:** Ambas as branches `main` e `cp04-final` encontram-se rigorosamente sincronizadas com o repositório remoto GitHub. A sequência histórica de consolidação do CP04 regista o commit de integração `dc45f4d44359cf562f7e7a2d269a453e8643aaf3`, o commit de sincronização remota `3b86f316049ae8d4261a928266ddb3b493d30c0f`, o commit de correções cirúrgicas `d2cf9bebc7554b580f283a9fbc5cb79ca65c383c`, o commit de integridade da entrega `bfdf5c5c7bb955734f5a691dde3088e4d4f08fd9` e o fecho cirúrgico final `docs(cp04): finalize robustness and delivery audit corrections`.
 
 ---
 
@@ -32,8 +32,8 @@ O manifesto oficial (`MANIFEST_ENTREGA.md`) enumera os 50 ficheiros do projeto q
 |---|---|:---:|---:|---|---|:---:|
 | Relatório de Auditoria | `AUDITORIA_FINAL_ENTREGA.md` | Sim | 14.303 | `0417ad4db53e...` | Auditoria detalhada das 12 áreas normativas | **CONFORME** |
 | Guia do Assistente | `CLAUDE.md` | Sim | 2.179 | `24468175d9c2...` | Regras de integridade e comandos de auditoria | **CONFORME** |
-| Fecho Técnico CP04 | `FECHO_FINAL_CP04.md` | Sim | 15.244 | `1bfadad44d5c...` | Relatório técnico de reconciliação e fecho | **CONFORME** |
-| Manifesto de Entrega | `MANIFEST_ENTREGA.md` | Sim | 7.473 | `c7f8e98ea36b...` | Tabela criptográfica dos 50 artefactos de projeto | **CONFORME** |
+| Fecho Técnico CP04 | `FECHO_FINAL_CP04.md` | Sim | 17.268 | `fc4580384107...` | Relatório técnico de reconciliação e fecho | **CONFORME** |
+| Manifesto de Entrega | `MANIFEST_ENTREGA.md` | Sim | 7.473 | `6077602efc85...` | Tabela criptográfica dos 50 artefactos de projeto | **CONFORME** |
 | Documentação Principal | `README.md` | Sim | 11.086 | `fcae13dfdcae...` | Visão global do projeto, equipa e estrutura | **CONFORME** |
 | Relatório Consolidado | `Relatorio_Consolidado.md` | Sim | 19.918 | `132646ea8c85...` | Relatório científico integrador dos 4 checkpoints | **CONFORME** |
 | Proveniência IA (HTML) | `TVSI_T08_Students_B1.0/AI_PROVENANCE.html` | Sim | 2.826 | `3ea599d9581c...` | Versão HTML do registo de proveniência de IA | **CONFORME** |
@@ -69,7 +69,7 @@ O manifesto oficial (`MANIFEST_ENTREGA.md`) enumera os 50 ficheiros do projeto q
 | Plano CP04 | `Trabalho_CP4/CP4.md` | Sim | 8.618 | `5ff4645229be...` | Planeamento da execução e evidências CP04 | **CONFORME** |
 | Relatório CP04 | `Trabalho_CP4/Relatorio_CP4.md` | Sim | 16.516 | `1fe84b901269...` | Relatório de execução e evidências CP04 | **CONFORME** |
 | Livro Excel Canónico| `Trabalho_CP4/TestResults_T08_Template.xlsx` | Sim | 33.151 | `5bbe97aacc41...` | Workbook oficial canónico auditado | **CONFORME** |
-| Auditor CP04 | `Trabalho_CP4/audit_cp4.py` | Sim | 27.383 | `0bafca36c726...` | Script formal de auditoria profunda das 12 áreas | **CONFORME** |
+| Auditor CP04 | `Trabalho_CP4/audit_cp4.py` | Sim | 27.498 | `71b9cd523c1c...` | Script formal de auditoria profunda das 12 áreas | **CONFORME** |
 | Evidência BR-05 CP04| `Trabalho_CP4/evidence/br05_independence_cp4.json` | Sim | 8.525 | `f59992d9d13e...` | 4 ensaios formais de propriedades BR-05 | **CONFORME** |
 | Evidência Robustez | `Trabalho_CP4/evidence/runner_robustness_evidence.json` | Sim | 2.502 | `0e03e5c92850...` | 5 ensaios de robustez CLI | **CONFORME** |
 | Casos Finais CP04 | `Trabalho_CP4/final_cases.json` | Sim | 5.867 | `1f3640243467...` | 30 casos finais integrados | **CONFORME** |
@@ -147,13 +147,14 @@ $$\text{Execuções Físicas Totais} = 1 + 16 + 12 + (30 \times 2) + 4 + 5 = \ma
 
 - **Ficheiro de Submissão:** `TVSI_T08_Grupo5_CP04.zip`
 - **Contagem de Ficheiros:** Exatamente **51 ficheiros** (50 artefactos de projeto + 1 manifesto `MANIFEST_ENTREGA.md`).
-- **Dimensão Exata:** **205.050 bytes**
-- **SHA-256 Definitivo:** `5066a82c38aab0fa93428599f61aff4ee0e946e4ec07826d6cc2fe32950ea950`
+- **Dimensão Exata:** **205.576 bytes**
+- **SHA-256 Definitivo:** `8006c04ba48546a9ac0716e2a2ff985118c70557809d679142313647b85d4d47`
 - **Validação Estrutural ZIP:** `zipfile.testzip()` executado sem erros (`None`). Ausência absoluta de ficheiros temporários, de sistema (`.DS_Store`) ou de controlo de versões (`.git/`).
 - **Validação de Extração:** Extração temporária comprovou correspondência estrita bit-a-bit e hash-a-hash para todos os 51 ficheiros.
 - **Manifesto Interno:** `MANIFEST_ENTREGA.md` audita os 50 ficheiros de projeto sem dependência circular.
 - **Ficheiro Externo de Validação:** `TVSI_T08_Grupo5_CP04.zip.sha256` contém a assinatura criptográfica:  
-  `5066a82c38aab0fa93428599f61aff4ee0e946e4ec07826d6cc2fe32950ea950  TVSI_T08_Grupo5_CP04.zip`
+  `8006c04ba48546a9ac0716e2a2ff985118c70557809d679142313647b85d4d47  TVSI_T08_Grupo5_CP04.zip`
+- **Declaração de Disponibilização:** Os requisitos técnicos, os artefactos versionados, os relatórios de auditoria e a sincronização das branches Git foram concluídos e validados. A integridade do pacote ZIP foi verificada no ambiente local de geração e submissão, não estando o ficheiro binário publicado no repositório GitHub; encontra-se publicada a respetiva assinatura SHA-256 externa.
 
 ---
 
@@ -163,16 +164,16 @@ $$\text{Execuções Físicas Totais} = 1 + 16 + 12 + (30 \times 2) + 4 + 5 = \ma
    - **Resultado:** **PASS: 27 | FAIL: 0 | WARNING: 0 | BLOCKED: 0** (Exit code: 0).
    - Valida as 12 áreas críticas: baseline, congelamento humano, validação sintática de 33 ficheiros JSON, unicidade de IDs, paridade de execução dual-Python, cobertura R01–R08, integridade do Excel e extração do ZIP.
 2. **Suite de Meta-Testes de Sensibilidade (`Trabalho_CP4/test_auditor_robustness.py`):**
-   - **Metodologia de Execução:** Executados de forma totalmente integrada contra o auditor real `Trabalho_CP4/audit_cp4.py` através da criação de sandboxes temporários isolados para cada cenário de mutação, sem mockings nem isolamento artificial, confirmando o tratamento de exceções (incluindo integridade de ficheiros ZIP corrompidos).
+   - **Metodologia de Execução:** Executados de forma totalmente integrada contra o auditor real `Trabalho_CP4/audit_cp4.py` através da criação de sandboxes temporários isolados para cada cenário de mutação, sem mockings nem isolamento artificial, confirmando o tratamento de exceções (separando `zipfile.BadZipFile` de erros gerais).
    - **Resultado:** **6/6 testes de mutação aprovados (100% PASS)**:
      - Detetou com sucesso ficheiro obrigatório em falta (PASS);
      - Detetou com sucesso JSON malformado (PASS);
      - Detetou com sucesso IDs de teste duplicados (PASS);
-     - Detetou com sucesso oráculo divergente (PASS);
+     - Inconsistência introduzida na expectativa de um caso da suite final, com verificação da deteção da divergência entre a suite e a evidência de execução e/ou da alteração da distribuição global de resultados (PASS);
      - Detetou com sucesso hash adulterado no manifesto (PASS);
-     - Detetou com sucesso arquivo ZIP corrompido (PASS).
+     - Detetou com sucesso arquivo ZIP corrompido com tratamento dedicado de `BadZipFile` (PASS).
    - **Declaração de Conformidade:**
-     > *"Os seis cenários controlados demonstram que o auditor integrado deteta as classes de falhas especificamente testadas através de execução isolada em ambiente temporário."*
+     > *"Os seis cenários controlados demonstram que o auditor integrado deteta as seis classes de falhas especificamente introduzidas nos ambientes temporários de teste. A cobertura não deve ser interpretada como demonstração exaustiva da deteção de todas as possíveis divergências entre a SUT e os oráculos independentes."*
 
 ---
 
@@ -182,7 +183,8 @@ $$\text{Execuções Físicas Totais} = 1 + 16 + 12 + (30 \times 2) + 4 + 5 = \ma
   - Commit de integração técnica e reconciliação estrutural: `dc45f4d44359cf562f7e7a2d269a453e8643aaf3` (*"CP04: finalize integrity audit, excel hash reconciliation, and delivery reports"*).
   - Commit de consolidação documental e sincronização remota inicial: `3b86f316049ae8d4261a928266ddb3b493d30c0f` (*"docs(cp04): add RELATORIO_AUDITORIA_FINAL_ENTREGA_CP04.md formal audit report"*).
   - Commit de correções cirúrgicas de fecho documental: `d2cf9bebc7554b580f283a9fbc5cb79ca65c383c` (*"docs(cp04): harmonize delivery report with independent audit findings"*).
-  - Commit de fecho definitivo da intervenção atual: `docs(cp04): finalize audit evidence and delivery integrity` (integração dos meta-testes de robustez em sandboxes isolados, ajuste à inspeção estrutural OpenXML e regeneração do pacote de entrega).
+  - Commit de fecho de evidências e integridade da entrega: `bfdf5c5c7bb955734f5a691dde3088e4d4f08fd9` (*"docs(cp04): finalize audit evidence and delivery integrity"*).
+  - Commit de correções cirúrgicas finais e encerramento: `docs(cp04): finalize robustness and delivery audit corrections` (precisão descritiva do meta-teste 4, separação de exceções ZIP e clarificação da disponibilização do pacote).
 - **Ramo Principal (`main`) e Ramo de Fecho (`cp04-final`):** Mantidos em rigorosa paridade remota no GitHub.
 - **Working Tree:** `nothing to commit, working tree clean`.
 - **Integridade da Baseline:** Zero alterações a `shipping.py` e zero modificações a evidências históricas.
@@ -195,6 +197,8 @@ Não existem bloqueios técnicos, ficheiros em falta ou inconsistências materia
 1. **Preservação dos 4 Defeitos da SUT:** Os defeitos estruturais em `shipping.py` (`DEF-01` a `DEF-04`) não foram corrigidos no código para preservar a integridade académica do objeto de teste.
 2. **Validação OpenXML sem Recálculo Dinâmico:** A verificação das fórmulas no Excel foi realizada por inspeção estática da árvore OpenXML, devido à ausência de LibreOffice no ambiente de execução.
 3. **Consolidação Multiplataforma:** As execuções em Python 3.12 encontram-se consolidadas nos registos JSON de paridade, mantendo-se no Excel uma linha lógica por caso de teste (68 linhas).
+4. **Disponibilização do Pacote ZIP e Política de Versionamento:** O pacote binário `TVSI_T08_Grupo5_CP04.zip` não está publicado no repositório GitHub em cumprimento da política do `.gitignore` (`*.zip`), encontrando-se validado no ambiente local de geração e submissão e publicada a respetiva assinatura SHA-256 externa (`TVSI_T08_Grupo5_CP04.zip.sha256`).
+5. **Âmbito dos Meta-Testes de Robustez:** Os seis cenários controlados demonstram a deteção das seis classes de falhas especificamente introduzidas nos ambientes temporários de teste, não devendo a cobertura ser interpretada como demonstração exaustiva da deteção de todas as possíveis divergências entre a SUT e os oráculos independentes.
 
 ---
 
@@ -202,4 +206,4 @@ Não existem bloqueios técnicos, ficheiros em falta ou inconsistências materia
 
 $$\mathbf{PRONTO\ COM\ LIMITAÇÕES\ DOCUMENTADAS}$$
 
-*(Os artefactos obrigatórios estão completos, íntegros, auditados e sincronizados no GitHub, subsistindo apenas as limitações metodológicas academicamente explicitadas).*
+*(Os requisitos técnicos, os artefactos versionados, os relatórios de auditoria e a sincronização das branches Git foram concluídos e validados. A integridade do pacote ZIP foi verificada no ambiente local de geração e submissão, não estando o ficheiro binário publicado no repositório GitHub; encontra-se publicada a respetiva assinatura SHA-256 externa).*

@@ -435,8 +435,10 @@ def run_deep_audit():
                         log_result("PASS", f"Deep extraction test: all {len(namelist)} extracted files match repository bit-for-bit")
                     else:
                         log_result("FAIL", "Extraction mismatches detected", str(extraction_errors[:3]))
-        except (zipfile.BadZipFile, Exception) as e:
-            log_result("FAIL", f"ZIP archive corrupted or unreadable: {zip_path.name}", str(e))
+        except zipfile.BadZipFile as e:
+            log_result("FAIL", f"ZIP archive invalid or corrupted: {zip_path.name}", str(e))
+        except Exception as e:
+            log_result("FAIL", f"ZIP archive reading or validation error: {zip_path.name}", str(e))
     else:
         log_result("WARNING", f"ZIP archive '{zip_path.name}' not yet generated (Pending creation step)")
 
