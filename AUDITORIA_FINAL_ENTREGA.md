@@ -89,16 +89,54 @@ A execução do script formal de auditoria [`Trabalho_CP4/audit_cp4.py`](file://
 
 - **Ficheiro:** `TVSI_T08_Grupo5_CP04.zip`
 - **Caminho Relativo:** `./TVSI_T08_Grupo5_CP04.zip`
-- **Ficheiro Externo de Validação:** `TVSI_T08_Grupo5_CP04.zip.sha256` (contém o SHA-256 definitivo do pacote)
-- **Ficheiros Incluídos:** 51 ficheiros essenciais (50 artefactos de projeto + 1 manifesto)
-- **Resultado do Teste de Extração:** 100% aprovado sem ficheiros em falta ou corrompidos.
+- **Ficheiro Externo de Validação:** `TVSI_T08_Grupo5_CP04.zip.sha256` (contém o SHA-256 definitivo do pacote gerado, eliminando dependência circular)
+- **Ficheiros Incluídos:** 51 ficheiros essenciais (50 artefactos de projeto + 1 manifesto `MANIFEST_ENTREGA.md`)
+- **Resultado do Teste de Extração:** 100% aprovado sem ficheiros em falta ou corrompidos, com correspondência bit-a-bit e hash-a-hash em todos os ficheiros.
 - **Resultado do Teste CRC:** 0 ficheiros corrompidos (`testzip()` retornou None).
 
 ---
 
-## 7. Conclusão Final do Auditor
+## 7. Reconciliação Rigorosa das Execuções (68 Lógicas vs 98 Físicas)
+
+| Bloco de Execução | ID de Ensaio | Casos Únicos | Execuções Lógicas (Excel) | Execuções Físicas (Runtimes) | Veredicto Observado | Evidência Primária no Repositório |
+|---|---|:---:|:---:|:---:|:---:|---|
+| **Ambiente de Teste** | `RUN-ENV-01` | 1 | 1 | 1 | 1 PASS | `Trabalho_CP4/runs/human_17_execution.json` |
+| **Suite Humana Congelada** | `RUN-H02-01..16` | 16 | 16 | 16 | 10 PASS / 6 FAIL | `Trabalho_CP2/human_cases.results.json` |
+| **Candidatos de IA** | `RUN-AI-01..12` | 12 | 12 | 12 | 10 PASS / 2 FAIL | `Trabalho_CP4/runs/ai_candidates_execution.json` |
+| **Suite Final Integrada** | `RUN-CP4-01..30` | 30 | 30 | 60 *(30 em Py 3.9 + 30 em Py 3.12)* | 20 PASS / 10 FAIL | `Trabalho_CP4/runs/final_cases_execution.json` & `.py312.json` |
+| **Propriedades BR-05** | `RUN-CTRL-01..04` | 4 | 4 | 4 | 4 PASS | `Trabalho_CP4/evidence/br05_independence_cp4.json` |
+| **Robustez do Runner CLI** | `RUN-ROB-01..05` | 5 | 5 | 5 | 5 PASS | `Trabalho_CP4/evidence/runner_robustness_evidence.json` |
+| **Total Global** | — | **68** | **68** | **98** | **50 PASS / 18 FAIL** *(no Excel)* | `TestResults_T08_Template.xlsx` |
+
+*Reconciliação quantitativa consistente com os registos de execução e as evidências identificadas.*
+
+---
+
+## 8. Auditoria e Sincronização do Workbook Excel
+
+- **Caminho Canónico Oficial:** `Trabalho_CP4/TestResults_T08_Template.xlsx`
+- **Dimensão:** 33.151 bytes
+- **SHA-256 Definitivo:** `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef`
+- **Esclarecimento Criptográfico (Hash A vs Hash B):** O hash real calculado diretamente sobre o ficheiro final canónico e sobre as réplicas é `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef` (anteriormente referido como Hash B). Qualquer ocorrência anterior de Hash A (`5bbe97aacc418cbfec21b66df825b42d54e26eb86a9782cfbf534ae8e8071861`) constituiu um lapso de transcrição textual num rascunho anterior de relatório, não existindo esse hash no repositório.
+- **Sincronização Bit-a-Bit das 4 Cópias:**
+
+| Caminho da Cópia | Dimensão (Bytes) | SHA-256 | Folhas | Status |
+|---|:---:|---|:---:|:---:|
+| `Trabalho_CP4/TestResults_T08_Template.xlsx` (Canónico) | 33.151 | `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef` | 6 | **Referência Canónica** |
+| `TVSI_T08_Students_B1.0/TestResults_T08_Template.xlsx` | 33.151 | `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef` | 6 | **100% Idêntico (Bit-a-bit)** |
+| `Trabalho_CP1/TestResults_T08_Template.xlsx` | 33.151 | `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef` | 6 | **100% Idêntico (Bit-a-bit)** |
+| `Trabalho_CP4/TVSI_T08_Students_B1.0_CP4/TestResults_T08_Template.xlsx` | 33.151 | `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef` | 6 | **100% Idêntico (Bit-a-bit)** |
+
+- **Estrutura das Folhas:** `Test Cases` (31 casos com coluna de Requisitos), `Executions` (68 registos lógicos com veredictos 50 PASS / 18 FAIL), `Defects` (4 defeitos de software DEF-01..04 e 3 anomalias de IA DATA-01..03), `Static Review`, `Coverage` (324 fórmulas ativas cobrindo R01..R08 a 100%), `Technique`.
+
+---
+
+## 9. Conclusão Final do Auditor
 
 O processo de teste, conceção de casos, gestão de evidências e os artefactos entregáveis do Checkpoint 4 (CP04) encontram-se **tecnicamente validados e auditados nos limites formalmente comprovados**, estando a baseline `shipping.py` preservada e os seus 4 defeitos de software empiricamente caracterizados.
 
-**Declaração de Âmbito sobre o Workbook Excel:**  
-Foi realizada uma validação estrutural do workbook, incluindo a inspeção das 324 fórmulas, das referências celulares e das dependências identificadas no XML OpenXML. Foram também inspecionadas estaticamente as fórmulas COUNTIFS/SUMIFS e a sua coerência estrutural. Não foi possível efetuar um recálculo dinâmico independente através do LibreOffice, pelo que a validação dos resultados calculados fica limitada aos valores armazenados e às verificações estáticas disponíveis.
+**Declaração de Âmbito sobre o Workbook Excel (Validação OpenXML):**  
+A validação estrutural OpenXML confirmou a legibilidade e a integridade sintática dos componentes XML analisados, incluindo a estrutura das folhas, os namespaces e a presença das fórmulas de rastreabilidade. Não foi efetuado recálculo dinâmico independente das fórmulas, devido à indisponibilidade do LibreOffice no ambiente de execução. Consequentemente, os resultados desta validação não são apresentados como prova de correção dos valores calculados.
+
+**Veredicto Final:**  
+**CP04 — FECHADO E VALIDADO, COM LIMITAÇÕES DOCUMENTADAS.**

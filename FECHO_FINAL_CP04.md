@@ -73,6 +73,8 @@ Para garantir absoluta clareza conceptual, distinguem-se:
 $$\text{Execuções Lógicas Reconciliadas} = 1 + 16 + 12 + 30 + 4 + 5 = \mathbf{68}$$
 $$\text{Execuções Físicas Totais} = 1 + 16 + 12 + (30 \times 2) + 4 + 5 = \mathbf{98}$$
 
+*Reconciliação quantitativa consistente com os registos de execução e as evidências identificadas.*
+
 ---
 
 ## 5. RECONCILIAÇÃO DO INVENTÁRIO: 50 ENTRADAS NO MANIFESTO VS. 51 FICHEIROS NO ZIP
@@ -107,19 +109,32 @@ Os defeitos decorrem de erros estruturais no código fornecido de `shipping.py` 
 
 ---
 
-## 8. AUDITORIA DO WORKBOOK EXCEL ([TestResults_T08_Template.xlsx](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/TVSI_T08_Students_B1.0/TestResults_T08_Template.xlsx))
+## 8. AUDITORIA E SINCRONIZAÇÃO DO WORKBOOK EXCEL ([TestResults_T08_Template.xlsx](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/TestResults_T08_Template.xlsx))
+
+- **Caminho Canónico Oficial:** `Trabalho_CP4/TestResults_T08_Template.xlsx`
+- **Dimensão:** 33.151 bytes
+- **SHA-256 Definitivo:** `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef`
+- **Esclarecimento Criptográfico (Hash A vs Hash B):** O hash real calculado diretamente sobre o ficheiro final canónico e sobre as réplicas é `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef` (anteriormente referido como Hash B). O valor anteriormente referido como Hash A (`5bbe97aacc418cbfec21b66df825b42d54e26eb86a9782cfbf534ae8e8071861`) constituiu um lapso de transcrição textual num rascunho anterior de relatório.
+- **Sincronização Bit-a-Bit das 4 Cópias no Repositório:**
+
+| Caminho da Cópia | Dimensão (Bytes) | SHA-256 | Folhas | Status |
+|---|:---:|---|:---:|:---:|
+| `Trabalho_CP4/TestResults_T08_Template.xlsx` (Canónico) | 33.151 | `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef` | 6 | **Referência Canónica** |
+| `TVSI_T08_Students_B1.0/TestResults_T08_Template.xlsx` | 33.151 | `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef` | 6 | **100% Idêntico (Bit-a-bit)** |
+| `Trabalho_CP1/TestResults_T08_Template.xlsx` | 33.151 | `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef` | 6 | **100% Idêntico (Bit-a-bit)** |
+| `Trabalho_CP4/TVSI_T08_Students_B1.0_CP4/TestResults_T08_Template.xlsx` | 33.151 | `5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef` | 6 | **100% Idêntico (Bit-a-bit)** |
 
 - **Folhas Preservadas (6 folhas):** `Test Cases`, `Executions`, `Defects`, `Static Review`, `Coverage`, `Technique`.
 - **Coluna de Requisitos Autónoma:** Célula `C4` contém `'Requirement ID(s)'`.
 - **Fórmulas de Cobertura R01..R08:** 324 fórmulas na folha `Coverage` ligam dinamicamente casos e execuções aos requisitos (Diferença entre desenhados e executados = 0).
 - **Erros de Fórmula Armazenados:** **0 erros** (`#REF!`, `#VALUE!`, `#NAME?`, `#DIV/0!`, `#N/A`).
-- **Âmbito e Limitação da Validação:** Foi realizada uma validação estrutural do workbook, incluindo a inspeção das 324 fórmulas, das referências celulares e das dependências identificadas no XML OpenXML. Foram também inspecionadas estaticamente as fórmulas COUNTIFS/SUMIFS e a sua coerência estrutural. Não foi possível efetuar um recálculo dinâmico independente através do LibreOffice, pelo que a validação dos resultados calculados fica limitada aos valores armazenados e às verificações estáticas disponíveis.
+- **Âmbito e Limitação da Validação (Validação OpenXML):** A validação estrutural OpenXML confirmou a legibilidade e a integridade sintática dos componentes XML analisados, incluindo a estrutura das folhas, os namespaces e a presença das fórmulas de rastreabilidade. Não foi efetuado recálculo dinâmico independente das fórmulas, devido à indisponibilidade do LibreOffice no ambiente de execução. Consequentemente, os resultados desta validação não são apresentados como prova de correção dos valores calculados.
 
 ---
 
 ## 9. SCRIPT DE AUDITORIA E META-TESTES DE SENSIBILIDADE
 
-- **Script Principal:** [Trabalho_CP4/audit_cp4.py](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/audit_cp4.py) — 12 áreas de auditoria com **26 PASS | 0 FAIL | 0 WARNING | 0 BLOCKED**.
+- **Script Principal:** [Trabalho_CP4/audit_cp4.py](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/audit_cp4.py) — 12 áreas de auditoria com **27 PASS | 0 FAIL | 0 WARNING | 0 BLOCKED**.
 - **Meta-Testes de Mutação:** [Trabalho_CP4/test_auditor_robustness.py](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/test_auditor_robustness.py) — 6 testes com fixtures temporárias:
   - Ficheiro em falta: detetado (PASS);
   - JSON malformado: detetado (PASS);
@@ -143,13 +158,14 @@ Os defeitos decorrem de erros estruturais no código fornecido de `shipping.py` 
 
 ## 11. LIMITAÇÕES TÉCNICAS DECLARADAS
 
-1. **Validação do Excel sem Recálculo Independente:** Não foi possível efetuar um recálculo dinâmico independente através do LibreOffice, pelo que a validação dos resultados calculados fica limitada aos valores armazenados, às verificações estáticas disponíveis e à validação estrutural do XML OpenXML.
+1. **Validação do Excel sem Recálculo Independente:** A validação estrutural OpenXML confirmou a legibilidade e a integridade sintática dos componentes XML analisados, incluindo a estrutura das folhas, os namespaces e a presença das fórmulas de rastreabilidade. Não foi efetuado recálculo dinâmico independente das fórmulas, devido à indisponibilidade do LibreOffice no ambiente de execução. Consequentemente, os resultados desta validação não são apresentados como prova de correção dos valores calculados.
 2. **Ambiente Multiplataforma:** As execuções em Python 3.12 foram consolidadas nos registos JSON de paridade, mantendo-se no workbook Excel a convenção de uma linha de ensaio lógica por caso de teste (68 linhas).
+3. **Preservação dos Defeitos da SUT:** Os 4 defeitos conhecidos de `shipping.py` permanecem inalterados por imperativo metodológico de integridade dos testes.
 
 ---
 
 ## 12. VEREDICTO FINAL
 
-$$\mathbf{FECHADO\ E\ VALIDADO\ TECNICAMENTE\ (COM\ LIMITAÇÕES\ DOCUMENTADAS)}$$
+$$\mathbf{CP04\ —\ FECHADO\ E\ VALIDADO,\ COM\ LIMITAÇÕES\ DOCUMENTADAS}$$
 
 O Checkpoint 4 (CP04) encontra-se tecnicamente consistente, empiricamente reproduzível, documentalmente harmonizado e pronto para submissão académica formal.
