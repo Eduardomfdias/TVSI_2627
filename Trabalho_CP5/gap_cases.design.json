@@ -1,0 +1,172 @@
+[
+  {
+    "id": "F-31",
+    "requirements": "R01",
+    "technique": "EP tipo inválido",
+    "priority": "Alta",
+    "oracle_note": "weight null",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-32",
+    "requirements": "R01",
+    "technique": "EP tipo inválido",
+    "priority": "Alta",
+    "oracle_note": "weight string, sem coerção",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-33",
+    "requirements": "R01",
+    "technique": "EP tipo inválido",
+    "priority": "Alta",
+    "oracle_note": "zone null",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-34",
+    "requirements": "R01",
+    "technique": "EP domínio inválido",
+    "priority": "Média",
+    "oracle_note": "zone vazia",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-35",
+    "requirements": "R01",
+    "technique": "EP tipo inválido",
+    "priority": "Alta",
+    "oracle_note": "express null",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-36",
+    "requirements": "R02,R03",
+    "technique": "BVA",
+    "priority": "Alta",
+    "oracle_note": "5+4",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-37",
+    "requirements": "R02,R03",
+    "technique": "BVA",
+    "priority": "Alta",
+    "oracle_note": "8+4",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-38",
+    "requirements": "R02,R03",
+    "technique": "BVA",
+    "priority": "Alta",
+    "oracle_note": "8+4",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-39",
+    "requirements": "R02,R03",
+    "technique": "BVA",
+    "priority": "Alta",
+    "oracle_note": "12+4",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-40",
+    "requirements": "R01,R02,R03",
+    "technique": "BVA",
+    "priority": "Alta",
+    "oracle_note": "12+4",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-41",
+    "requirements": "R02,R03,R04",
+    "technique": "BVA",
+    "priority": "Alta",
+    "oracle_note": "5+4+6; disponível (<=5000)",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-42",
+    "requirements": "R02,R03,R04",
+    "technique": "BVA",
+    "priority": "Alta",
+    "oracle_note": "8+4+6; disponível (<=5000)",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-43",
+    "requirements": "R01,R04,R05",
+    "technique": "BVA + precedência",
+    "priority": "Alta",
+    "oracle_note": "peso válido >5000 → disponibilidade antes de fee",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-44",
+    "requirements": "R01,R05",
+    "technique": "BVA + precedência",
+    "priority": "Alta",
+    "oracle_note": "validação antes de disponibilidade",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-45",
+    "requirements": "R01,R02",
+    "technique": "BVA (interior)",
+    "priority": "Média",
+    "oracle_note": "tier 3",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-46",
+    "requirements": "R04",
+    "technique": "Caracterização black-box",
+    "priority": "Média",
+    "oracle_note": "delimitar sintoma DEF-04",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  },
+  {
+    "id": "F-47",
+    "requirements": "R04",
+    "technique": "Caracterização black-box",
+    "priority": "Média",
+    "oracle_note": "delimitar sintoma DEF-04",
+    "setup": "Cópia limpa de app/ (sem __pycache__), Python 3.10+, build T08-B1.0",
+    "action": "python run_cases.py gap_cases.json",
+    "side_effects_expected": "nenhum (BR-05)"
+  }
+]

@@ -1,0 +1,145 @@
+[
+  {
+    "suite": "Humano H-01..H-12",
+    "n": 12,
+    "req": [
+      "R01",
+      "R02",
+      "R03",
+      "R04"
+    ],
+    "partitions": 11,
+    "partitions_list": [
+      "AV:LOCAL-express",
+      "AV:REMOTE<=5000",
+      "E:False",
+      "E:True",
+      "W:<=0",
+      "W:>20000",
+      "W:T1",
+      "W:T2",
+      "W:T3",
+      "Z:LOCAL",
+      "Z:REMOTE"
+    ],
+    "boundaries": [
+      "W=0",
+      "W=1",
+      "W=1000",
+      "W=1001",
+      "W=20000",
+      "W=20001",
+      "W=5000",
+      "W=5001"
+    ],
+    "invalid_expectations": 0,
+    "dup_exact": 0,
+    "dup_same_partition": 0,
+    "defects_original": [
+      "DEF-01",
+      "DEF-02",
+      "DEF-03"
+    ],
+    "defects_corrected": [
+      "DEF-01",
+      "DEF-02",
+      "DEF-03"
+    ]
+  },
+  {
+    "suite": "IA AI-01..AI-12",
+    "n": 12,
+    "req": [
+      "R01",
+      "R02",
+      "R03",
+      "R04",
+      "R05"
+    ],
+    "partitions": 11,
+    "partitions_list": [
+      "AV:LOCAL-express",
+      "AV:REMOTE>5000",
+      "E:False",
+      "E:True",
+      "W:<=0",
+      "W:>20000",
+      "W:T1",
+      "W:T2",
+      "W:T3",
+      "Z:LOCAL",
+      "Z:REMOTE"
+    ],
+    "boundaries": [
+      "W=0",
+      "W=1000",
+      "W=20001"
+    ],
+    "invalid_expectations": 3,
+    "dup_exact": 1,
+    "dup_same_partition": 1,
+    "defects_original": [
+      "DEF-03"
+    ],
+    "defects_corrected": [
+      "DEF-02",
+      "DEF-03",
+      "DEF-04"
+    ]
+  },
+  {
+    "suite": "Humano completo H-01..H-16",
+    "n": 16,
+    "req": [
+      "R01",
+      "R02",
+      "R03",
+      "R04",
+      "R05"
+    ],
+    "partitions": 14,
+    "partitions_list": [
+      "AV:LOCAL-express",
+      "AV:REMOTE<=5000",
+      "AV:REMOTE>5000",
+      "E:False",
+      "E:True",
+      "W:<=0",
+      "W:>20000",
+      "W:T1",
+      "W:T2",
+      "W:T3",
+      "W:bool",
+      "Z:LOCAL",
+      "Z:REMOTE",
+      "Z:inválida"
+    ],
+    "boundaries": [
+      "REMOTE-express=5000",
+      "REMOTE-express=5001",
+      "W=0",
+      "W=1",
+      "W=1000",
+      "W=1001",
+      "W=20000",
+      "W=20001",
+      "W=5000",
+      "W=5001"
+    ],
+    "invalid_expectations": 0,
+    "dup_exact": 0,
+    "dup_same_partition": 0,
+    "defects_original": [
+      "DEF-01",
+      "DEF-02",
+      "DEF-03",
+      "DEF-04"
+    ],
+    "defects_corrected": [
+      "DEF-01",
+      "DEF-02",
+      "DEF-03",
+      "DEF-04"
+    ]
+  }
+]

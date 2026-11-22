@@ -1,0 +1,13 @@
+Reproduções isoladas — RUN-CP5-20261122-212810 — Python 3.12.16 — cada linha é um processo Python novo
+DEF-01 #1 quote(20000, 'LOCAL', False) | esperado (BR): OK, fee 12 | observado: {'status': 'INVALID', 'fee': None}
+DEF-01 #2 quote(20000, 'LOCAL', False) | esperado (BR): OK, fee 12 | observado: {'status': 'INVALID', 'fee': None}
+DEF-01 #3 quote(20000, 'LOCAL', False) | esperado (BR): OK, fee 12 | observado: {'status': 'INVALID', 'fee': None}
+DEF-02 #1 quote(1000, 'LOCAL', False) | esperado (BR): OK, fee 5 | observado: {'status': 'OK', 'fee': 8}
+DEF-02 #2 quote(1000, 'LOCAL', False) | esperado (BR): OK, fee 5 | observado: {'status': 'OK', 'fee': 8}
+DEF-02 #3 quote(1000, 'LOCAL', False) | esperado (BR): OK, fee 5 | observado: {'status': 'OK', 'fee': 8}
+DEF-03 #1 quote(500, 'REMOTE', False) | esperado (BR): OK, fee 9 | observado: {'status': 'OK', 'fee': 4}
+DEF-03 #2 quote(500, 'REMOTE', False) | esperado (BR): OK, fee 9 | observado: {'status': 'OK', 'fee': 4}
+DEF-03 #3 quote(500, 'REMOTE', False) | esperado (BR): OK, fee 9 | observado: {'status': 'OK', 'fee': 4}
+DEF-04 #1 quote(5001, 'REMOTE', True) | esperado (BR): UNAVAILABLE, fee null | observado: {'status': 'OK', 'fee': 10}
+DEF-04 #2 quote(5001, 'REMOTE', True) | esperado (BR): UNAVAILABLE, fee null | observado: {'status': 'OK', 'fee': 10}
+DEF-04 #3 quote(5001, 'REMOTE', True) | esperado (BR): UNAVAILABLE, fee null | observado: {'status': 'OK', 'fee': 10}

@@ -1,0 +1,206 @@
+[
+  {
+    "id": "F-31",
+    "input": {
+      "weight": null,
+      "zone": "LOCAL",
+      "express": false
+    },
+    "expected": {
+      "status": "INVALID",
+      "fee": null
+    }
+  },
+  {
+    "id": "F-32",
+    "input": {
+      "weight": "500",
+      "zone": "LOCAL",
+      "express": false
+    },
+    "expected": {
+      "status": "INVALID",
+      "fee": null
+    }
+  },
+  {
+    "id": "F-33",
+    "input": {
+      "weight": 500,
+      "zone": null,
+      "express": false
+    },
+    "expected": {
+      "status": "INVALID",
+      "fee": null
+    }
+  },
+  {
+    "id": "F-34",
+    "input": {
+      "weight": 500,
+      "zone": "",
+      "express": false
+    },
+    "expected": {
+      "status": "INVALID",
+      "fee": null
+    }
+  },
+  {
+    "id": "F-35",
+    "input": {
+      "weight": 500,
+      "zone": "LOCAL",
+      "express": null
+    },
+    "expected": {
+      "status": "INVALID",
+      "fee": null
+    }
+  },
+  {
+    "id": "F-36",
+    "input": {
+      "weight": 1000,
+      "zone": "REMOTE",
+      "express": false
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 9
+    }
+  },
+  {
+    "id": "F-37",
+    "input": {
+      "weight": 1001,
+      "zone": "REMOTE",
+      "express": false
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 12
+    }
+  },
+  {
+    "id": "F-38",
+    "input": {
+      "weight": 5000,
+      "zone": "REMOTE",
+      "express": false
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 12
+    }
+  },
+  {
+    "id": "F-39",
+    "input": {
+      "weight": 5001,
+      "zone": "REMOTE",
+      "express": false
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 16
+    }
+  },
+  {
+    "id": "F-40",
+    "input": {
+      "weight": 20000,
+      "zone": "REMOTE",
+      "express": false
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 16
+    }
+  },
+  {
+    "id": "F-41",
+    "input": {
+      "weight": 1000,
+      "zone": "REMOTE",
+      "express": true
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 15
+    }
+  },
+  {
+    "id": "F-42",
+    "input": {
+      "weight": 1001,
+      "zone": "REMOTE",
+      "express": true
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 18
+    }
+  },
+  {
+    "id": "F-43",
+    "input": {
+      "weight": 20000,
+      "zone": "REMOTE",
+      "express": true
+    },
+    "expected": {
+      "status": "UNAVAILABLE",
+      "fee": null
+    }
+  },
+  {
+    "id": "F-44",
+    "input": {
+      "weight": 0,
+      "zone": "REMOTE",
+      "express": true
+    },
+    "expected": {
+      "status": "INVALID",
+      "fee": null
+    }
+  },
+  {
+    "id": "F-45",
+    "input": {
+      "weight": 19999,
+      "zone": "LOCAL",
+      "express": false
+    },
+    "expected": {
+      "status": "OK",
+      "fee": 12
+    }
+  },
+  {
+    "id": "F-46",
+    "input": {
+      "weight": 10000,
+      "zone": "REMOTE",
+      "express": true
+    },
+    "expected": {
+      "status": "UNAVAILABLE",
+      "fee": null
+    }
+  },
+  {
+    "id": "F-47",
+    "input": {
+      "weight": 10001,
+      "zone": "REMOTE",
+      "express": true
+    },
+    "expected": {
+      "status": "UNAVAILABLE",
+      "fee": null
+    }
+  }
+]

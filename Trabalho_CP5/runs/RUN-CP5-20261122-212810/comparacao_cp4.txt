@@ -1,0 +1,4 @@
+final_cases vs Trabalho_CP4/runs/RUN-CP4-20261115-162457/final_cases.results.py312.json (python 3.12.16): 30 casos, divergências: [('F-22', None, {'status': 'INVALID', 'fee': None}), ('F-23', None, {'status': 'INVALID', 'fee': None}), ('F-24', None, {'status': 'OK', 'fee': 14}), ('F-25', None, {'status': 'INVALID', 'fee': None}), ('F-26', None, {'status': 'INVALID', 'fee': None}), ('F-27', None, {'status': 'INVALID', 'fee': None}), ('F-28', None, {'status': 'OK', 'fee': 12}), ('F-29', None, {'status': 'OK', 'fee': 4}), ('F-30', None, {'status': 'OK', 'fee': 10})]
+final_cases vs Trabalho_CP4/runs/final_cases_execution.py312.json (python 3.12.7): 30 casos, divergências: nenhuma
+human_cases_cp4 vs Trabalho_CP4/runs/human_17_execution.json (python 3.9.6): 17 casos, divergências: nenhuma
+ai_candidates vs Trabalho_CP4/runs/ai_candidates_execution.json (python 3.9.6): 12 casos, divergências: nenhuma

@@ -223,7 +223,7 @@ O livro oficial `TVSI_T08_Students_B1.0/TestResults_T08_Template.xlsx` foi integ
 
 ### 10.7. Automação de Auditoria e Validação Criptográfica
 
-Foi desenvolvido e executado o script [`Trabalho_CP4/audit_cp4.py`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/audit_cp4.py), que valida automaticamente as 11 áreas normativas do projeto, confirmando zero falhas críticas.
+Foi desenvolvido e executado o script [`Trabalho_CP4/audit_cp4.py`](Trabalho_CP4/audit_cp4.py), que valida automaticamente as 11 áreas normativas do projeto, confirmando zero falhas críticas.
 
 ---
 

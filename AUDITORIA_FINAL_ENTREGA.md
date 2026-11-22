@@ -66,7 +66,7 @@ O âmbito cobriu de forma cumulativa e harmonizada os quatro checkpoints da U.C.
 
 ## 5. Auditoria das 12 Áreas Normativas (`audit_cp4.py`)
 
-A execução do script formal de auditoria [`Trabalho_CP4/audit_cp4.py`](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/audit_cp4.py) reportou 26 verificações com veredicto **PASS**:
+A execução do script formal de auditoria [`Trabalho_CP4/audit_cp4.py`](Trabalho_CP4/audit_cp4.py) reportou 26 verificações com veredicto **PASS**:
 
 | # | Área de Auditoria | Verificações Efetuadas | Veredicto |
 |---|---|---|:---:|

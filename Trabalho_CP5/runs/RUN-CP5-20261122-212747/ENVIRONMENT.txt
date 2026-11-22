@@ -1,0 +1,7 @@
+Run ID: RUN-CP5-20261122-212747
+Data: 2026-11-22T21:27:48Z
+SO: macOS 27.2.1 (arm64)
+Python: Python 3.12.16
+Executável: /opt/homebrew/bin/python3.12
+Build: T08-B1.0
+Tester: a confirmar (sessão Claude Code na máquina de Eduardo Dias)

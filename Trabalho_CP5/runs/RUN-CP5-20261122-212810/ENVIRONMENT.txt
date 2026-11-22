@@ -1,0 +1,7 @@
+Run ID: RUN-CP5-20261122-212810
+Data: 2026-11-22T21:28:11Z
+SO: macOS 27.2.1 (arm64)
+Python: Python 3.12.16
+Comando: /opt/homebrew/bin/python3.12 -E -s run_cases.py <suite>.json (cwd = cópia limpa app/)
+Build: T08-B1.0
+Tester: a confirmar (sessão Claude Code na máquina de Eduardo Dias)

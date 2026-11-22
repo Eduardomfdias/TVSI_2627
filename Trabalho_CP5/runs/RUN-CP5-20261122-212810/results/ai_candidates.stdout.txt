@@ -1,0 +1,211 @@
+{
+  "build": "T08-B1.0",
+  "suite": "ai_candidates.json",
+  "python": "3.12.16 (main, Oct 25 2026, 18:24:37) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "results": [
+    {
+      "id": "AI-01",
+      "input": {
+        "weight": 500,
+        "zone": "LOCAL",
+        "express": false
+      },
+      "expected": {
+        "status": "OK",
+        "fee": 5
+      },
+      "actual": {
+        "status": "OK",
+        "fee": 5
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "AI-02",
+      "input": {
+        "weight": 2000,
+        "zone": "LOCAL",
+        "express": false
+      },
+      "expected": {
+        "status": "OK",
+        "fee": 8
+      },
+      "actual": {
+        "status": "OK",
+        "fee": 8
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "AI-03",
+      "input": {
+        "weight": 6000,
+        "zone": "LOCAL",
+        "express": false
+      },
+      "expected": {
+        "status": "OK",
+        "fee": 12
+      },
+      "actual": {
+        "status": "OK",
+        "fee": 12
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "AI-04",
+      "input": {
+        "weight": 500,
+        "zone": "LOCAL",
+        "express": true
+      },
+      "expected": {
+        "status": "OK",
+        "fee": 11
+      },
+      "actual": {
+        "status": "OK",
+        "fee": 11
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "AI-05",
+      "input": {
+        "weight": 500,
+        "zone": "REMOTE",
+        "express": false
+      },
+      "expected": {
+        "status": "OK",
+        "fee": 4
+      },
+      "actual": {
+        "status": "OK",
+        "fee": 4
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "AI-06",
+      "input": {
+        "weight": 1000,
+        "zone": "LOCAL",
+        "express": false
+      },
+      "expected": {
+        "status": "OK",
+        "fee": 8
+      },
+      "actual": {
+        "status": "OK",
+        "fee": 8
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "AI-07",
+      "input": {
+        "weight": 0,
+        "zone": "LOCAL",
+        "express": false
+      },
+      "expected": {
+        "status": "INVALID",
+        "fee": null
+      },
+      "actual": {
+        "status": "INVALID",
+        "fee": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "AI-08",
+      "input": {
+        "weight": 20001,
+        "zone": "LOCAL",
+        "express": false
+      },
+      "expected": {
+        "status": "INVALID",
+        "fee": null
+      },
+      "actual": {
+        "status": "INVALID",
+        "fee": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "AI-09",
+      "input": {
+        "weight": 6000,
+        "zone": "REMOTE",
+        "express": true
+      },
+      "expected": {
+        "status": "OK",
+        "fee": 22
+      },
+      "actual": {
+        "status": "OK",
+        "fee": 10
+      },
+      "verdict": "FAIL"
+    },
+    {
+      "id": "AI-10",
+      "input": {
+        "weight": 500,
+        "zone": "LOCAL",
+        "express": false
+      },
+      "expected": {
+        "status": "OK",
+        "fee": 5
+      },
+      "actual": {
+        "status": "OK",
+        "fee": 5
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "AI-11",
+      "input": {
+        "weight": 10000,
+        "zone": "LOCAL",
+        "express": true
+      },
+      "expected": {
+        "status": "OK",
+        "fee": 18
+      },
+      "actual": {
+        "status": "OK",
+        "fee": 18
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "AI-12",
+      "input": {
+        "weight": 2000,
+        "zone": "REMOTE",
+        "express": false
+      },
+      "expected": {
+        "status": "OK",
+        "fee": 12
+      },
+      "actual": {
+        "status": "OK",
+        "fee": 4
+      },
+      "verdict": "FAIL"
+    }
+  ]
+}

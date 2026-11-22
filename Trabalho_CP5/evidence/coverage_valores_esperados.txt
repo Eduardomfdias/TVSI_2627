@@ -1,0 +1,11 @@
+Valores que a folha Coverage deve mostrar após recálculo (simulação das fórmulas em Python):
+Requirement | Designed | Executed | Not executed
+R01 | 24 | 15 | 9
+R02 | 25 | 17 | 8
+R03 | 17 | 10 | 7
+R04 | 10 | 5 | 5
+R05 | 4 | 2 | 2
+R06 | 7 | 7 | 0
+R07 | 5 | 5 | 0
+R08 | 4 | 4 | 0
+Ligações 'Check IDs / duplicate': nenhuma

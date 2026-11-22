@@ -55,7 +55,7 @@ Todas as verificações obedecem aos princípios fundamentais de engenharia de s
 
 Para garantir absoluta clareza conceptual, distinguem-se:
 1. **Casos de Teste Únicos:** Entidades de teste distintas concebidas nas suites (`H-ENV`, `H-01..16`, `AI-01..12`, `F-17..30`, `BR05-01..04`, `ROB-01..05`).
-2. **Linhas de Execução Lógica no Workbook (68):** Linhas formais de registo no livro de cálculo oficial [TestResults_T08_Template.xlsx](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/TVSI_T08_Students_B1.0/TestResults_T08_Template.xlsx) (folha `Executions`), correspondendo a um ensaio por caso de teste lógico.
+2. **Linhas de Execução Lógica no Workbook (68):** Linhas formais de registo no livro de cálculo oficial [TestResults_T08_Template.xlsx](TVSI_T08_Students_B1.0/TestResults_T08_Template.xlsx) (folha `Executions`), correspondendo a um ensaio por caso de teste lógico.
 3. **Execuções Físicas Totais Multiplataforma (98):** Invocações efetivas do interpretador Python em runtime, incluindo a execução paralela de paridade da suite final (30 em Python 3.9 + 30 em Python 3.12 = 60 execuções físicas), perfazendo um total de 98 execuções físicas comprovadas por evidências JSON ($1 + 16 + 12 + 60 + 4 + 5 = 98$).
 
 ### Tabela de Reconciliação Metodológica das Execuções
@@ -81,9 +81,9 @@ $$\text{Execuções Físicas Totais} = 1 + 16 + 12 + (30 \times 2) + 4 + 5 = \ma
 ## 5. RECONCILIAÇÃO DO INVENTÁRIO: 50 ENTRADAS NO MANIFESTO VS. 51 FICHEIROS NO ZIP
 
 A contagem entre o manifesto e o arquivo ZIP encontra-se estritamente reconciliada:
-- **Tabela de Conteúdo de [MANIFEST_ENTREGA.md](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/MANIFEST_ENTREGA.md):** Enumera exatamente **50 ficheiros de projeto** (códigos-fonte, documentação, evidências JSON e workbooks Excel), fornecendo a sua dimensão em bytes e o respetivo hash SHA-256.
+- **Tabela de Conteúdo de [MANIFEST_ENTREGA.md](MANIFEST_ENTREGA.md):** Enumera exatamente **50 ficheiros de projeto** (códigos-fonte, documentação, evidências JSON e workbooks Excel), fornecendo a sua dimensão em bytes e o respetivo hash SHA-256.
 - **Arquivo ZIP Consolidado (`TVSI_T08_Grupo5_CP04.zip`):** Contém exatamente **51 ficheiros**, correspondendo aos 50 ficheiros de projeto atestados acrescidos do próprio ficheiro `MANIFEST_ENTREGA.md`.
-- **Eliminação de Dependência Circular:** O manifesto contido dentro do arquivo ZIP não inclui o hash do próprio ZIP. O hash SHA-256 do arquivo ZIP final é atestado no ficheiro externo de verificação [TVSI_T08_Grupo5_CP04.zip.sha256](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/TVSI_T08_Grupo5_CP04.zip.sha256).
+- **Eliminação de Dependência Circular:** O manifesto contido dentro do arquivo ZIP não inclui o hash do próprio ZIP. O hash SHA-256 do arquivo ZIP final é atestado no ficheiro externo de verificação [TVSI_T08_Grupo5_CP04.zip.sha256](TVSI_T08_Grupo5_CP04.zip.sha256).
 
 ---
 
@@ -110,7 +110,7 @@ Os defeitos decorrem de erros estruturais no código fornecido de `shipping.py` 
 
 ---
 
-## 8. AUDITORIA E SINCRONIZAÇÃO DO WORKBOOK EXCEL ([TestResults_T08_Template.xlsx](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/TestResults_T08_Template.xlsx))
+## 8. AUDITORIA E SINCRONIZAÇÃO DO WORKBOOK EXCEL ([TestResults_T08_Template.xlsx](Trabalho_CP4/TestResults_T08_Template.xlsx))
 
 - **Caminho Canónico Oficial:** `Trabalho_CP4/TestResults_T08_Template.xlsx`
 - **Dimensão:** 33.151 bytes
@@ -134,8 +134,8 @@ Os defeitos decorrem de erros estruturais no código fornecido de `shipping.py` 
 
 ## 9. SCRIPT DE AUDITORIA E META-TESTES DE SENSIBILIDADE
 
-- **Script Principal:** [Trabalho_CP4/audit_cp4.py](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/audit_cp4.py) — 12 áreas de auditoria com **27 PASS | 0 FAIL | 0 WARNING | 0 BLOCKED**.
-- **Meta-Testes de Mutação:** [Trabalho_CP4/test_auditor_robustness.py](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/Trabalho_CP4/test_auditor_robustness.py) — 6 testes executados de forma integrada contra o auditor real em sandboxes temporários isolados:
+- **Script Principal:** [Trabalho_CP4/audit_cp4.py](Trabalho_CP4/audit_cp4.py) — 12 áreas de auditoria com **27 PASS | 0 FAIL | 0 WARNING | 0 BLOCKED**.
+- **Meta-Testes de Mutação:** [Trabalho_CP4/test_auditor_robustness.py](Trabalho_CP4/test_auditor_robustness.py) — 6 testes executados de forma integrada contra o auditor real em sandboxes temporários isolados:
   - Ficheiro em falta: detetado (PASS);
   - JSON malformado: detetado (PASS);
   - IDs duplicados: detetado (PASS);
@@ -150,7 +150,7 @@ Os defeitos decorrem de erros estruturais no código fornecido de `shipping.py` 
 
 - **Nome do Arquivo:** `TVSI_T08_Grupo5_CP04.zip`
 - **Total de Ficheiros:** 51 ficheiros essenciais (50 artefactos de projeto + 1 manifesto)
-- **Ficheiro Externo de Validação:** [TVSI_T08_Grupo5_CP04.zip.sha256](file:///Users/rui.carneiro/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Mestrado/TVSI/TVSI_2627/TVSI_T08_Grupo5_CP04.zip.sha256) (contém a soma criptográfica SHA-256 e dimensão exata do arquivo consolidado, eliminando qualquer dependência circular de cálculo)
+- **Ficheiro Externo de Validação:** [TVSI_T08_Grupo5_CP04.zip.sha256](TVSI_T08_Grupo5_CP04.zip.sha256) (contém a soma criptográfica SHA-256 e dimensão exata do arquivo consolidado, eliminando qualquer dependência circular de cálculo)
 - **Validação CRC:** `zipfile.testzip()` executado com veredicto `None` (0 erros).
 - **Validação por Extração:** Extração temporária confirmou 100% de correspondência byte a byte e hash a hash com o repositório.
 - **Declaração de Disponibilização:** Os requisitos técnicos, os artefactos versionados, os relatórios de auditoria e a sincronização das branches Git foram concluídos e validados. A integridade do pacote ZIP foi verificada no ambiente local de geração e submissão, não estando o ficheiro binário publicado no repositório GitHub; encontra-se publicada a respetiva assinatura SHA-256 externa.

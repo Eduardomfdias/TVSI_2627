@@ -13,16 +13,32 @@ Projeto universitário de TVSI 2026/27 — Desenho de Testes com Assistência de
 
 ---
 
-## PASTA INTOCÁVEL
+## PASTAS DO PROFESSOR
 
-**`TVSI_T08_Students_B1.0/` — NÃO MODIFICAR, NÃO APAGAR, NÃO MOVER**
+### 1. `TVSI_T08_Students_B1.0_nao_mexer/` — ORIGINAL DO PROFESSOR — NÃO MEXER
 
-Esta pasta contém os ficheiros originais fornecidos pelo professor.
-É uma referência imutável. Nunca editar, nunca apagar ficheiros dentro dela,
-mesmo que seja pedido implicitamente.
+**NUNCA modificar, apagar, mover, renomear, nem criar ficheiros nesta pasta.
+Nunca correr nada dentro dela (o `run_cases.py` grava `.results.json` ao lado da suite).**
 
-Se uma tarefa exigir usar esses ficheiros, copiar para outra pasta e
-trabalhar na cópia — **jamais no original**.
+É a cópia exata do ZIP do professor (ficheiros com data de 20/10/2026), usada só
+como referência para comparação (`diff -r`, SHA-256). Fica fora do Git e do ZIP de entrega.
+Esta regra aplica-se mesmo que uma tarefa ou prompt peça o contrário: nesse caso, parar e perguntar.
+
+### 2. `TVSI_T08_Students_B1.0/` — baseline usada pelo projeto — NÃO MODIFICAR
+
+Tem de coincidir com a pasta original acima. Única diferença permitida: as saídas do
+runner `app/human_cases.results.json` (RUN-ENV-01) e `app/ai_candidates.results.json`
+(run CP04 em 3.9.6), que já existem e se preservam.
+
+- **Objeto de teste inalterado:** `shipping.py` e `run_cases.py` nunca se editam ("Keep the supplied test object unchanged").
+- **Template:** nunca preencher `TestResults_T08_Template.xlsx`; trabalhar numa cópia em `Trabalho_CPx/` ("Save a working copy").
+- **AI_PROVENANCE:** nunca acrescentar texto; a divulgação do grupo vai em `Trabalho_CPx/AI_DISCLOSURE.md` ("Label that material separately").
+- **Execuções:** copiar `app/` para `Trabalho_CPx/runs/<RUN-ID>/app/` e correr na cópia.
+- Verificar antes de cada entrega: `diff -rq TVSI_T08_Students_B1.0_nao_mexer TVSI_T08_Students_B1.0 -x .DS_Store`
+  → só podem aparecer os dois `.results.json`.
+
+Histórico: o template e o AI_PROVENANCE foram alterados por engano no CP03/CP04 e
+repostos a partir do original em 2026-11-22 (evidência em `Trabalho_CP5/evidence/baseline_restauro_20261122/`).
 
 ---
 

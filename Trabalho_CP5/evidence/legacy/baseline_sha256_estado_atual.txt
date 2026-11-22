@@ -1,0 +1,3 @@
+AI_PROVENANCE.md | 9d9f950: b254a4ea17c1ae0776eda3426460681f5e836cfbf3704c09bb9bbbc14e29e676 | atual: f365eef25a652acb4f8ec6d33d97dc73324b5dbcebaa85119ab2e86c1070d309
+TestResults_T08_Template.xlsx | 9d9f950: b9165a30a2889c2d35b761d1d296c8e04b32c9c25ebf56cde8d22f89c82e7c69 | atual: 5bbe97aacc418cbf2fb2c6555e4d1d812f9acfb68d98a48c99ea83a78f9c0bef
+app/ai_candidates.results.json | 9d9f950: (não existia em 9d9f950) | atual: c802c963a533f10e2179fa4fc8ff7dafa8b9d992d52f1c37b832afde38491555
