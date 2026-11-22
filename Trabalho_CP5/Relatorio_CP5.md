@@ -94,6 +94,8 @@ O desenho foi registado no Git antes de qualquer execução. Os casos ainda não
 
 ## 5. Cobertura e lacunas na ótica T08
 
+### 5.1 Comparação entre suites de igual dimensão
+
 Para a comparação de igual dimensão, fixou-se à partida a suite humana H-01 a H-12 (ordem de ID), comparada com os 12 candidatos IA. Acrescenta-se a suite humana completa como referência.
 
 *Tabela 4 — Comparação entre suites humana e IA*
@@ -110,7 +112,31 @@ Na suite final, F-19 e F-30 estão na mesma partição que o H-14 para o DEF-04,
 
 Estas conclusões aplicam-se apenas a este material. O fixture é curado pelo docente e não permite afirmar superioridade de humanos ou de IA. A suite do grupo também não é exclusivamente humana: a revisão dos candidatos no CP03 e o desenho dos casos F-31 a F-47 tiveram assistência de IA.
 
-Os requisitos R06 a R08 são verificados por procedimentos de processo e do runner (formato JSON, exit codes, revisão do material IA), e não pelo comportamento da função `quote()`.
+### 5.2 Rastreabilidade requisito → teste → execução
+
+A Tabela 5 resume a folha Coverage do workbook. Cada ligação corresponde a um par requisito–teste; um teste conta como executado quando tem pelo menos uma execução com veredicto PASS ou FAIL. Todas as execuções contabilizadas são do CP05 (RUN-CP5-20261122-212810, Python 3.12.16): os casos H-ENV e H-01 a H-16 foram executados nas suites humana e final, e os casos F-17 a F-30 na suite final. Os casos F-31 a F-47 estão desenhados mas ainda não executados.
+
+*Tabela 5 — Rastreabilidade R01–R08*
+
+| Requisito | Testes ligados | Executados | Testes executados (RUN-CP5-20261122-212810) | Desenhados, por executar |
+|---|---:|---:|---|---|
+| R01 / BR-01 — validação | 24 | 15 | H-ENV, H-02, H-03, H-07, H-08, H-09, H-15, H-16, F-20 a F-23, F-25 a F-27 | F-31 a F-35, F-40, F-43 a F-45 |
+| R02 / BR-02 — fee base | 25 | 17 | H-ENV, H-01 a H-07, H-10 a H-13, F-17, F-18, F-24, F-28, F-29 | F-36 a F-42, F-45 |
+| R03 / BR-03 — suplementos | 17 | 10 | H-01, H-10 a H-13, F-17, F-18, F-24, F-28, F-29 | F-36 a F-42 |
+| R04 / BR-04 — disponibilidade | 10 | 5 | H-13, H-14, F-19, F-21, F-30 | F-41 a F-43, F-46, F-47 |
+| R05 / BR-05 — precedência e independência | 4 | 2 | F-21, H-ENV ¹ | F-43, F-44 |
+| R06 / BR-06 — formato e ambiente | 7 | 7 | H-ENV, H-01, H-07, H-14, F-17, F-21, F-30 ² | — |
+| R07 / BR-07 — comparação e exit codes | 5 | 5 | H-ENV, H-01, H-03, F-18, F-21 ² | — |
+| R08 / BR-08 — revisão do material IA | 4 | 4 | H-01, F-17, F-18, F-19 ² | — |
+
+¹ A ligação R05–H-ENV foi herdada do CP04 e não exercita precedência; é retirada do workbook. A precedência validação > disponibilidade é exercitada pelo F-21 (e pelos F-43/F-44 por executar); a precedência disponibilidade > cálculo pelos casos UNAVAILABLE sem fee (H-14, F-19, F-30). A independência entre chamadas foi verificada pelos controlos RUN-CTRL-01 a RUN-CTRL-04 (CP04), apenas em Python 3.9.6.
+
+² Os requisitos R06 a R08 não dependem do comportamento da função `quote()`. Os casos indicados servem apenas de evidência de que o processo foi aplicado. A verificação efetiva é de processo:
+- **R06:** todas as suites foram aceites pelo runner no formato JSON e executadas em Python 3.12.16.
+- **R07:** exit code 1 nas três suites CP05, que têm FAILs, e preservação de cada execução com Run ID próprio; os casos de erro do runner (exit code 2, RUN-ROB-01 a RUN-ROB-05) só têm evidência em 3.9.6.
+- **R08:** classificação dos 12 candidatos IA contra o oráculo independente (folha Technique) e comparação da secção 5.1.
+
+A cobertura de requisitos indica apenas que cada regra tem testes ligados e executados; não mede a cobertura de partições, fronteiras ou combinações, que é tratada na secção 5.1.
 
 ## 6. Limitações e riscos residuais
 
@@ -204,9 +230,9 @@ O relatório CP04 entregue é cumulativo: Parte I (enquadramento, §1–5), Part
 | 10.3.2. | Defeitos de Dados no Material IA | §4.4 (DATA-01 a DATA-03, AI-10) | — |
 | 10.3.3. | Questões de Especificação | §4.4 (nenhuma em aberto) | — |
 | 10.4. | Cobertura e Lacunas na Ótica T08 | | |
-| 10.4.1. | Comparação entre Suites de Igual Dimensão | §5 | Tabela 39 — Comparação humano vs IA |
-| 10.4.2. | Redundância na Suite Final | §5 (F-19, F-30, F-28) | — |
-| 10.4.3. | Rastreabilidade Requisito–Teste–Execução | Resumo R01–R08 a partir da folha Coverage do workbook (R06–R08 por verificação de processo) | Tabela 40 — Rastreabilidade R01–R08 |
+| 10.4.1. | Comparação entre Suites de Igual Dimensão | §5.1 | Tabela 39 — Comparação humano vs IA |
+| 10.4.2. | Redundância na Suite Final | §5.1 (F-19, F-30, F-28) | — |
+| 10.4.3. | Rastreabilidade Requisito–Teste–Execução | §5.2 (Tabela 5 e notas ¹ ²) | Tabela 40 — Rastreabilidade R01–R08 |
 | 10.4.4. | Casos de Lacuna (F-31 a F-47) | §4.5 | — |
 | 10.5. | Limitações e Riscos Residuais | §6 + estado atualizado dos riscos R1–R5 do §4 | Tabela 41 — Riscos residuais (estado CP05) |
 | 10.6. | Trabalho por Fazer até ao CP06 | §7 | Tabela 42 — Tarefas, prioridades e responsáveis |
@@ -217,7 +243,7 @@ O relatório CP04 entregue é cumulativo: Parte I (enquadramento, §1–5), Part
 
 ### C. Notas para a passagem ao Word
 
-- A Tabela 40 (rastreabilidade) não existe neste documento: retirar os valores da folha Coverage depois de o Excel estar fechado, para os números baterem.
+- A Tabela 40 (rastreabilidade) corresponde à Tabela 5 (§5.2), extraída do workbook `TestResults_T08_CP05.xlsx` em 22/11. Se o Excel mudar (por exemplo, ao retirar a ligação R05–H-ENV, que passa R05 para 3 ligações e 1 executada), atualizar os números antes de passar para o Word.
 - Manter os títulos das secções dos checkpoints em inglês, como no CP04 ("CP05 – Consolidated Findings and Coverage"), e o resto em português.
 - Legendas no formato do CP04: *Tabela N - Título*, em itálico, por cima da tabela.
 - Os caminhos de ficheiros (evidências) ficam só no Anexo; no corpo do texto basta referir o Run ID.
