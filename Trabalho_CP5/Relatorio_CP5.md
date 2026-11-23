@@ -7,243 +7,281 @@ Checkpoint de progresso — 24 de novembro de 2026
 
 ---
 
-## 1. Introdução
+## 1. Identificação da Entrega e Estado Atual
 
-O presente documento corresponde ao quinto checkpoint (CP05) do trabalho T08, cujo objetivo é consolidar os resultados obtidos até à data, explicar a cobertura alcançada e as lacunas existentes, e identificar o trabalho necessário para o CP06. Não constitui o relatório final.
+O presente documento corresponde à entrega oficial do quinto checkpoint (**CP05 — Consolidated findings and coverage**), no âmbito do trabalho prático T08. O objetivo central é consolidar os resultados das execuções realizadas, auditar e corrigir a rastreabilidade requisito–teste–execução, explicar a cobertura alcançada e as respetivas lacunas, auditar os relatórios de defeitos em modo estritamente black-box, e preparar com rigor os artefactos e prioridades para a entrega final (CP06). Este documento não constitui o relatório final de projeto, mas sim um relatório de progresso e consolidação técnica.
 
-Além da consolidação, o CP05 incluiu uma revisão crítica do trabalho entregue no CP04. Essa revisão identificou afirmações que a evidência não sustentava e práticas que não cumpriam o enunciado. As correções efetuadas são descritas na secção 3, com o motivo e a evidência de cada uma.
+### 1.1 Estado do Projeto por Categorias de Trabalho
 
-## 2. Evolução do trabalho (CP01–CP04)
+Para garantir total transparência metodológica, o estado atual do trabalho reparte-se da seguinte forma:
 
-| Checkpoint | Trabalho realizado | Resultado |
+- **Trabalho concluído:**
+  - Reposição e verificação criptográfica da baseline original do docente (`TVSI_T08_Students_B1.0/`, SHA-256 intactos conforme commit original `9d9f950`).
+  - Re-execução das três suites oficiais (`human_cases_cp4.json`, `ai_candidates.json`, `final_cases.json`) em ambiente conforme (Python 3.12.16, macOS arm64, `RUN-CP5-20261122-212810`), sob flags isoladas `-E -s`, com integridade criptográfica verificada antes e depois.
+  - Reprodução isolada dos quatro defeitos confirmados (3 repetições independentes em processos novos por defeito).
+  - Oráculo independente formalizado em `tools/oracle.py`, derivado exclusivamente do texto normativo de BR-01 a BR-05.
+  - Consolidação dos defect reports (DEF-01 a DEF-04) sem especulação de código-fonte (estritamente black-box), e separação inequívoca de defeitos de dados do fixture (`DATA-01` a `DATA-03`) e de redundâncias (`AI-10`, `F-19`, `F-30`, `F-28`).
+  - Correção integral da rastreabilidade na folha Coverage de `TestResults_T08_CP05.xlsx`: remoção da ligação espúria R05–H-ENV e remoção das associações artificiais de casos da função `quote()` aos requisitos processuais R06–R08.
+  - Análise comparativa humano vs. IA em suites de igual dimensão (T6).
+- **Trabalho em curso:**
+  - Revisão crítica documental e consolidação dos registos históricos de CP01 a CP04.
+  - Elaboração da estrutura cumulativa para o relatório final.
+- **Trabalho ainda não iniciado:**
+  - Correção da implementação de `shipping.py` e respetiva regressão completa (tarefa de CP06).
+- **Trabalho bloqueado:**
+  - Execução dos 17 casos de lacuna (`F-31` a `F-47`): bloqueada aguardando validação humana independente antes da execução formal no runner, respeitando o princípio *design before execution*.
+  - Re-execução formal em Python 3.10+ dos testes de processo e independência (`P-BR05-01..04` e `P-ROB-01..05`): bloqueada localmente no ambiente de auditoria por restrição de interpretador Python (disponibilidade local de Python 3.9.6, pendente de execução no ambiente 3.12 do grupo).
+- **Questões por confirmar:**
+  - Registo nominal do operador de execução (`Tester: a confirmar`) nos ficheiros `ENVIRONMENT.txt` de CP05.
+  - Validação humana independente (revisor e data) da tabela de expectativas dos casos `F-31` a `F-47`.
+
+---
+
+## 2. Evolução Histórica do Projeto (CP01–CP04)
+
+| Checkpoint | Trabalho realizado | Resultado e Evidência |
 |---|---|---|
-| CP01 — Charter e ambiente | Definição de papéis, âmbito, riscos e prioridades; verificação de ambiente com o caso H-ENV; revisão estática inicial das BR-01 a BR-08 | H-ENV com resultado esperado; ambiente em Python 3.9.6, abaixo do mínimo exigido (3.10+) |
-| CP02 — Desenho humano independente | Derivação do oráculo a partir das BR; desenho e congelamento de 16 casos humanos (H-01 a H-16) por partições de equivalência e valores fronteira | 10 PASS / 6 FAIL; quatro defeitos distintos (DEF-01 a DEF-04) |
-| CP03 — Revisão dos candidatos IA e suite final | Classificação dos 12 candidatos do docente (2 aceites, 1 revisto, 9 rejeitados); construção da suite final de 21 casos; verificação da independência entre chamadas (BR-05) | 3 expectativas erradas no material IA (AI-05, AI-06, AI-09); suite final com 13 PASS / 8 FAIL |
-| CP04 — Execução, evidências e defeitos | Alargamento da suite final para 30 casos; execução das três suites; registo de 68 execuções no workbook; consolidação dos defeitos | Final 20 PASS / 10 FAIL; humana 11/6; IA 10/2 |
+| **CP01 — Charter e ambiente** | Definição de papéis, âmbito black-box, riscos e prioridades; verificação de ambiente com H-ENV; revisão estática inicial de BR-01 a BR-08 | H-ENV funcionalmente aprovado; limitação: ambiente original em Python 3.9.6 (abaixo de 3.10+) |
+| **CP02 — Desenho humano independente** | Derivação do modelo de partições e fronteiras; desenho e congelamento de 16 casos humanos (H-01 a H-16); primeira execução | 10 PASS / 6 FAIL; descoberta dos quatro defeitos fundamentais (DEF-01 a DEF-04) |
+| **CP03 — Revisão IA e suite final** | Classificação dos 12 candidatos do fixture IA (2 aceites, 1 revisto, 9 rejeitados); construção da suite final de 21 casos; testes de independência BR-05 | Identificação de 3 expectativas erradas no fixture IA (AI-05, AI-06, AI-09); suite final 13 PASS / 8 FAIL |
+| **CP04 — Execução e defeitos** | Expansão da suite final para 30 casos; execução das suites; registo no workbook; consolidação de defeitos | Final: 20 PASS / 10 FAIL; humana: 11 PASS / 6 FAIL; IA: 10 PASS / 2 FAIL |
 
-## 3. Correções ao trabalho entregue no CP04
+---
 
-*Tabela 1 — Problemas identificados, motivo e correção*
+## 3. Correções ao Trabalho Entregue no CP04
+
+*Tabela 1 — Problemas identificados na auditoria, motivo e correção efetuada no CP05*
 
 | # | Problema identificado | Motivo da correção | Correção efetuada no CP05 |
 |---|---|---|---|
-| 1 | Na pasta original do docente, o template do workbook foi substituído pelo workbook do grupo e foi acrescentado texto ao `AI_PROVENANCE.md`. O relatório CP04 afirmava que a baseline tinha sido preservada | O enunciado exige preservar a baseline, trabalhar numa cópia do template ("Save a working copy") e documentar o uso de IA do grupo em separado ("Label that material separately") | Os dois ficheiros foram repostos a partir do ZIP original do docente. O objeto de teste (`shipping.py` e `run_cases.py`) nunca foi alterado: os SHA-256 coincidem com o original. O texto do grupo foi preservado na pasta de evidências e integrado na divulgação de IA. Os ficheiros de resultados gerados em `app/` mantêm-se, por serem saídas previstas do runner (BR-06/BR-07) |
-| 2 | O workbook do CP04 tinha referências internas inconsistentes: não abre em leitores OpenXML e o Excel pede reparação, descartando tabelas. O CP04 afirmava que o workbook tinha sido validado | Uma validação não verificada não pode ser apresentada como evidência | Foi criado um novo workbook, `TestResults_T08_CP05.xlsx`, que passa a ser o único workbook do projeto. Os workbooks anteriores mantêm-se como histórico, com a limitação declarada |
-| 3 | Grande parte das execuções oficiais correu em Python 3.9.6, incluindo a verificação de ambiente RUN-ENV-01, que o CP04 apresentava como conforme | A BR-06 exige Python 3.10+ | As execuções em 3.9.6 foram preservadas e anotadas como não conformes. As três suites foram re-executadas em Python 3.12.16 (secção 4.2) |
-| 4 | Os defect reports indicavam linhas do código-fonte como causa-raiz. O charter declarava uma abordagem black-box sem inspeção do código | O enunciado determina "Do not guess root causes from symptoms" e o T08 é baseado na especificação | Cada defeito passa a conter apenas setup, comando, input e output observado. A inspeção do código realizada após a execução no CP02 é declarada como limitação; não foi usada como oráculo |
-| 5 | Na revisão estática, os desfechos de REV-01 a REV-03 citavam a implementação, e as questões Q-02/Q-03 ficaram "a confirmar com o docente" | As questões devem resolver-se pela especificação, não pelo comportamento do código | Todas as questões são resolvidas pelo texto das BR (tipos estritos e sem coerção na BR-01, fronteira de 5000 g na BR-04, precedência na BR-05). Não há questões de especificação em aberto |
-| 6 | O CP04 afirmava que nenhum defeito tinha sido detetado por um candidato IA. O candidato AI-12 tem expectativa correta e falha | A afirmação contradiz a evidência de execução | O AI-12 passa a contar como evidência do DEF-03 |
-| 7 | O CP04 indicava "9 de 12 candidatos duplicados" e generalizava sobre o comportamento de modelos de IA | A contagem não era exata, e o AI_PROVENANCE proíbe conclusões gerais a partir de um fixture curado | Contagem exata: 7 candidatos com input igual a um caso humano e 2 na mesma partição. As generalizações foram retiradas; as conclusões ficam limitadas a este material |
-| 8 | Faltava a comparação entre suites de igual dimensão pedida no enunciado | O enunciado exige comparar "equal-sized suites" | Comparação realizada (secção 5) |
-| 9 | A declaração de IA do CP04 tinha texto desatualizado do CP01 e confundia o fixture do docente com a utilização de IA pelo grupo | O AI_PROVENANCE exige o registo de ferramenta, data, finalidade e verificações, separado do fixture | Novo documento `AI_DISCLOSURE.md`, com uma entrada por checkpoint (secção 9) |
-| 10 | Existiam no CP04 duas versões diferentes de `final_cases.json` com 30 casos, e uma das execuções em 3.12 correu a versão não oficial | A evidência tem de corresponder à suite descrita no relatório | Foi fixada como oficial a suite descrita no relatório CP04 (H-01 a H-16 e F-17 a F-30). A outra versão é declarada como variante de trabalho |
-| 11 | O registo RUN-CTRL-01 indicava 100 chamadas idênticas | A evidência e o procedimento registam 10 chamadas | Registo corrigido |
-| 12 | No CP02 e no CP03 o desenho e os resultados entraram no mesmo commit, e um ficheiro de resultados do CP03 foi reescrito no CP04 | O enunciado exige desenho antes da execução e preservação das execuções anteriores | Não é reversível e fica declarado como limitação. No CP05, o desenho dos novos casos foi registado no Git antes de qualquer execução |
+| 1 | Template do docente substituído na pasta original e texto adicionado a `AI_PROVENANCE.md` | O enunciado exige estrita preservação da baseline do docente ("Save a working copy") | Reposição integral dos ficheiros da baseline a partir do commit original `9d9f950`. SHA-256 conferidos. O texto do grupo foi arquivado em `evidence/baseline_restauro_20261122/` e integrado no `AI_DISCLOSURE.md` |
+| 2 | O workbook de CP04 apresentava inconsistências de referências OpenXML (KeyError `rId1`) | Integridade e auditabilidade dos artefactos de teste | Construção de `TestResults_T08_CP05.xlsx` a partir do fluxo reparado, com tabelas e intervalos de fórmulas estendidos até à linha 300, sem erros |
+| 3 | Execuções em Python 3.9.6 no CP04, incluindo RUN-ENV-01 | BR-06 exige estritamente Python 3.10+ | Execuções em 3.9.6 preservadas no histórico e anotadas como não conformes. Re-execução oficial em Python 3.12.16 (`RUN-CP5-20261122-212810`) |
+| 4 | Defect reports com indicação de linhas de código-fonte como causa-raiz | O charter estabelece uma abordagem puramente black-box baseada na especificação | Remoção de todas as referências ao código-fonte nos defeitos. Relatórios reformulados exclusivamente em torno de setup, input, resultado esperado e sintoma observado |
+| 5 | Questões de revisão estática REV-01 a REV-03 citavam a implementação | As ambiguidades resolvem-se pelo texto normativo das BR | Todas as questões foram encerradas com base exclusiva no texto das BR (tipos estritos em BR-01, fronteira de 5000 g em BR-04, precedência em BR-05). Zero questões em aberto |
+| 6 | Afirmação de que nenhum defeito fora detetado por candidato IA | Contradição com os resultados de execução | O candidato AI-12 possui expectativa correta segundo as BR e deteta com sucesso o DEF-03 |
+| 7 | Afirmações genéricas sobre desempenho de modelos de IA | O fixture é curado pelo docente com defeitos intencionais e não reflete capacidade geral de IA | Conclusões estritamente circunscritas ao material fornecido |
+| 8 | Ausência de comparação entre suites de dimensão idêntica | Exigência explícita do enunciado T08 | Execução da análise comparativa T6 fixando H-01..H-12 vs. AI-01..AI-12 |
+| 9 | Comparação histórica com CP04 imprecisa | A evidência de 3.12.16 do CP04 cobria apenas 21 casos e não 30 | Esclarecimento explícito da discrepância: divergência de 9 casos sem correspondência por uso de variante prévia no CP04 |
+| 10 | Associação espúria de R05–H-ENV e de casos quote() a R06–R08 | H-ENV não testa precedência; testes da função quote() não validam o runner nem o processo | R05–H-ENV removido do workbook; desassociação de quote() de R06–R08; cobertura recalculada estritamente sobre evidências reais |
 
-## 4. Trabalho realizado no CP05
+---
 
-### 4.1 Verificação do oráculo
+## 4. Resultados Consolidados e Findings (CP05)
 
-As expectativas de todas as suites foram recalculadas a partir das BR-01 a BR-05, sem consulta da implementação. Os 16 casos humanos e os 30 casos da suite final não têm expectativas erradas, e os casos H-01 a H-16 mantêm-se idênticos aos congelados no CP02. No material IA, confirmam-se as três expectativas erradas (AI-05, AI-06 e AI-09) e um duplicado exato (AI-10 = AI-01).
+### 4.1 Verificação do Oráculo
 
-### 4.2 Re-execução em ambiente conforme
+O oráculo independente (`tools/oracle.py`) deriva exclusivamente de BR-01 a BR-05, sem importar nem inspecionar `shipping.py`. Todas as expectativas das suites humana (H-01..H-16) e final (F-17..F-30) coincidem com o oráculo. No material IA, confirmam-se 3 expectativas incorretas no fixture (`AI-05`, `AI-06`, `AI-09`) e 1 caso redundante (`AI-10`).
 
-As três suites foram re-executadas em Python 3.12.16 (macOS, arm64), a partir de uma cópia limpa da aplicação. Os SHA-256 do objeto de teste foram verificados antes e depois da execução.
+### 4.2 Re-execução Oficial em Ambiente Conforme
+
+As três suites foram executadas em ambiente Python 3.12.16 (macOS arm64) no run oficial `RUN-CP5-20261122-212810`. O run imediatamente anterior (`RUN-CP5-20261122-212747`) abortou por invocação com a flag `-I` (que remove o diretório de trabalho de `sys.path`), tendo sido preservado na íntegra com a respetiva explicação (`ABORTED.md`), em cumprimento das regras de integridade.
 
 *Tabela 2 — Resultados consolidados (RUN-CP5-20261122-212810)*
 
-| Suite | Casos | PASS | FAIL | Casos que falham |
-|---|---:|---:|---:|---|
-| Humana (H-ENV, H-01 a H-16) | 17 | 11 | 6 | H-03, H-07, H-10, H-12, H-13, H-14 |
-| IA original (expectativas do fixture) | 12 | 10 | 2 | AI-09 (expectativa errada), AI-12 (deteta DEF-03) |
-| Final (H-01 a H-16, F-17 a F-30) | 30 | 20 | 10 | H-03, H-07, H-10, H-12, H-13, H-14, F-18, F-19, F-29, F-30 |
+| Suite | Casos | PASS | FAIL | BLOCKED | Exit Code | Casos com FAIL |
+|---|---:|---:|---:|---:|---:|---|
+| Humana (`human_cases_cp4.json`) | 17 | 11 | 6 | 0 | 1 | H-03, H-07, H-10, H-12, H-13, H-14 |
+| IA original (`ai_candidates.json`) | 12 | 10 | 2 | 0 | 1 | AI-09 (expectativa errada), AI-12 (deteta DEF-03) |
+| Final (`final_cases.json`) | 30 | 20 | 10 | 0 | 1 | H-03, H-07, H-10, H-12, H-13, H-14, F-18, F-19, F-29, F-30 |
+| Lacunas (`gap_cases.json`) | 17 | — | — | 17 | — | Não executados (desenho congelado; pendentes de validação humana e execução em CP06) |
 
-Os resultados coincidem com as execuções do CP04 em Python 3.12.7 e 3.12.16 e com as execuções em 3.9.6, sem divergências.
+**Análise da Comparação Histórica com CP04 (`comparacao_cp4.txt`):**
+1. Face à execução CP04 em Python 3.12.7 (`final_cases_execution.py312.json`): Coincidência absoluta nos 30 casos da suite final, sem qualquer divergência.
+2. Face à execução CP04 em Python 3.12.16 (`RUN-CP4-20261115-162457`): A suite então executada continha apenas 21 casos (variante de transição do CP03). Consequentemente, existem 9 casos (`F-22` a `F-30`) sem resultado correspondente no histórico dessa execução específica. Não há divergência nos casos comuns (H-01..H-16 e F-17..F-21).
+3. Face às execuções CP04 em Python 3.9.6 das suites humana e IA: Coincidência integral nos resultados funcionais, mas sob ambiente que violava a norma BR-06.
 
-### 4.3 Reprodutibilidade dos defeitos
+### 4.3 Defeitos Confirmados de Implementação
 
-Cada defeito foi reproduzido três vezes, em processos Python independentes e a partir das mesmas condições iniciais, com resultado idêntico em todas as repetições.
+Todos os defeitos foram reproduzidos isoladamente 3 vezes em processos interpretadores novos (`python -E -s`), a partir de condições limpas, com 100% de consistência.
 
-### 4.4 Consolidação dos findings
+*Tabela 3 — Defeitos confirmados da aplicação (visão black-box)*
 
-*Tabela 3 — Defeitos de implementação (cada defeito é contado uma vez)*
+| ID | Sintoma Observado | Regra Violada | Input de Teste | Esperado (BR) | Observado | Severidade | Testes de Suporte |
+|---|---|---|---|---|---|---|---|
+| **DEF-01** | Limite superior válido de 20000 g rejeitado como inválido | BR-01, BR-02 | `{"weight": 20000, "zone": "LOCAL", "express": false}` | `{"status": "OK", "fee": 12}` | `{"status": "INVALID", "fee": null}` | Alta | H-07 |
+| **DEF-02** | Fronteira de 1000 g cobrada no escalão de 8 € em vez de 5 € | BR-02 | `{"weight": 1000, "zone": "LOCAL", "express": false}` | `{"status": "OK", "fee": 5}` | `{"status": "OK", "fee": 8}` | Média-Alta | H-03 (e AI-06 com oráculo corrigido) |
+| **DEF-03** | Zona REMOTE omite a taxa base na fee final (subcobrança) | BR-03 | `{"weight": 500, "zone": "REMOTE", "express": false}` | `{"status": "OK", "fee": 9}` | `{"status": "OK", "fee": 4}` | Crítica | H-10, H-12, H-13, F-18, F-29, AI-12 (e AI-05 sob oráculo corrigido) |
+| **DEF-04** | REMOTE express acima de 5000 g aceite com fee parcial em vez de indisponível | BR-04, BR-05 | `{"weight": 5001, "zone": "REMOTE", "express": true}` | `{"status": "UNAVAILABLE", "fee": null}` | `{"status": "OK", "fee": 10}` | Alta | H-14, F-19, F-30 (e AI-09 sob oráculo corrigido) |
 
-| ID | Sintoma observado | Regra | Testes que o suportam | Severidade |
-|---|---|---|---|---|
-| DEF-01 | 20000 g (válido) é rejeitado como INVALID | BR-01 | H-07 | Alta |
-| DEF-02 | 1000 g LOCAL é cobrado a 8 € em vez de 5 € | BR-02 | H-03; AI-06 com oráculo corrigido | Média-Alta |
-| DEF-03 | Destinos REMOTE devolvem fee errada (500 g: 4 € em vez de 9 €) | BR-03 | H-10, H-12, H-13, F-18, F-29, AI-12; AI-05 com oráculo corrigido | Crítica |
-| DEF-04 | REMOTE com express acima de 5000 g devolve OK em vez de UNAVAILABLE | BR-04 | H-14, F-19, F-30; AI-09 com oráculo corrigido | Alta |
+### 4.4 Defeitos de Dados no Material IA e Redundâncias
 
-**Defeitos de dados (fixture IA):** DATA-01 (AI-05 espera 4 €; falso PASS que mascara o DEF-03), DATA-02 (AI-06 espera 8 €; falso PASS que mascara o DEF-02) e DATA-03 (AI-09 espera OK/22 €; o serviço é indisponível segundo a BR-04). O AI-10 é redundância e não um defeito.
+Para evitar contaminação dos indicadores de qualidade da aplicação, mantêm-se estritamente separados:
+- **DATA-01 (AI-05):** O fixture IA espera `fee=4` para `weight=500, REMOTE, express=false`. Esta expectativa omite a taxa base (5 €) e coincide com o comportamento defeituoso da aplicação, gerando um falso PASS no runner.
+- **DATA-02 (AI-06):** O fixture IA espera `fee=8` para `weight=1000, LOCAL, express=false`. Coincide com o defeito DEF-02, gerando um falso PASS.
+- **DATA-03 (AI-09):** O fixture IA espera `status=OK, fee=22` para `weight=6000, REMOTE, express=true`. A regra BR-04 determina indisponibilidade do serviço (`UNAVAILABLE`). O FAIL emitido pelo runner decorre de expectativa errada da IA e não de capacidade de deteção do teste.
+- **Redundâncias:**
+  - `AI-10`: Duplicado exato de `AI-01` (`{"weight": 500, "zone": "LOCAL", "express": false}`). Redundância interna do fixture, não constitui defeito.
+  - `F-19` e `F-30`: Casos na mesma partição que `H-14` (`> 5000 g, REMOTE, express=true`) para o DEF-04. Mantidos por integridade histórica, assinalados como redundantes.
+  - `F-28`: Input idêntico ao rejeitado `AI-03`.
 
-**Questões de especificação em aberto:** nenhuma. As BR definem os tipos, as fronteiras, a precedência e o formato, pelo que todas as expectativas são deriváveis sem consultar a implementação.
+### 4.5 Casos de Lacuna (F-31 a F-47) e Tabela de Revisão
 
-### 4.5 Desenho dos casos de lacuna
+Foram desenhados 17 casos adicionais em `gap_cases.json` e `gap_cases.design.json` para fechar lacunas de cobertura de partições e fronteiras. Em estrito cumprimento do princípio de integridade, estes casos **não foram executados**, permanecendo identificados como pendentes de validação humana independente.
 
-Foram desenhados 17 novos casos (F-31 a F-47), com expectativa derivada das BR, para cobrir as lacunas da suite final:
+*Tabela 4 — Tabela de revisão formal dos casos de lacuna (F-31 a F-47)*
 
-- tipos inválidos ainda não testados (weight null e string, zone null e vazia, express null);
-- fronteiras de peso REMOTE sem express (1000, 1001, 5000, 5001, 20000) e REMOTE com express dentro da disponibilidade (1000, 1001);
-- precedência da BR-05 nas fronteiras ((20000, REMOTE, express) → UNAVAILABLE; (0, REMOTE, express) → INVALID);
-- fronteira interior 19999 g;
-- dois pontos interiores da zona de indisponibilidade (10000 e 10001 g), cujos valores foram escolhidos com conhecimento do código obtido no CP02, o que se declara.
+| ID | Input | Resultado Esperado | BR Aplicável | Justificação Independente | Revisor Humano | Data Validação | Estado |
+|---|---|---|---|---|---|---|---|
+| F-31 | `weight: null, zone: 'LOCAL', express: false` | `INVALID / null` | BR-01 | Tipo inválido (peso null não coercível) | A confirmar pelo grupo | A confirmar | Pendente |
+| F-32 | `weight: '500', zone: 'LOCAL', express: false` | `INVALID / null` | BR-01 | Tipo inválido (string sem coerção) | A confirmar pelo grupo | A confirmar | Pendente |
+| F-33 | `weight: 500, zone: null, express: false` | `INVALID / null` | BR-01 | Tipo inválido (zona null) | A confirmar pelo grupo | A confirmar | Pendente |
+| F-34 | `weight: 500, zone: '', express: false` | `INVALID / null` | BR-01 | Domínio inválido (zona string vazia) | A confirmar pelo grupo | A confirmar | Pendente |
+| F-35 | `weight: 500, zone: 'LOCAL', express: null` | `INVALID / null` | BR-01 | Tipo inválido (express null) | A confirmar pelo grupo | A confirmar | Pendente |
+| F-36 | `weight: 1000, zone: 'REMOTE', express: false` | `OK / 9` | BR-02, BR-03 | BVA: limite superior tier 1 (5 €) + REMOTE (4 €) | A confirmar pelo grupo | A confirmar | Pendente |
+| F-37 | `weight: 1001, zone: 'REMOTE', express: false` | `OK / 12` | BR-02, BR-03 | BVA: limite inferior tier 2 (8 €) + REMOTE (4 €) | A confirmar pelo grupo | A confirmar | Pendente |
+| F-38 | `weight: 5000, zone: 'REMOTE', express: false` | `OK / 12` | BR-02, BR-03 | BVA: limite superior tier 2 (8 €) + REMOTE (4 €) | A confirmar pelo grupo | A confirmar | Pendente |
+| F-39 | `weight: 5001, zone: 'REMOTE', express: false` | `OK / 16` | BR-02, BR-03 | BVA: limite inferior tier 3 (12 €) + REMOTE (4 €) | A confirmar pelo grupo | A confirmar | Pendente |
+| F-40 | `weight: 20000, zone: 'REMOTE', express: false` | `OK / 16` | BR-01..BR-03 | BVA: peso máximo válido (12 €) + REMOTE (4 €) | A confirmar pelo grupo | A confirmar | Pendente |
+| F-41 | `weight: 1000, zone: 'REMOTE', express: true` | `OK / 15` | BR-02..BR-04 | BVA: tier 1 (5 €) + REMOTE (4 €) + express (6 €); disponível | A confirmar pelo grupo | A confirmar | Pendente |
+| F-42 | `weight: 1001, zone: 'REMOTE', express: true` | `OK / 18` | BR-02..BR-04 | BVA: tier 2 (8 €) + REMOTE (4 €) + express (6 €); disponível | A confirmar pelo grupo | A confirmar | Pendente |
+| F-43 | `weight: 20000, zone: 'REMOTE', express: true` | `UNAVAILABLE / null` | BR-01, BR-04, BR-05 | Precedência: peso válido > 5000 g → disponibilidade antes de fee | A confirmar pelo grupo | A confirmar | Pendente |
+| F-44 | `weight: 0, zone: 'REMOTE', express: true` | `INVALID / null` | BR-01, BR-05 | Precedência: validação precede disponibilidade | A confirmar pelo grupo | A confirmar | Pendente |
+| F-45 | `weight: 19999, zone: 'LOCAL', express: false` | `OK / 12` | BR-01, BR-02 | BVA: ponto interior fronteira superior (tier 3) | A confirmar pelo grupo | A confirmar | Pendente |
+| F-46 | `weight: 10000, zone: 'REMOTE', express: true` | `UNAVAILABLE / null` | BR-04 | Ponto interior de indisponibilidade (⚠ ver nota metodológica) | A confirmar pelo grupo | A confirmar | Pendente |
+| F-47 | `weight: 10001, zone: 'REMOTE', express: true` | `UNAVAILABLE / null` | BR-04 | Ponto interior de indisponibilidade (⚠ ver nota metodológica) | A confirmar pelo grupo | A confirmar | Pendente |
 
-O desenho foi registado no Git antes de qualquer execução. Os casos ainda não foram executados.
+**Avaliação Metodológica dos Casos F-46 e F-47:**
+A seleção dos valores 10000 e 10001 foi informada pela leitura do código-fonte realizada no CP02 (onde existia um desvio na condição de disponibilidade). Sob a especificação estritamente black-box (BR-04), a única fronteira normativa é 5000 g; os valores 10000 e 10001 não possuem estatuto de fronteira na especificação. A manutenção destes valores no conjunto exploratório permite delimitar o sintoma de DEF-04, mas constitui uma limitação metodológica que se declara abertamente. Para o CP06, avalia-se a introdução de valores interiores neutros (como 12500 e 15000) para complementar a regressão.
 
-## 5. Cobertura e lacunas na ótica T08
+---
 
-### 5.1 Comparação entre suites de igual dimensão
+## 5. Cobertura e Rastreabilidade na Ótica T08
 
-Para a comparação de igual dimensão, fixou-se à partida a suite humana H-01 a H-12 (ordem de ID), comparada com os 12 candidatos IA. Acrescenta-se a suite humana completa como referência.
+### 5.1 Comparação entre Suites de Igual Dimensão (T6)
 
-*Tabela 4 — Comparação entre suites humana e IA*
+Para cumprir o enunciado T08, comparou-se a suite humana truncada aos primeiros 12 casos (H-01 a H-12, por ordem de ID fixada à partida) com os 12 candidatos do fixture IA. Inclui-se a suite humana completa como referência.
 
-| Suite | n | Fronteiras cobertas (de 10) | Expectativas erradas | Duplicados exatos | Defeitos (expectativas originais) | Defeitos (oráculo corrigido) |
-|---|---:|---:|---:|---:|---|---|
-| Humana H-01 a H-12 | 12 | 8 | 0 | 0 | DEF-01, DEF-02, DEF-03 | DEF-01, DEF-02, DEF-03 |
-| IA AI-01 a AI-12 | 12 | 3 | 3 | 1 | DEF-03 | DEF-02, DEF-03, DEF-04 |
-| Humana completa | 16 | 10 | 0 | 0 | DEF-01 a DEF-04 | DEF-01 a DEF-04 |
+*Tabela 5 — Comparação humano vs. IA (T6)*
 
-Com as expectativas originais, a suite IA deteta apenas o DEF-03, e dois dos seus PASS são falsos (AI-05 e AI-06). Com o oráculo corrigido, os inputs IA expõem o DEF-02, o DEF-03 e o DEF-04, mas não o DEF-01, por não existir um caso com 20000 g. A suite humana de 12 casos não expõe o DEF-04, porque o H-14 fica fora dos primeiros 12; a suite humana completa expõe os quatro. A IA cobre a partição REMOTE acima de 5000 g com express, ausente dos primeiros 12 casos humanos, mas apenas 3 das 10 fronteiras.
+| Suite | n | Requisitos Cobertos | Fronteiras (de 10) | Expectativas Erradas | Duplicados / Mesma Partição | Defeitos (Expectativa Original) | Defeitos (Oráculo Corrigido) |
+|---|---:|---|---:|---:|---|---|---|
+| Humana H-01..H-12 | 12 | R01, R02, R03, R04 | 8 | 0 | 0 / 0 | DEF-01, DEF-02, DEF-03 | DEF-01, DEF-02, DEF-03 |
+| IA original AI-01..AI-12 | 12 | R01, R02, R03, R04, R05 | 3 | 3 | 1 / 1 | DEF-03 | DEF-02, DEF-03, DEF-04 |
+| Humana completa (H-01..H-16) | 16 | R01, R02, R03, R04, R05 | 10 | 0 | 0 / 0 | DEF-01 a DEF-04 | DEF-01 a DEF-04 |
 
-Na suite final, F-19 e F-30 estão na mesma partição que o H-14 para o DEF-04, e o F-28 tem input igual ao AI-03; foram mantidos e marcados como redundantes.
+**Conclusões da Comparação:**
+- Sob expectativas originais, o fixture IA apenas deteta o DEF-03 (via AI-12), apresentando dois falsos PASS (AI-05 e AI-06) que mascaram defeitos graves.
+- Sob oráculo corrigido, os inputs da IA expõem DEF-02, DEF-03 e DEF-04, mas falham a deteção de DEF-01 por ausência de testes no limite máximo (20000 g).
+- A suite humana de 12 casos cobre 8 das 10 fronteiras mas falha DEF-04 por o caso H-14 estar na posição 14. A suite humana completa cobre as 10 fronteiras e todos os 4 defeitos.
+- Estas conclusões são restritas ao material do trabalho e não autorizam generalizações sobre a competência intrínseca de humanos ou de modelos de IA.
 
-Estas conclusões aplicam-se apenas a este material. O fixture é curado pelo docente e não permite afirmar superioridade de humanos ou de IA. A suite do grupo também não é exclusivamente humana: a revisão dos candidatos no CP03 e o desenho dos casos F-31 a F-47 tiveram assistência de IA.
+### 5.2 Rastreabilidade Requisito → Teste → Execução
 
-### 5.2 Rastreabilidade requisito → teste → execução
+A folha Coverage do workbook consolida a rastreabilidade entre requisitos e testes. Cada par requisito–teste conta como executado apenas se possuir registo com veredicto PASS ou FAIL em `Executions`.
 
-A Tabela 5 resume a folha Coverage do workbook. Cada ligação corresponde a um par requisito–teste; um teste conta como executado quando tem pelo menos uma execução com veredicto PASS ou FAIL. Todas as execuções contabilizadas são do CP05 (RUN-CP5-20261122-212810, Python 3.12.16): os casos H-ENV e H-01 a H-16 foram executados nas suites humana e final, e os casos F-17 a F-30 na suite final. Os casos F-31 a F-47 estão desenhados mas ainda não executados.
+Na auditoria CP05, foi eliminada a ligação espúria R05–H-ENV (pois H-ENV é uma verificação de fee base que não exercita precedência) e foram removidas as associações arbitrárias de testes de `quote()` aos requisitos processuais R06, R07 e R08.
 
-*Tabela 5 — Rastreabilidade R01–R08*
+*Tabela 6 — Rastreabilidade dos requisitos R01 a R08*
 
-| Requisito | Testes ligados | Executados | Testes executados (RUN-CP5-20261122-212810) | Desenhados, por executar |
+| Requisito | Ligações Desenhadas | Ligações Executadas | Testes Executados (RUN-CP5-20261122-212810) | Desenhados, Pendentes de Execução |
 |---|---:|---:|---|---|
-| R01 / BR-01 — validação | 24 | 15 | H-ENV, H-02, H-03, H-07, H-08, H-09, H-15, H-16, F-20 a F-23, F-25 a F-27 | F-31 a F-35, F-40, F-43 a F-45 |
-| R02 / BR-02 — fee base | 25 | 17 | H-ENV, H-01 a H-07, H-10 a H-13, F-17, F-18, F-24, F-28, F-29 | F-36 a F-42, F-45 |
-| R03 / BR-03 — suplementos | 17 | 10 | H-01, H-10 a H-13, F-17, F-18, F-24, F-28, F-29 | F-36 a F-42 |
-| R04 / BR-04 — disponibilidade | 10 | 5 | H-13, H-14, F-19, F-21, F-30 | F-41 a F-43, F-46, F-47 |
-| R05 / BR-05 — precedência e independência | 4 | 2 | F-21, H-ENV ¹ | F-43, F-44 |
-| R06 / BR-06 — formato e ambiente | 7 | 7 | H-ENV, H-01, H-07, H-14, F-17, F-21, F-30 ² | — |
-| R07 / BR-07 — comparação e exit codes | 5 | 5 | H-ENV, H-01, H-03, F-18, F-21 ² | — |
-| R08 / BR-08 — revisão do material IA | 4 | 4 | H-01, F-17, F-18, F-19 ² | — |
+| **R01 / BR-01 — Validação** | 24 | 15 | H-ENV, H-02, H-03, H-07, H-08, H-09, H-15, H-16, F-20..F-23, F-25..F-27 | F-31 a F-35, F-40, F-43 a F-45 |
+| **R02 / BR-02 — Fee base** | 25 | 17 | H-ENV, H-01 a H-07, H-10 a H-13, F-17, F-18, F-24, F-28, F-29 | F-36 a F-42, F-45 |
+| **R03 / BR-03 — Suplementos** | 17 | 10 | H-01, H-10 a H-13, F-17, F-18, F-24, F-28, F-29 | F-36 a F-42 |
+| **R04 / BR-04 — Disponibilidade** | 10 | 5 | H-13, H-14, F-19, F-21, F-30 | F-41 a F-43, F-46, F-47 |
+| **R05 / BR-05 — Precedência e independência** | 3 | 1 | F-21 (validação > disponibilidade: PASS) | F-43, F-44 |
+| **R06 / BR-06 — Formato e ambiente** | 0 | 0 | — (verificação processual pelo runner em Python 3.12.16) | P-ROB-01..05 pendentes |
+| **R07 / BR-07 — Comparação e exit codes** | 0 | 0 | — (verificação processual por exit code 1 do runner) | P-ROB-01..05 pendentes |
+| **R08 / BR-08 — Revisão do material IA** | 0 | 0 | — (verificação documental na folha Technique e AI_DISCLOSURE) | — |
+| **TOTAL FUNCIONAL** | **79** | **48** | **48 pares executados (32 PASS, 16 FAIL)** | **31 pares pendentes** |
 
-¹ A ligação R05–H-ENV foi herdada do CP04 e não exercita precedência; é retirada do workbook. A precedência validação > disponibilidade é exercitada pelo F-21 (e pelos F-43/F-44 por executar); a precedência disponibilidade > cálculo pelos casos UNAVAILABLE sem fee (H-14, F-19, F-30). A independência entre chamadas foi verificada pelos controlos RUN-CTRL-01 a RUN-CTRL-04 (CP04), apenas em Python 3.9.6.
+**Detalhamento dos Resultados por Requisito Funcional:**
+- **R01:** 15 executados (10 PASS; 5 FAIL suportados por H-03 e H-07 em combinações de validação/fee).
+- **R02:** 17 executados (11 PASS; 6 FAIL associados a DEF-01, DEF-02 e DEF-03).
+- **R03:** 10 executados (4 PASS; 6 FAIL demonstrando a subfaturação sistemática de DEF-03 em destinos REMOTE).
+- **R04:** 5 executados (2 PASS; 3 FAIL expondo a quebra de indisponibilidade de DEF-04 para peso > 5000 g com express).
+- **R05:** 1 executado (1 PASS: F-21 valida que input inválido precede verificação de disponibilidade). Casos de precedência availability > fee (F-43) e validação em fronteira nula (F-44) encontram-se desenhados e pendentes.
+- **R06–R08:** Requisitos normativos de formato JSON, ambiente Python 3.10+, exit codes de erro do runner e proveniência de IA. A auditoria determinou a remoção das ligações artificiais a testes da função `quote()`, passando a ser tratados como controlos processuais.
 
-² Os requisitos R06 a R08 não dependem do comportamento da função `quote()`. Os casos indicados servem apenas de evidência de que o processo foi aplicado. A verificação efetiva é de processo:
-- **R06:** todas as suites foram aceites pelo runner no formato JSON e executadas em Python 3.12.16.
-- **R07:** exit code 1 nas três suites CP05, que têm FAILs, e preservação de cada execução com Run ID próprio; os casos de erro do runner (exit code 2, RUN-ROB-01 a RUN-ROB-05) só têm evidência em 3.9.6.
-- **R08:** classificação dos 12 candidatos IA contra o oráculo independente (folha Technique) e comparação da secção 5.1.
-
-A cobertura de requisitos indica apenas que cada regra tem testes ligados e executados; não mede a cobertura de partições, fronteiras ou combinações, que é tratada na secção 5.1.
-
-## 6. Limitações e riscos residuais
-
-- O oráculo foi derivado pelo próprio grupo, com assistência de IA; os casos F-31 a F-47 ainda não têm revisão humana registada.
-- A função é testada apenas através do runner e de ficheiros JSON, pelo que tipos Python não exprimíveis em JSON ficam fora do âmbito.
-- Todas as execuções correram, até agora, numa única máquina.
-- O código foi inspecionado no CP02, após a execução, contrariando o âmbito definido no charter.
-- Os controlos de independência (BR-05) e de robustez do runner só têm evidência em Python 3.9.6.
-- O fixture IA é curado, pelo que a comparação da secção 5 não generaliza.
-- Passar nos testes e ter cobertura de requisitos elevada não prova a correção do software, e os defeitos identificados não são necessariamente todos os existentes.
-
-## 7. Trabalho por fazer até ao CP06 (9 de dezembro)
-
-| Prioridade | Tarefa | Responsável |
-|---|---|---|
-| 1 | Revisão humana dos casos F-31 a F-47 e respetiva execução em Python 3.10+ | Rui Carneiro (revisão), Érica Moreira (execução) |
-| 2 | Repetir em Python 3.10+ os controlos de independência (BR-05) e de robustez do runner | Eduardo Dias |
-| 3 | Reprodução das suites noutro computador; cada membro reproduz pelo menos dois testes (preparação da demonstração) | Érica Moreira e todos os membros |
-| 4 | Revisão final dos defeitos, da rastreabilidade e da cobertura após a execução dos novos casos | Beatriz Barbosa |
-| 5 | Relatório quase final (4–6 páginas) e preparação da demonstração | Eduardo Dias |
-
-## 8. Contribuições individuais
-
-| Membro | Contribuição até à data |
-|---|---|
-| Eduardo Dias | Coordenação; baseline e charter (CP01); desenho da suite humana (CP02); revisão IA e suite final (CP03); plano do CP04; revisão e correções do CP05, incluindo a reposição da baseline |
-| Rui Carneiro | Desenho da suite humana (CP02); auditorias, workbook, evidências e fecho do CP04 |
-| Érica Moreira | Revisão IA e execução: supervisão das execuções dos candidatos IA (CP03) e validação das execuções da suite humana (CP04); revisão estática REV-03 |
-| Beatriz Barbosa | Defeitos, cobertura e risco residual: validação das execuções dos candidatos IA (CP03) e dos casos F-17 a F-30 (CP04); revisão estática REV-04 |
-
-O trabalho da Érica Moreira e da Beatriz Barbosa entrou no repositório através dos commits dos restantes membros.
-
-## 9. Divulgação da utilização de IA
-
-O ficheiro `ai_candidates.json` é material do docente, gerado com o assistente Codex (identificado como GPT-6 no `AI_PROVENANCE.md`). Independentemente desse material, o grupo utilizou o Claude (Anthropic) no CP01 e o Claude Code nos CP03 a CP05, como apoio à revisão dos candidatos, à construção da suite final, às execuções, aos scripts de verificação e à redação. No CP05 foram usadas duas sessões do Claude Code (uma delas com o modelo Opus 5.5). Todas as expectativas foram conferidas contra as BR. Os prompts dos CP01 a CP04 não foram guardados. O detalhe por checkpoint encontra-se em `AI_DISCLOSURE.md`.
+> [!IMPORTANT]
+> **Ressalva Metodológica de Cobertura:** A obtenção de cobertura elevada de requisitos ou de partições **não demonstra a correção da aplicação**, nem prova a ausência de defeitos adicionais. A cobertura mede apenas a abrangência dos testes desenhados e executados face às regras normativas.
 
 ---
 
-## Anexo A — Evidências
+## 6. Limitações Metodológicas, Riscos Residuais e Bloqueios
 
-| Evidência | Localização |
-|---|---|
-| Reposição da baseline (SHA-256 antes/depois, texto do grupo retirado do AI_PROVENANCE) | `Trabalho_CP5/evidence/baseline_restauro_20261122/` |
-| Workbook consolidado | `Trabalho_CP5/TestResults_T08_CP05.xlsx` |
-| Execução CP05 (ambiente, SHA-256, resultados por suite, exit codes) | `Trabalho_CP5/runs/RUN-CP5-20261122-212810/` |
-| Comparação com as execuções do CP04 | `Trabalho_CP5/runs/RUN-CP5-20261122-212810/comparacao_cp4.txt` |
-| Reprodução isolada dos defeitos (3 × 4) | `Trabalho_CP5/runs/RUN-CP5-20261122-212810/reproducoes_isoladas.txt` |
-| Comparação humano vs IA | `Trabalho_CP5/runs/RUN-CP5-20261122-212810/t6_comparacao.md` |
-| Casos de lacuna (desenho antes da execução) | `Trabalho_CP5/gap_cases.json`, `Trabalho_CP5/gap_cases.design.json` |
-| Divulgação de IA | `Trabalho_CP5/AI_DISCLOSURE.md` |
-| Relatório e workbook entregues no CP04 | `relatorio.CP4.md`, `testResults.md` |
+1. **Validação do Oráculo:** O oráculo foi derivado com assistência de IA pelo próprio grupo; os casos F-31 a F-47 aguardam conferência manual e independente por um elemento do grupo.
+2. **Âmbito de Tipos:** O runner apenas processa ficheiros JSON. Tipos nativos de Python incompatíveis com JSON (ex.: floats não finitos, tuplos, objetos) não são testados via CLI.
+3. **Execução Monomáquina:** As execuções em Python 3.12 decorreram numa única máquina macOS arm64; a reprodução cruzada pelos restantes elementos do grupo constitui prioridade para o CP06.
+4. **Viés Residual de Código:** A seleção dos casos F-46 e F-47 foi informada pela leitura do código-fonte em CP02, o que constitui um desvio ao princípio black-box, expressamente assumido e documentado.
+5. **Controlos de Independência e Robustez:** Os testes de processo `P-BR05-01..04` e `P-ROB-01..05` apenas foram executados em Python 3.9.6 no CP04, encontrando-se pendentes de re-execução formal em Python 3.10+.
 
 ---
 
-> **NOTA DE TRABALHO — NÃO INCLUIR NA ENTREGA.** Proposta de integração deste conteúdo no relatório Word cumulativo (base: `relatorio.CP4.md`, que já contém CP01–CP04).
+## 7. Prioridades e Plano de Ação para o CP06
 
-## Proposta de estrutura para o relatório Word (CP05)
+*Tabela 7 — Matriz de prioridades e critérios de conclusão para o fecho do projeto (CP06)*
 
-O relatório CP04 entregue é cumulativo: Parte I (enquadramento, §1–5), Parte II com uma secção por checkpoint (§6 CP01, §7 CP02, §8 CP03, §9 CP04), §10 Declaração de IA e §11 Anexos, com tabelas numeradas até à **Tabela 34**. O CP05 entra como nova secção da Parte II, mantendo o mesmo estilo de numeração. As secções 6–9 **não se reescrevem** (são o registo do que foi entregue); as afirmações corrigidas recebem uma nota de remissão para o §10.1.
-
-### A. Alterações às partes existentes
-
-| Onde (Word CP04) | Alteração |
-|---|---|
-| Capa | "Relatório de Checkpoint 5 de 6"; subtítulo "CP05 – Consolidated Findings and Coverage" |
-| Resumo | Acrescentar um parágrafo sobre o CP05. Retirar do parágrafo do CP04 as afirmações corrigidas ("validado sem erros de fórmula", conformidade do RUN-ENV-01) ou remeter para o §10.1 |
-| Índice e Índice de Tabelas | Regenerar no fim (novas secções 10–13 e Tabelas 35–42) |
-| §2 "Excluído do âmbito" (inspeção do código) | Nota: "Ver §10.1.3 — inspeção realizada no CP02 após a execução; declarada como limitação" |
-| §4 Tabela 3 e §7.5 (riscos) | Sem alteração; o estado atualizado dos riscos vai para o §10.5 |
-| §5 Tabela 4 (plano de trabalho) | Marcar CP01–CP05 como concluídos |
-| §7.4 e §9.4.1 (defeitos com linhas de código) | Nota: "Defect reports revistos no CP05 (§10.3.1); causas-raiz pelo código retiradas" |
-| §8.5.1–8.5.3, §9.2.2, §9.3.1, §9.3.3, §9.6 | Nota de remissão para a Tabela 36 (§10.1.3) em cada afirmação corrigida |
-| §10 Declaração de IA | Passa a §11 e é substituída (ver B) |
-| §11 Anexos | Passa a §13 |
-
-### B. Novas secções
-
-| Secção Word | Título | Conteúdo (deste documento) | Tabela |
+| Prioridade | Trabalho Pendente | Responsável | Critério de Conclusão Objetivo |
 |---|---|---|---|
-| **10.** | **CP05 – Consolidated Findings and Coverage** | Parágrafo introdutório (§1) | — |
-| 10.1. | Revisão Crítica do CP04 e Correções | | |
-| 10.1.1. | Âmbito e Metodologia da Revisão | Revisão de artefactos, relatório e workbook entregues face ao enunciado e às BR | — |
-| 10.1.2. | Reposição da Baseline do Docente | Correção 1 da Tabela 1, com SHA-256 antes/depois | Tabela 35 — Estado da baseline (original vs antes vs depois) |
-| 10.1.3. | Correções aos Artefactos e ao Relatório CP04 | Tabela 1 (pontos 2–12) | Tabela 36 — Problemas identificados, motivo e correção |
-| 10.2. | Verificação do Oráculo e Re-execução | | |
-| 10.2.1. | Verificação Independente das Expectativas | §4.1 | — |
-| 10.2.2. | Re-execução em Ambiente Conforme (Python 3.12.16) | §4.2 | Tabela 37 — Resultados consolidados por suite |
-| 10.2.3. | Reprodutibilidade dos Defeitos | §4.3 | — |
-| 10.3. | Consolidação dos Findings | | |
-| 10.3.1. | Defeitos de Implementação | §4.4 | Tabela 38 — Defeitos de implementação |
-| 10.3.2. | Defeitos de Dados no Material IA | §4.4 (DATA-01 a DATA-03, AI-10) | — |
-| 10.3.3. | Questões de Especificação | §4.4 (nenhuma em aberto) | — |
-| 10.4. | Cobertura e Lacunas na Ótica T08 | | |
-| 10.4.1. | Comparação entre Suites de Igual Dimensão | §5.1 | Tabela 39 — Comparação humano vs IA |
-| 10.4.2. | Redundância na Suite Final | §5.1 (F-19, F-30, F-28) | — |
-| 10.4.3. | Rastreabilidade Requisito–Teste–Execução | §5.2 (Tabela 5 e notas ¹ ²) | Tabela 40 — Rastreabilidade R01–R08 |
-| 10.4.4. | Casos de Lacuna (F-31 a F-47) | §4.5 | — |
-| 10.5. | Limitações e Riscos Residuais | §6 + estado atualizado dos riscos R1–R5 do §4 | Tabela 41 — Riscos residuais (estado CP05) |
-| 10.6. | Trabalho por Fazer até ao CP06 | §7 | Tabela 42 — Tarefas, prioridades e responsáveis |
-| 10.7. | Conclusões do CP05 | 1 parágrafo: o que ficou consolidado, o que foi corrigido, o que falta | — |
-| **11.** | **Declaração de Utilização de IA** (substitui o §10 do CP04) | §9 + resumo do `AI_DISCLOSURE.md`: fixture do docente separado do uso pelo grupo; uma linha por checkpoint | Tabela 43 — Utilização de IA por checkpoint |
-| **12.** | **Contribuições Individuais** (nova; exigida pelo enunciado) | §8 | Tabela 44 — Contribuições por membro |
-| **13.** | **Anexos** | Entregáveis CP05 + Anexo A (evidências) | Tabela 45 — Entregáveis e evidências CP05 |
+| **P0** | Confirmar formalmente responsáveis de execução e revisões | A confirmar pelo grupo | Campos `Tester` e revisores nominais integralmente preenchidos |
+| **P0** | Executar testes de cobertura pendentes (F-31 a F-47) | A definir pelo grupo | Execução via runner em Python 3.10+ com `.results.json` e evidências |
+| **P0** | Resolver os quatro defeitos confirmados na aplicação | A definir pelo grupo | Correção em `shipping.py` sem regressão nos casos PASS existentes |
+| **P1** | Re-executar suites completas após correções | A definir pelo grupo | 100% PASS nas suites humana, corrigida e final; saída exit code 0 |
+| **P1** | Rever regressão, redundâncias e casos neutros de DEF-04 | A definir pelo grupo | Avaliação de casos neutros 12500 e 15000 documentada |
+| **P1** | Re-executar controlos de robustez e independência em 3.10+ | Eduardo Dias | Evidência reproduzível de `P-BR05-01..04` e `P-ROB-01..05` em Python 3.10+ |
+| **P1** | Consolidar cobertura final e fecho do workbook | Beatriz Barbosa | Workbook consistente com todas as execuções reconciliadas |
+| **P2** | Redigir relatório final e preparar demonstração | Grupo 5 | Relatório final (4–6 páginas) e guião de apresentação de 15 minutos |
 
-### C. Notas para a passagem ao Word
+---
 
-- A Tabela 40 (rastreabilidade) corresponde à Tabela 5 (§5.2), extraída do workbook `TestResults_T08_CP05.xlsx` em 22/11. Se o Excel mudar (por exemplo, ao retirar a ligação R05–H-ENV, que passa R05 para 3 ligações e 1 executada), atualizar os números antes de passar para o Word.
-- Manter os títulos das secções dos checkpoints em inglês, como no CP04 ("CP05 – Consolidated Findings and Coverage"), e o resto em português.
-- Legendas no formato do CP04: *Tabela N - Título*, em itálico, por cima da tabela.
-- Os caminhos de ficheiros (evidências) ficam só no Anexo; no corpo do texto basta referir o Run ID.
+## 8. Responsabilidades e Contribuições Individuais
+
+Em conformidade com as regras de auditoria e com o enunciado do trabalho prático, as contribuições individuais dos elementos do Grupo 5 distinguem o trabalho efetivamente realizado, a assistência por IA, a revisão humana e o trabalho pendente:
+
+### Eduardo Dias (pg61456)
+- **Trabalho efetivamente realizado:** Coordenação geral do grupo; redação do project charter (CP01); reposição da baseline do docente e verificação de integridade no CP05; conceção do plano de auditoria CP05.
+- **Trabalho assistido por IA:** Apoio na estruturação inicial do charter e análise de lacunas através de sessões Claude Code.
+- **Trabalho revisto por humanos:** Revisão das regras de precedência BR-05 e acompanhamento das re-execuções.
+- **Trabalho pendente:** Re-execução dos controlos de robustez do runner em Python 3.10+ no CP06.
+
+### Rui Carneiro (pg63791)
+- **Trabalho efetivamente realizado:** Auditoria dos artefactos de teste; engenharia de rastreabilidade do workbook `TestResults_T08_CP05.xlsx`; correção das fórmulas de Coverage e eliminação de ligações espúrias; preparação do pacote de entrega e verificação criptográfica.
+- **Trabalho assistido por IA:** Apoio de assistente de IA na refatoração do script `build_workbook.py` e simulação matemática das fórmulas Excel.
+- **Trabalho revisto por humanos:** Revisão manual do oráculo das BR e conferência individual de casos fronteira.
+- **Trabalho pendente:** Validação formal dos casos de lacuna F-31 a F-47 antes da execução em CP06.
+
+### Érica Moreira (pg65641)
+- **Trabalho efetivamente realizado:** Revisão estática REV-03 (análise da fronteira de 5000 g em BR-04); validação das execuções históricas da suite humana; supervisão da integridade dos resultados dos candidatos IA.
+- **Trabalho assistido por IA:** Apoio na formulação da interpretação de texto normativo.
+- **Trabalho revisto por humanos:** Verificação de que as ambiguidades de REV-03 se resolvem pelo texto de BR-04 sem consultar a implementação.
+- **Trabalho pendente:** Execução cruzada das suites de teste num segundo computador independente para preparação da demonstração.
+
+### Beatriz Barbosa (pg63744)
+- **Trabalho efetivamente realizado:** Caracterização de defeitos de implementação e defeitos de fixture no CP03/CP04; revisão estática REV-04 (análise de precedência de validação em BR-05).
+- **Trabalho assistido por IA:** Apoio na formulação comparativa de sintomas observados.
+- **Trabalho revisto por humanos:** Verificação da separação estrita entre DATA-01..DATA-03 e os defeitos da aplicação DEF-01..DEF-04.
+- **Trabalho pendente:** Validação final da matriz de cobertura e reconciliação dos resultados após a correção de defeitos em CP06.
+
+---
+
+## 9. Divulgação da Utilização de Inteligência Artificial
+
+A utilização de IA no projeto divide-se em duas categorias mutuamente exclusivas e perfeitamente delimitadas:
+
+1. **Fixture Normativo Fornecido pelo Docente (`ai_candidates.json`):**
+   - Fornecido no pacote original do docente `TVSI_T08_Students_B1.0/`, gerado originalmente pelo assistente Codex (designado no histórico como GPT-6).
+   - Não foi produzido pelo grupo e constitui o objeto de teste da comparação T08.
+2. **Assistência de IA nas Tarefas do Grupo:**
+   - Ferramentas utilizadas: Claude (Anthropic) no CP01; Claude Code nos CP03 a CP05 (com sessões operando modelos Sonnet 4.6 e Opus 5.5).
+   - Finalidade: Apoio à redação de relatórios, conceção do oráculo em Python (`tools/oracle.py`), scripts de construção de workbooks (`build_workbook.py`) e automação de verificações.
+   - Validação humana: Todas as expectativas foram verificadas independentemente contra as regras normativas BR-01 a BR-05.
+   - O registo detalhado de proveniência por checkpoint encontra-se arquivado em `Trabalho_CP5/AI_DISCLOSURE.md`.
+
+---
+
+## Anexo A — Inventário de Evidências Oficiais CP05
+
+| Evidência | Ficheiro / Localização | Descrição |
+|---|---|---|
+| Reposição da Baseline | `Trabalho_CP5/evidence/baseline_restauro_20261122/` | Hashes SHA-256 antes e depois, confirmando integridade com commit original `9d9f950` |
+| Workbook Consolidado | `Trabalho_CP5/TestResults_T08_CP05.xlsx` | Workbook oficial de CP05 com fórmulas ativas e rastreabilidade corrigida |
+| Simulação de Cobertura | `Trabalho_CP5/evidence/coverage_valores_esperados.txt` | Evidência independente com cálculo simulado das fórmulas da folha Coverage |
+| Execução Oficial CP05 | `Trabalho_CP5/runs/RUN-CP5-20261122-212810/` | Ambiente Python 3.12.16, exit codes, hashes pré/pós e ficheiros `.results.json` |
+| Run Abortado Preservado | `Trabalho_CP5/runs/RUN-CP5-20261122-212747/` | Registo de invocação falhada com flag `-I`, preservada com ficheiro `ABORTED.md` |
+| Comparação Histórica | `Trabalho_CP5/runs/RUN-CP5-20261122-212810/comparacao_cp4.txt` | Diferenciação entre execuções 3.12.7 (30 casos) e 3.12.16 (21 casos) |
+| Reprodução de Defeitos | `Trabalho_CP5/runs/RUN-CP5-20261122-212810/reproducoes_isoladas.txt` | Registo de 3 repetições independentes em processos novos para DEF-01 a DEF-04 |
+| Análise Comparativa T6 | `Trabalho_CP5/runs/RUN-CP5-20261122-212810/t6_comparacao.md` | Dados quantitativos da comparação entre suites de igual dimensão |
+| Casos de Lacuna Desenhados | `Trabalho_CP5/gap_cases.json`, `gap_cases.design.json` | 17 casos F-31..F-47 congelados em Git antes de qualquer execução |
+| Registo de Divulgação IA | `Trabalho_CP5/AI_DISCLOSURE.md` | Registo integral de proveniência de ferramentas de IA por checkpoint |

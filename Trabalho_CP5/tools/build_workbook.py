@@ -230,16 +230,52 @@ def main():
     sr.cell(nr, 5, "-")
     sr.cell(nr, 6, "Testabilidade confirmada pelo oráculo tools/oracle.py (só BR) / a confirmar pelo grupo")
 
-    # ---------- Coverage: ligações novas + intervalos ----------
-    links = {(cov.cell(i, 1).value, cov.cell(i, 2).value) for i in range(21, cov.max_row + 1)}
-    r = max(i for i in range(21, cov.max_row + 1) if cov.cell(i, 1).value not in (None, "")) + 1
+    # ---------- Coverage: ligações revistas e limpas (sem H-ENV em R05, sem quote() em R06-R08) ----------
+    # Limpa linhas 21..MAXR na folha Coverage para garantir que não sobram ligações espúrias herdadas
+    for i in range(21, max(cov.max_row + 1, MAXR + 1)):
+        for col in range(1, 6):
+            cov.cell(i, col, None)
+
+    # Ligações funcionais genuínas de CP04 (R01..R05)
+    # R05-H-ENV removido por não exercitar precedência/independência funcional
+    # Casos quote() removidos de R06-R08 por serem requisitos de processo/runner
+    valid_cp4_links = [
+        # R01 / BR-01 (Validação)
+        ("R01", "H-ENV"), ("R01", "H-02"), ("R01", "H-03"), ("R01", "H-07"), ("R01", "H-08"),
+        ("R01", "H-09"), ("R01", "H-15"), ("R01", "H-16"), ("R01", "F-20"), ("R01", "F-21"),
+        ("R01", "F-22"), ("R01", "F-23"), ("R01", "F-25"), ("R01", "F-26"), ("R01", "F-27"),
+        # R02 / BR-02 (Fee base)
+        ("R02", "H-ENV"), ("R02", "H-01"), ("R02", "H-02"), ("R02", "H-03"), ("R02", "H-04"),
+        ("R02", "H-05"), ("R02", "H-06"), ("R02", "H-07"), ("R02", "H-10"), ("R02", "H-11"),
+        ("R02", "H-12"), ("R02", "H-13"), ("R02", "F-17"), ("R02", "F-18"), ("R02", "F-24"),
+        ("R02", "F-28"), ("R02", "F-29"),
+        # R03 / BR-03 (Suplementos)
+        ("R03", "H-01"), ("R03", "H-10"), ("R03", "H-11"), ("R03", "H-12"), ("R03", "H-13"),
+        ("R03", "F-17"), ("R03", "F-18"), ("R03", "F-24"), ("R03", "F-28"), ("R03", "F-29"),
+        # R04 / BR-04 (Disponibilidade)
+        ("R04", "H-13"), ("R04", "H-14"), ("R04", "F-19"), ("R04", "F-21"), ("R04", "F-30"),
+        # R05 / BR-05 (Precedência funcional: validação > disponibilidade)
+        ("R05", "F-21"),
+    ]
+
+    links = set()
+    r = 21
+    for req, cid in valid_cp4_links:
+        cov.cell(r, 1, req)
+        cov.cell(r, 2, cid)
+        links.add((req, cid))
+        r += 1
+
+    # Ligações dos casos de lacuna F-31..F-47 (desenhados, por executar)
     for c in gap:
         for req in design[c["id"]]["requirements"].split(","):
+            req = req.strip()
             if (req, c["id"]) not in links:
                 cov.cell(r, 1, req)
                 cov.cell(r, 2, c["id"])
                 links.add((req, c["id"]))
                 r += 1
+
     for i in range(5, 13):
         cov.cell(i, 3, f"=SUMIFS($C$21:$C${MAXR},$A$21:$A${MAXR},A{i})")
         cov.cell(i, 4, f"=SUMIFS($D$21:$D${MAXR},$A$21:$A${MAXR},A{i})")
@@ -248,7 +284,7 @@ def main():
         cov.cell(i, 3, f"=IF(OR(A{i}=\"\",B{i}=\"\"),0,IF(AND(COUNTIFS($A$5:$A$12,A{i})=1,COUNTIFS('Test Cases'!$A$5:$A${MAXR},B{i})=1,COUNTIFS($A$21:A{i},A{i},$B$21:B{i},B{i})=1),1,0))")
         cov.cell(i, 4, f"=IF(C{i}=0,0,IF(COUNTIFS(Executions!$B$5:$B${MAXR},B{i},Executions!$G$5:$G${MAXR},\"PASS\")+COUNTIFS(Executions!$B$5:$B${MAXR},B{i},Executions!$G$5:$G${MAXR},\"FAIL\")>0,1,0))")
         cov.cell(i, 5, f"=IF(AND(A{i}=\"\",B{i}=\"\"),\"\",IF(C{i}=1,\"Linked\",\"Check IDs / duplicate\"))")
-    cov.cell(14, 1, f"CP05: intervalos das fórmulas alargados de $5:$84/$21:$120 para $5:${MAXR}/$21:${MAXR}. R06–R08 são cobertos por verificação de processo/runner, não por casos quote().")
+    cov.cell(14, 1, f"CP05: intervalos das fórmulas alargados para $5:${MAXR}/$21:${MAXR}. R01–R05 cobrem os requisitos funcionais da função quote(). R05–H-ENV retirado por falta de fundamento funcional (H-ENV não testa precedência). R06–R08 são requisitos de processo e framework (formato JSON, runner CLI em Python 3.10+, exit codes 0/1/2 e auditoria de IA), verificados ao nível do processo/runner e documentalmente, sem associações espúrias a testes quote().")
 
     # ---------- Technique: T6 + redundância da suite final ----------
     t6p = os.path.join(run_dirs()[0], "t6_comparacao.json")

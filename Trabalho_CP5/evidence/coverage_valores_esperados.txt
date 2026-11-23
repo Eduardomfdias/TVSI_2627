@@ -4,8 +4,17 @@ R01 | 24 | 15 | 9
 R02 | 25 | 17 | 8
 R03 | 17 | 10 | 7
 R04 | 10 | 5 | 5
-R05 | 4 | 2 | 2
-R06 | 7 | 7 | 0
-R07 | 5 | 5 | 0
-R08 | 4 | 4 | 0
+R05 | 3 | 1 | 2
+R06 | 0 | 0 | 0
+R07 | 0 | 0 | 0
+R08 | 0 | 0 | 0
 Ligações 'Check IDs / duplicate': nenhuma
+
+Total de ligações funcionais desenhadas: 79
+Total de ligações funcionais executadas: 48
+Total de ligações funcionais não executadas: 31
+
+Nota metodológica (auditoria CP05):
+- R01–R05: Cobrem os requisitos funcionais da função quote(weight, zone, express).
+  - R05: A ligação espúria R05–H-ENV herdada de CP04 foi removida por não exercitar precedência nem independência funcional. F-21 exercita a precedência validação > disponibilidade (PASS). F-43 e F-44 estão desenhados (pendentes de execução).
+- R06–R08: Requisitos normativos de formato JSON, ambiente runner em Python 3.10+, exit codes do runner (0/1/2) e processo de auditoria de testes IA. Foram desassociados de testes arbitrários da função quote() (H-01, H-07, etc.), uma vez que quote() não valida o runner nem o formato de ficheiros. Estes requisitos são verificados a nível processual, operacional e documental (folha Technique, AI_DISCLOSURE, exit codes de execução e relatórios). Os controlos formais de processo (P-BR05-01..04 e P-ROB-01..05) permanecem como pendências para execução formal em Python 3.10+ no CP06.
